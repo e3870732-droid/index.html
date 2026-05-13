@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -57,14 +58,17 @@
     <div class="px-2 pb-3 space-y-0.5">
       <div class="text-[9px] text-white/50 px-1 pt-1 pb-0.5 uppercase tracking-wider font-bold">访客</div>
       <button data-role="guest" class="role-btn role-chip-inactive w-full text-[11px] px-2.5 py-1.5 rounded-lg text-left transition-all">未登录</button>
-      <div class="text-[9px] text-white/50 px-1 pt-2 pb-0.5 uppercase tracking-wider font-bold">需求方</div>
-      <button data-role="demand_new" class="role-btn role-chip-inactive w-full text-[11px] px-2.5 py-1.5 rounded-lg text-left transition-all">未认证</button>
-      <button data-role="demand_ok" class="role-btn role-chip-inactive w-full text-[11px] px-2.5 py-1.5 rounded-lg text-left transition-all">企业认证</button>
+      <div class="text-[9px] text-white/50 px-1 pt-2 pb-0.5 uppercase tracking-wider font-bold">已登录·未认证</div>
+      <button data-role="logged_new" class="role-btn role-chip-inactive w-full text-[11px] px-2.5 py-1.5 rounded-lg text-left transition-all">无任何认证</button>
+      <div class="text-[9px] text-white/50 px-1 pt-2 pb-0.5 uppercase tracking-wider font-bold">仅飞手认证</div>
+      <button data-role="pilot_ok" class="role-btn role-chip-inactive w-full text-[11px] px-2.5 py-1.5 rounded-lg text-left transition-all">飞手</button>
+      <button data-role="pilot_warn" class="role-btn role-chip-inactive w-full text-[11px] px-2.5 py-1.5 rounded-lg text-left transition-all">飞手·被投诉</button>
+      <div class="text-[9px] text-white/50 px-1 pt-2 pb-0.5 uppercase tracking-wider font-bold">仅企业认证</div>
+      <button data-role="demand_ok" class="role-btn role-chip-inactive w-full text-[11px] px-2.5 py-1.5 rounded-lg text-left transition-all">企业</button>
       <button data-role="demand_warn" class="role-btn role-chip-inactive w-full text-[11px] px-2.5 py-1.5 rounded-lg text-left transition-all">企业·被投诉</button>
-      <div class="text-[9px] text-white/50 px-1 pt-2 pb-0.5 uppercase tracking-wider font-bold">飞手</div>
-      <button data-role="pilot_new" class="role-btn role-chip-inactive w-full text-[11px] px-2.5 py-1.5 rounded-lg text-left transition-all">未认证</button>
-      <button data-role="pilot_ok" class="role-btn role-chip-inactive w-full text-[11px] px-2.5 py-1.5 rounded-lg text-left transition-all">已认证</button>
-      <button data-role="pilot_warn" class="role-btn role-chip-inactive w-full text-[11px] px-2.5 py-1.5 rounded-lg text-left transition-all">已认证·被投诉</button>
+      <div class="text-[9px] text-white/50 px-1 pt-2 pb-0.5 uppercase tracking-wider font-bold">双向认证</div>
+      <button data-role="both_pilot" class="role-btn role-chip-inactive w-full text-[11px] px-2.5 py-1.5 rounded-lg text-left transition-all">双认证 · 当前飞手态</button>
+      <button data-role="both_demand" class="role-btn role-chip-inactive w-full text-[11px] px-2.5 py-1.5 rounded-lg text-left transition-all">双认证 · 当前企业态</button>
     </div>
   </div>
 </div>
@@ -1034,6 +1038,83 @@
     </div>
   </div>
 
+  <!-- 提交完工材料弹窗 -->
+  <div id="弹窗-提交完成" class="hidden absolute inset-0 z-[70] flex items-end">
+    <div class="absolute inset-0 bg-black/50" onclick="关闭提交完成()"></div>
+    <div class="relative bg-white w-full rounded-t-3xl animate-slide-up overflow-hidden flex flex-col" style="max-height:92%">
+      <div class="flex-shrink-0">
+        <div class="w-10 h-1 bg-gray-200 rounded-full mx-auto mt-3 mb-0"></div>
+        <div class="flex items-center px-4 py-3 border-b border-gray-100">
+          <button onclick="关闭提交完成()" class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-1">
+            <i data-lucide="chevron-left" class="w-4 h-4 text-gray-500"></i>
+          </button>
+          <h3 class="text-base font-bold text-gray-900 flex-1">提交完工材料</h3>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto hide-scrollbar p-4 space-y-4">
+        <div class="bg-blue-50 border border-blue-100 rounded-2xl p-3 flex items-start gap-2">
+          <i data-lucide="info" class="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5"></i>
+          <p class="text-[12px] text-blue-800 leading-relaxed">请提交本次作业的成果证明（照片/视频）与作业说明，发布方将依据这些材料进行验收。验收通过后订单流转为"已完成"。</p>
+        </div>
+
+        <div id="提交完成-验收提示" class="hidden bg-amber-50 border border-amber-100 rounded-xl p-3">
+          <p class="text-[11px] text-amber-700 leading-relaxed"></p>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="text-[13px] font-semibold text-gray-900">作业说明 <span class="text-red-500">*</span></label>
+            <span id="完成-说明-字数" class="text-[11px] text-gray-400">0 / 500</span>
+          </div>
+          <textarea id="完成-说明" maxlength="500" rows="5" placeholder="请说明本次作业完成情况、关键节点、遇到的问题及处理方式..." class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-[13px] text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-500 resize-none"></textarea>
+        </div>
+
+        <div>
+          <label class="text-[13px] font-semibold text-gray-900 mb-1.5 block">作业成果 <span class="text-red-500">*</span> <span class="text-[11px] text-gray-400 font-normal">最多 9 个 · 图片/视频</span></label>
+          <div id="完成-证据列表" class="grid grid-cols-3 gap-2"></div>
+          <p class="text-[11px] text-gray-400 mt-2 leading-relaxed">建议包含：作业前后对比图、关键节点照片、飞行轨迹截图、现场视频等。</p>
+        </div>
+
+        <div>
+          <label class="text-[13px] font-semibold text-gray-900 mb-1.5 block">飞行数据 <span class="text-[11px] text-gray-400 font-normal">选填 · 飞行日志/航线文件</span></label>
+          <button onclick="添加完成证据('file')" class="w-full py-3 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 flex items-center justify-center gap-2 active:scale-[.98]">
+            <i data-lucide="file-up" class="w-4 h-4 text-gray-400"></i>
+            <span class="text-[12px] text-gray-500">上传飞行日志 / 数据文件</span>
+          </button>
+          <div id="完成-数据文件列表" class="mt-2 space-y-1.5"></div>
+        </div>
+
+        <div class="bg-amber-50 border border-amber-100 rounded-xl p-3">
+          <p class="text-[11px] text-amber-700 leading-relaxed flex items-start gap-1">
+            <i data-lucide="alert-circle" class="w-3 h-3 flex-shrink-0 mt-0.5"></i>
+            <span>提交后材料将同步给发布方与平台。发布方有 <strong>72 小时</strong> 验收期，超时未处理系统自动判定通过。</span>
+          </p>
+        </div>
+      </div>
+      <div class="flex-shrink-0 px-4 py-3 border-t border-gray-100 bg-white pb-safe">
+        <button id="完成-提交按钮" onclick="提交完成证明()" class="w-full py-3 rounded-full bg-blue-600 text-white text-sm font-semibold shadow-md shadow-blue-200 active:scale-95 transition-transform">提交完工材料</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 查看完工材料弹窗（发布方视角）-->
+  <div id="弹窗-查看完工" class="hidden absolute inset-0 z-[70] flex items-end">
+    <div class="absolute inset-0 bg-black/50" onclick="关闭查看完工()"></div>
+    <div class="relative bg-white w-full rounded-t-3xl animate-slide-up overflow-hidden flex flex-col" style="max-height:92%">
+      <div class="flex-shrink-0">
+        <div class="w-10 h-1 bg-gray-200 rounded-full mx-auto mt-3 mb-0"></div>
+        <div class="flex items-center px-4 py-3 border-b border-gray-100">
+          <button onclick="关闭查看完工()" class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-1">
+            <i data-lucide="chevron-left" class="w-4 h-4 text-gray-500"></i>
+          </button>
+          <h3 class="text-base font-bold text-gray-900 flex-1">飞手提交的完工材料</h3>
+        </div>
+      </div>
+      <div id="查看完工-内容" class="flex-1 overflow-y-auto hide-scrollbar p-4 space-y-4"></div>
+      <div id="查看完工-底栏" class="flex-shrink-0 px-4 py-3 border-t border-gray-100 bg-white pb-safe flex gap-2"></div>
+    </div>
+  </div>
+
   <div id="toast" class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-900/90 text-white text-sm px-5 py-3 rounded-xl z-[200] whitespace-nowrap"></div>
 </div>
 
@@ -1119,9 +1200,25 @@ const 订单数据 = {
 };
 
 // ============ 全局状态 ============
-let 当前身份 = 'pilot_ok'; 
+// 兼容层：当前身份 仍是各模块在读的"运行时角色"，但它现在由"双向认证档案 + 当前模式"派生
+let 当前身份 = 'pilot_ok';
 let 当前Tab = '首页';
 let 当前大厅 = 'recommend';
+
+// === 新：双向认证档案（一个真人 = 一个身份证 = 一个手机号）===
+// 飞手与企业是两条独立的认证轨；用户可以只认证一边、也可以双向认证
+// 当前态（currentMode）决定 UI 表现（飞手态只能接单 / 企业态只能发单）
+let 用户认证 = {
+  loggedIn: true,            // 是否登录
+  authedAsPilot: true,       // 是否完成 CAAC 飞手认证
+  authedAsDemand: false,     // 是否完成企业认证
+  pilotWarn: false,          // 飞手身份是否被投诉
+  demandWarn: false,         // 企业身份是否被投诉
+  currentMode: 'pilot',      // 'pilot' | 'demand' —— 当前激活的身份
+  // 实名锚点（飞手与企业必须为同一人）
+  idCard: '440300********1234',
+  phone:  '138****0000',
+};
 
 const 身份文案 = {
   guest: {label:'未登录 访客模式', isGuest:true},
@@ -1133,7 +1230,52 @@ const 身份文案 = {
   pilot_warn: {label:'飞手 · 被投诉', isPilot:true, isAuth:true, isWarn:true},
 };
 
-// ============ 身份切换器 ============
+// === 双向认证派生函数 ===
+function 是否双向认证() { return 用户认证.loggedIn && 用户认证.authedAsPilot && 用户认证.authedAsDemand; }
+function 是否仅飞手认证() { return 用户认证.loggedIn && 用户认证.authedAsPilot && !用户认证.authedAsDemand; }
+function 是否仅企业认证() { return 用户认证.loggedIn && !用户认证.authedAsPilot && 用户认证.authedAsDemand; }
+function 是否未认证已登录() { return 用户认证.loggedIn && !用户认证.authedAsPilot && !用户认证.authedAsDemand; }
+
+// 把 用户认证 → 当前身份（兼容层）
+function 同步当前身份() {
+  if (!用户认证.loggedIn) { 当前身份 = 'guest'; return; }
+  if (是否未认证已登录()) {
+    当前身份 = 用户认证.currentMode === 'pilot' ? 'pilot_new' : 'demand_new';
+    return;
+  }
+  if (用户认证.currentMode === 'pilot') {
+    if (!用户认证.authedAsPilot) { 当前身份 = 'pilot_new'; return; }
+    当前身份 = 用户认证.pilotWarn ? 'pilot_warn' : 'pilot_ok';
+  } else {
+    if (!用户认证.authedAsDemand) { 当前身份 = 'demand_new'; return; }
+    当前身份 = 用户认证.demandWarn ? 'demand_warn' : 'demand_ok';
+  }
+}
+
+// 在我的页切换激活身份；只有双向认证时才暴露入口
+function 切换激活身份(mode) {
+  if (!是否双向认证()) { 显示Toast('请先完成两侧认证后再切换'); return; }
+  if (用户认证.currentMode === mode) return;
+  // 进行中订单的护栏（避免离开自己的活）
+  const 阻断 = 进行中订单数(用户认证.currentMode);
+  if (阻断 > 0) {
+    if (!confirm(`你当前作为${用户认证.currentMode==='pilot'?'飞手':'企业'}还有 ${阻断} 个进行中订单。切换后这些订单不会消失，但订单列表会切到另一身份。继续？`)) return;
+  }
+  用户认证.currentMode = mode;
+  同步当前身份();
+  // 切身份后默认回首页(飞手) / 发布(企业)
+  const 默认Tab = mode === 'pilot' ? '首页' : '发布';
+  切换Tab(默认Tab);
+  显示Toast(`已切换至${mode==='pilot'?'飞手':'企业'}身份`);
+}
+
+function 进行中订单数(mode) {
+  const 源 = mode === 'pilot' ? (订单数据.pilot||{}) : (订单数据.demand||{});
+  return ((源.ongoing||[]).length) + ((源.recruiting||[]).length);
+}
+
+// ============ 身份切换器（开发测试用：模拟不同认证组合）============
+// 产品功能上的"身份切换"在 我的 页面（双向认证后才出现），此处仅用于跳测试态
 document.querySelectorAll('.role-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const role = btn.dataset.role;
@@ -1141,8 +1283,27 @@ document.querySelectorAll('.role-btn').forEach(btn => {
   });
 });
 
+// 测试态枚举 → 用户认证 档案的预设
+const 测试态映射 = {
+  guest:       { loggedIn:false, authedAsPilot:false, authedAsDemand:false, pilotWarn:false, demandWarn:false, currentMode:'pilot' },
+  logged_new:  { loggedIn:true,  authedAsPilot:false, authedAsDemand:false, pilotWarn:false, demandWarn:false, currentMode:'pilot' },
+  pilot_ok:    { loggedIn:true,  authedAsPilot:true,  authedAsDemand:false, pilotWarn:false, demandWarn:false, currentMode:'pilot' },
+  pilot_warn:  { loggedIn:true,  authedAsPilot:true,  authedAsDemand:false, pilotWarn:true,  demandWarn:false, currentMode:'pilot' },
+  demand_ok:   { loggedIn:true,  authedAsPilot:false, authedAsDemand:true,  pilotWarn:false, demandWarn:false, currentMode:'demand' },
+  demand_warn: { loggedIn:true,  authedAsPilot:false, authedAsDemand:true,  pilotWarn:false, demandWarn:true,  currentMode:'demand' },
+  both_pilot:  { loggedIn:true,  authedAsPilot:true,  authedAsDemand:true,  pilotWarn:false, demandWarn:false, currentMode:'pilot' },
+  both_demand: { loggedIn:true,  authedAsPilot:true,  authedAsDemand:true,  pilotWarn:false, demandWarn:false, currentMode:'demand' },
+};
+
 function 切换身份(role) {
-  当前身份 = role;
+  const preset = 测试态映射[role];
+  if (preset) {
+    用户认证 = { ...用户认证, ...preset };
+    同步当前身份();
+  } else {
+    // 兼容旧入口直接传 pilot_ok 等
+    当前身份 = role;
+  }
   document.querySelectorAll('.role-btn').forEach(b => {
     if (b.dataset.role === role) {
       b.classList.remove('role-chip-inactive'); b.classList.add('role-chip-active');
@@ -1150,8 +1311,8 @@ function 切换身份(role) {
       b.classList.remove('role-chip-active'); b.classList.add('role-chip-inactive');
     }
   });
-  const info = 身份文案[role];
-  document.getElementById('当前身份标签').textContent = info.label;
+  const info = 身份文案[当前身份] || {};
+  document.getElementById('当前身份标签').textContent = info.label || '--';
   
   const 遮罩 = document.getElementById('首页未登录遮罩');
   if (info.isGuest) { 遮罩.classList.remove('hidden'); } else { 遮罩.classList.add('hidden'); }
@@ -1176,7 +1337,10 @@ function 切换身份(role) {
   if (!document.getElementById('页面-任务详情').classList.contains('hidden') && 当前查看任务) {
     渲染详情底栏(当前查看任务);
   }
-  显示Toast(`已切换：${info.label}`);
+  显示Toast(`[测试态] ${info.label || ''}`);
+  // 同步底部Tab可见性与"我的"页内容
+  应用Tab可见性();
+  if (当前Tab === '我的') 渲染我的页();
 }
 
 // ============ 标签页切换 ============
@@ -1184,10 +1348,38 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => 切换Tab(btn.dataset.tab));
 });
 
+// 根据当前激活身份决定底部 Tab 可见性
+// 规则：
+//   - 飞手态：首页 / 订单 / 消息 / 我的（隐藏"发布"）
+//   - 企业态：首页 / 订单 / 发布 / 消息 / 我的（5 个全有）
+//   - 未登录：保留全部 5 个，但点发布走登录引导
+//   - 已登录·未认证：默认 currentMode 走对应 Tab，配合"去认证"引导
+function 应用Tab可见性() {
+  const info = 身份文案[当前身份] || {};
+  const 是访客 = !!info.isGuest;
+  const 是飞手态 = 用户认证.currentMode === 'pilot';
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    const t = b.dataset.tab;
+    let 显示 = true;
+    if (!是访客) {
+      // 仅在飞手态隐藏发布；企业态保留全部 5 个 Tab
+      if (t === '发布' && 是飞手态) 显示 = false;
+    }
+    b.style.display = 显示 ? '' : 'none';
+  });
+}
+
 function 切换Tab(name) {
   // guest 点发布 → 登录引导
   if (name === '发布' && 身份文案[当前身份] && 身份文案[当前身份].isGuest) {
     打开未登录引导(); return;
+  }
+  // 跨身份拦截：仅"飞手态点发布"做拦截；企业态可正常进首页浏览任务大厅（但不能申请）
+  if (!身份文案[当前身份].isGuest) {
+    if (name === '发布' && 用户认证.currentMode === 'pilot') {
+      显示Toast('飞手身份不能发布任务，请切换至企业身份');
+      return;
+    }
   }
   当前Tab = name;
   ['首页','订单','发布','消息','我的'].forEach(t => {
@@ -1421,6 +1613,210 @@ function 发起评价(tid) {
   setTimeout(()=>{ 打开订单详情(tid); }, 300);
 }
 
+// ============ 完工材料提交 / 验收 ============
+let 当前完工订单ID = null;
+let 完成证据列表 = [];
+let 完成数据文件列表 = [];
+
+function 查找订单ById(oid) {
+  const all = [
+    ...(订单数据.demand.recruiting||[]), ...(订单数据.demand.ongoing||[]), ...(订单数据.demand.ended||[]),
+    ...(订单数据.pilot.recruiting||[]),  ...(订单数据.pilot.ongoing||[]),  ...(订单数据.pilot.ended||[]),
+  ];
+  return all.find(o => o.id === oid);
+}
+
+// 飞手订单与发布方订单是两条独立记录；通过 taskId/title 匹配，双向同步完工字段
+function 同步完工到对端(o) {
+  const taskKey = o.taskId || o.id;
+  const all = [...(订单数据.demand.ongoing||[]), ...(订单数据.pilot.ongoing||[])];
+  all.forEach(x => {
+    if (x === o) return;
+    if ((x.taskId || x.id) === taskKey || x.title === o.title) {
+      x.completionSubmitted = o.completionSubmitted;
+      x.completionRejected = o.completionRejected;
+      x.completionRejectReason = o.completionRejectReason;
+      x.completionNote = o.completionNote;
+      x.completionMedia = o.completionMedia ? [...o.completionMedia] : undefined;
+      x.completionFiles = o.completionFiles ? [...o.completionFiles] : undefined;
+      x.completionSubmittedAt = o.completionSubmittedAt;
+      x.completedDate = o.completedDate;
+      if (o.completedDate) x.progress = '';
+    }
+  });
+}
+
+function 打开提交完成(orderId) {
+  当前完工订单ID = orderId;
+  const o = 查找订单ById(orderId);
+  完成证据列表 = (o && o.completionMedia) ? [...o.completionMedia] : [];
+  完成数据文件列表 = (o && o.completionFiles) ? [...o.completionFiles] : [];
+  const ta = document.getElementById('完成-说明');
+  ta.value = (o && o.completionNote) || '';
+  document.getElementById('完成-说明-字数').textContent = `${ta.value.length} / 500`;
+  const tip = document.getElementById('提交完成-验收提示');
+  if (o && o.completionRejected) {
+    tip.classList.remove('hidden');
+    tip.querySelector('p').textContent = `上一次提交被打回${o.completionRejectReason ? '：' + o.completionRejectReason : '。'}请补充材料后重新提交。`;
+  } else { tip.classList.add('hidden'); }
+  渲染完成证据();
+  渲染完成数据文件();
+  document.getElementById('弹窗-提交完成').classList.remove('hidden');
+  渲染全局图标();
+}
+
+function 关闭提交完成() { document.getElementById('弹窗-提交完成').classList.add('hidden'); }
+
+function 渲染完成证据() {
+  const grid = document.getElementById('完成-证据列表');
+  if (!grid) return;
+  const 已有 = 完成证据列表.map((m, i) => `
+    <div class="aspect-square rounded-xl bg-gradient-to-br from-blue-100 to-indigo-100 relative overflow-hidden flex items-center justify-center">
+      <i data-lucide="${m.type==='video'?'video':'image'}" class="w-6 h-6 text-blue-600"></i>
+      ${m.type==='video' ? '<span class="absolute bottom-1 left-1 text-[9px] bg-black/50 text-white px-1 rounded">视频</span>' : ''}
+      <button onclick="移除完成证据(${i})" class="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/60 text-white flex items-center justify-center"><i data-lucide="x" class="w-3 h-3"></i></button>
+    </div>`).join('');
+  const 可加 = 完成证据列表.length < 9;
+  grid.innerHTML = 已有 + (可加 ? `
+    <button onclick="添加完成证据('img')" class="aspect-square rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 flex flex-col items-center justify-center gap-1 active:scale-95">
+      <i data-lucide="image" class="w-5 h-5 text-gray-400"></i><span class="text-[10px] text-gray-500">添加图片</span>
+    </button>
+    <button onclick="添加完成证据('video')" class="aspect-square rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 flex flex-col items-center justify-center gap-1 active:scale-95">
+      <i data-lucide="video" class="w-5 h-5 text-gray-400"></i><span class="text-[10px] text-gray-500">添加视频</span>
+    </button>` : '');
+  渲染全局图标();
+}
+
+function 渲染完成数据文件() {
+  const box = document.getElementById('完成-数据文件列表');
+  if (!box) return;
+  box.innerHTML = 完成数据文件列表.map((f,i) => `
+    <div class="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
+      <div class="flex items-center gap-2 min-w-0"><i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-500 flex-shrink-0"></i><span class="text-[12px] text-gray-700 truncate">${f.name}</span></div>
+      <button onclick="移除完成数据(${i})" class="text-gray-400 flex-shrink-0"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+    </div>`).join('');
+  渲染全局图标();
+}
+
+function 添加完成证据(type) {
+  if (type === 'file') {
+    完成数据文件列表.push({name: `飞行日志_${Date.now().toString().slice(-4)}.csv`});
+    渲染完成数据文件();
+  } else {
+    if (完成证据列表.length >= 9) { 显示Toast('最多 9 个'); return; }
+    完成证据列表.push({type, name: `${type}_${Date.now().toString().slice(-4)}`});
+    渲染完成证据();
+  }
+}
+
+function 移除完成证据(i) { 完成证据列表.splice(i,1); 渲染完成证据(); }
+function 移除完成数据(i) { 完成数据文件列表.splice(i,1); 渲染完成数据文件(); }
+
+function 提交完成证明() {
+  const note = document.getElementById('完成-说明').value.trim();
+  if (!note) { 显示Toast('请填写作业说明'); return; }
+  if (完成证据列表.length === 0) { 显示Toast('请至少上传 1 个作业成果'); return; }
+  const o = 查找订单ById(当前完工订单ID);
+  if (!o) { 显示Toast('订单已失效'); return; }
+  o.completionSubmitted = true;
+  o.completionRejected = false;
+  o.completionRejectReason = '';
+  o.completionNote = note;
+  o.completionMedia = [...完成证据列表];
+  o.completionFiles = [...完成数据文件列表];
+  const now = new Date();
+  o.completionSubmittedAt = `${now.getMonth()+1}-${now.getDate()} ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+  同步完工到对端(o);
+  关闭提交完成();
+  显示Toast('已提交，等待发布方验收');
+  setTimeout(()=>{ 打开订单详情(o.taskId || o.id); }, 400);
+}
+
+function 打开查看完工(orderId) {
+  const o = 查找订单ById(orderId);
+  if (!o || !o.completionSubmitted) { 显示Toast('飞手尚未提交完工材料'); return; }
+  const 内容 = document.getElementById('查看完工-内容');
+  const 底栏 = document.getElementById('查看完工-底栏');
+  const mediaHtml = (o.completionMedia||[]).map(m => `
+    <div class="aspect-square rounded-xl bg-gradient-to-br from-blue-100 to-indigo-100 relative overflow-hidden flex items-center justify-center">
+      <i data-lucide="${m.type==='video'?'video':'image'}" class="w-6 h-6 text-blue-600"></i>
+      ${m.type==='video' ? '<span class="absolute bottom-1 left-1 text-[9px] bg-black/50 text-white px-1 rounded">视频</span>' : ''}
+    </div>`).join('');
+  const filesHtml = (o.completionFiles||[]).map(f => `
+    <div class="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2">
+      <i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-500"></i><span class="text-[12px] text-gray-700 truncate">${f.name}</span>
+    </div>`).join('');
+  内容.innerHTML = `
+    <div class="bg-blue-50 border border-blue-100 rounded-2xl p-3 flex items-start gap-2">
+      <i data-lucide="info" class="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5"></i>
+      <p class="text-[12px] text-blue-800 leading-relaxed">飞手于 ${o.completionSubmittedAt||'--'} 提交。请核对材料后选择"验收通过"或"打回修改"，72 小时未处理系统自动判定通过。</p>
+    </div>
+    <div>
+      <h4 class="text-[12px] text-gray-400 mb-1.5">作业说明</h4>
+      <p class="text-[13px] text-gray-800 leading-relaxed bg-gray-50 rounded-xl p-3 whitespace-pre-wrap">${o.completionNote||'（无）'}</p>
+    </div>
+    <div>
+      <h4 class="text-[12px] text-gray-400 mb-1.5">作业成果（${(o.completionMedia||[]).length}）</h4>
+      ${mediaHtml ? `<div class="grid grid-cols-3 gap-2">${mediaHtml}</div>` : '<p class="text-[12px] text-gray-400">无</p>'}
+    </div>
+    ${filesHtml ? `<div><h4 class="text-[12px] text-gray-400 mb-1.5">飞行数据</h4><div class="space-y-1.5">${filesHtml}</div></div>` : ''}
+  `;
+  底栏.innerHTML = `
+    <button class="flex-1 py-3 rounded-full bg-white border border-red-200 text-red-500 font-medium text-sm active:bg-red-50" onclick="打回完工('${orderId}')">打回修改</button>
+    <button class="flex-[1.4] py-3 rounded-full bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold text-sm shadow-md shadow-emerald-200 active:scale-[.98]" onclick="验收通过('${orderId}')"><i data-lucide="check-circle-2" class="w-3.5 h-3.5 inline mr-1 align-text-bottom"></i>验收通过</button>
+  `;
+  document.getElementById('弹窗-查看完工').classList.remove('hidden');
+  渲染全局图标();
+}
+
+function 关闭查看完工() { document.getElementById('弹窗-查看完工').classList.add('hidden'); }
+
+function 验收通过(orderId) {
+  const o = 查找订单ById(orderId);
+  if (!o) return;
+  const now = new Date();
+  o.completedDate = `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')}`;
+  o.progress = '';
+  同步完工到对端(o);
+  // 同步把订单从 ongoing 移到 ended（双方各一条）
+  ['demand','pilot'].forEach(side => {
+    const arr = 订单数据[side].ongoing || [];
+    const idx = arr.findIndex(x => (x.taskId||x.id) === (o.taskId||o.id) || x.title === o.title);
+    if (idx >= 0) { const [m] = arr.splice(idx,1); (订单数据[side].ended ||= []).unshift(m); }
+  });
+  关闭查看完工();
+  显示Toast('已验收通过，订单已完成');
+  setTimeout(()=>{ 打开订单详情(o.taskId || o.id); }, 400);
+}
+
+function 打回完工(orderId) {
+  const reason = prompt('请填写打回原因（飞手将看到）：');
+  if (!reason || !reason.trim()) return;
+  const o = 查找订单ById(orderId);
+  if (!o) return;
+  o.completionRejected = true;
+  o.completionSubmitted = false;
+  o.completionRejectReason = reason.trim();
+  同步完工到对端(o);
+  关闭查看完工();
+  显示Toast('已打回，飞手将重新提交');
+  setTimeout(()=>{ 打开订单详情(o.taskId || o.id); }, 400);
+}
+
+function 打开联系发布方(orderId) {
+  document.getElementById('页面-任务详情').classList.add('hidden');
+  切换Tab('消息');
+  显示Toast('已切到消息页，可继续沟通');
+}
+
+(function 绑定完成说明字数() {
+  const ta = document.getElementById('完成-说明');
+  if (ta) ta.addEventListener('input', (e) => {
+    const el = document.getElementById('完成-说明-字数');
+    if (el) el.textContent = `${e.target.value.length} / 500`;
+  });
+})();
+
 // ============ 渲染任务详情 ============
 let 当前查看任务 = null;
 // 入参兼容：renderArg 可以是 tid 字符串（来自大厅入口）或任务对象 t（来自订单详情入口）
@@ -1468,6 +1864,12 @@ function 渲染任务详情(renderArg, 订单) {
       </div>`;
   } else if (进行中) {
     const 飞手列表 = (订单.pilotList && 订单.pilotList.length) ? 订单.pilotList : [订单.pilotName].filter(Boolean);
+    const 已提交 = !!订单.completionSubmitted;
+    const 验收中 = 已提交 && !订单.completionRejected;
+    const 被打回 = !!订单.completionRejected;
+    const 提交状态色 = 被打回 ? 'bg-red-50 text-red-600' : (验收中 ? 'bg-blue-50 text-blue-600' : 'bg-gray-100 text-gray-500');
+    const 提交状态文案 = 被打回 ? '材料被打回，待重新提交' : (验收中 ? '已提交·待发布方验收' : '尚未提交完工材料');
+    const 提交状态图标 = 被打回 ? 'alert-triangle' : (验收中 ? 'check' : 'clock');
     状态卡 = `
       <div class="bg-white mt-2 px-4 py-3.5">
         <div class="flex items-center justify-between mb-2">
@@ -1476,8 +1878,14 @@ function 渲染任务详情(renderArg, 订单) {
         </div>
         ${飞手列表.length ? `
           <div class="text-[10px] text-gray-400 mb-1.5">${当前订单身份==='demand'?'合作飞手':'发布方'}（${飞手列表.length}人）</div>
-          <div class="flex flex-wrap gap-2">${飞手列表.map(n => `<div class="flex items-center bg-orange-50/60 rounded-lg px-2.5 py-1.5"><div class="w-6 h-6 rounded-full bg-orange-100 flex items-center justify-center text-orange-700 font-bold text-[10px] mr-1.5">${n.charAt(0)}</div><span class="text-[12px] text-gray-800 font-medium">${n}</span></div>`).join('')}</div>
+          <div class="flex flex-wrap gap-2 mb-2.5">${飞手列表.map(n => `<div class="flex items-center bg-orange-50/60 rounded-lg px-2.5 py-1.5"><div class="w-6 h-6 rounded-full bg-orange-100 flex items-center justify-center text-orange-700 font-bold text-[10px] mr-1.5">${n.charAt(0)}</div><span class="text-[12px] text-gray-800 font-medium">${n}</span></div>`).join('')}</div>
         ` : ''}
+        <div class="flex items-center gap-1.5 ${提交状态色} rounded-lg px-2.5 py-1.5">
+          <i data-lucide="${提交状态图标}" class="w-3 h-3"></i>
+          <span class="text-[11px] font-medium">${提交状态文案}</span>
+          ${验收中 && 订单.completionSubmittedAt ? `<span class="text-[10px] text-gray-400 ml-auto">${订单.completionSubmittedAt}</span>` : ''}
+        </div>
+        ${被打回 && 订单.completionRejectReason ? `<p class="text-[11px] text-red-600 mt-1.5 leading-relaxed">打回原因：${订单.completionRejectReason}</p>` : ''}
       </div>`;
   } else if (已完成) {
     const isDemand = 当前订单身份 === 'demand';
@@ -1659,13 +2067,49 @@ function 渲染详情底栏(t, 订单) {
     return;
   }
 
-  // 订单状态短路：进行中 / 已完成 / 已取消 都只显示"返回"
+  // 订单状态短路：已完成 / 已取消 → 返回；进行中 → 区分飞手/发布方
   if (订单) {
     const 已取消 = !!订单.cancelled;
     const 已完成 = !!订单.completedDate && !已取消;
     const 进行中 = !!订单.progress && !已完成 && !已取消;
-    if (进行中 || 已完成 || 已取消) {
+    if (已完成 || 已取消) {
       底栏.innerHTML = `<button class="flex-1 py-3 rounded-full bg-gray-100 text-gray-700 text-sm font-medium" onclick="document.getElementById('页面-任务详情').classList.add('hidden')">返回</button>`;
+      渲染全局图标();
+      return;
+    }
+    if (进行中) {
+      const isPilotSide = 当前订单身份 === 'pilot';
+      const 已提交 = !!订单.completionSubmitted;
+      const 被打回 = !!订单.completionRejected;
+      if (isPilotSide) {
+        // 飞手视角
+        if (已提交 && !被打回) {
+          底栏.innerHTML = `
+            <button class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center flex-shrink-0 active:scale-90" onclick="document.getElementById('页面-任务详情').classList.add('hidden')"><i data-lucide="chevron-left" class="w-4 h-4 text-gray-500"></i></button>
+            <button class="flex-1 py-3 rounded-full bg-gray-100 text-gray-500 text-sm font-medium flex items-center justify-center gap-1.5" disabled><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>已提交，等待发布方验收</button>
+          `;
+        } else {
+          const 主按钮文案 = 被打回 ? '重新提交完工材料' : '提交完工材料';
+          底栏.innerHTML = `
+            <button class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center flex-shrink-0 active:scale-90" onclick="打开联系发布方('${订单.id||''}')" title="联系发布方"><i data-lucide="message-circle" class="w-4 h-4 text-gray-500"></i></button>
+            <button class="flex-1 py-3 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm shadow-md shadow-blue-200 active:scale-[.98] transition-transform" onclick="打开提交完成('${订单.id||''}')"><i data-lucide="upload-cloud" class="w-3.5 h-3.5 inline mr-1 align-text-bottom"></i>${主按钮文案}</button>
+          `;
+        }
+      } else {
+        // 发布方视角
+        if (已提交 && !被打回) {
+          底栏.innerHTML = `
+            <button class="flex-1 py-3 rounded-full bg-white border border-blue-200 text-blue-600 font-medium text-sm active:bg-blue-50" onclick="打开查看完工('${订单.id||''}')"><i data-lucide="eye" class="w-3.5 h-3.5 inline mr-1 align-text-bottom"></i>查看完工材料</button>
+            <button class="flex-[1.4] py-3 rounded-full bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold text-sm shadow-md shadow-emerald-200 active:scale-[.98]" onclick="打开查看完工('${订单.id||''}')"><i data-lucide="check-circle-2" class="w-3.5 h-3.5 inline mr-1 align-text-bottom"></i>验收</button>
+          `;
+        } else {
+          const 提示文案 = 被打回 ? '已打回，等待飞手重新提交' : '等待飞手提交完工材料';
+          底栏.innerHTML = `
+            <button class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center flex-shrink-0 active:scale-90" onclick="document.getElementById('页面-任务详情').classList.add('hidden')"><i data-lucide="chevron-left" class="w-4 h-4 text-gray-500"></i></button>
+            <button class="flex-1 py-3 rounded-full bg-gray-100 text-gray-400 text-sm font-medium flex items-center justify-center gap-1.5" disabled><i data-lucide="clock" class="w-3.5 h-3.5"></i>${提示文案}</button>
+          `;
+        }
+      }
       渲染全局图标();
       return;
     }
@@ -4088,6 +4532,7 @@ function 渲染我的页() {
   const 是飞手 = info.isPilot;
   const 是被诉 = info.isWarn;
   const 已认证 = info.isAuth;
+  // V1.2.1：身份切换入口已迁移至「设置」页，我的页不再显示切换 chip / 新增另一身份引导条
   const 信用变动 = 当前身份==='pilot_warn' ? 8 : (当前身份==='demand_warn' ? 10 : 0);
   const 信用块 = p.credit != null ? `<span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium flex items-center"><i data-lucide="shield-check" class="w-3 h-3 mr-0.5"></i>信用 ${p.credit}</span>${是被诉?`<span class="text-[10px] px-2 py-0.5 rounded-full bg-white/15 text-white font-medium flex items-center backdrop-blur-sm border border-white/20"><i data-lucide="trending-down" class="w-3 h-3 mr-0.5"></i>近期 −${信用变动}</span>`:''}` : '';
 
@@ -4132,20 +4577,20 @@ function 渲染我的页() {
       <div class="mx-4 mt-3 bg-gradient-to-r from-red-50 to-rose-50 border border-red-200 rounded-2xl p-3.5 flex items-center gap-3 cursor-pointer active:scale-[.99] transition-transform" onclick="查看投诉详情('${当前身份}')">
         <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center flex-shrink-0"><i data-lucide="alert-circle" class="w-5 h-5 text-white"></i></div>
         <div class="flex-1 min-w-0">
-          <div class="text-[13px] font-bold text-gray-900 mb-0.5">⚠️ 你有一条未处理的投诉</div>
-          <div class="text-[11px] text-gray-500">点击查看详情与申诉</div>
+          <div class="text-[13px] font-bold text-gray-900 mb-0.5">⚠️ 你的${是飞手?'飞手':'企业'}身份有一条未处理的投诉</div>
+          <div class="text-[11px] text-gray-500">仅影响当前身份；另一身份不受牵连</div>
         </div>
         <button class="text-[11px] px-3 py-1.5 rounded-full bg-red-500 text-white font-medium shadow-sm shadow-red-200 flex-shrink-0">查看</button>
       </div>
     ` : ''}
 
-    <!-- 未认证引导条 -->
+    <!-- 未认证引导条（仅在"已登录·当前身份未认证"时出现） -->
     ${!已认证 ? `
       <div class="mx-4 mt-3 bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 rounded-2xl p-3.5 flex items-center gap-3 cursor-pointer active:scale-[.99] transition-transform" onclick="打开认证中心()">
         <div class="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0"><i data-lucide="shield" class="w-5 h-5 text-white"></i></div>
         <div class="flex-1 min-w-0">
           <div class="text-[13px] font-bold text-gray-900 mb-0.5">完成${是飞手?' CAAC 飞手':'企业'}认证</div>
-          <div class="text-[11px] text-gray-500">${是飞手?'解锁全部任务申请权限':'解锁任务发布与担保结算'}</div>
+          <div class="text-[11px] text-gray-500">${是飞手?'解锁接单与申请':'解锁任务发布与担保结算'}</div>
         </div>
         <button class="text-[11px] px-3 py-1.5 rounded-full bg-orange-500 text-white font-medium shadow-sm shadow-orange-200 flex-shrink-0">去认证</button>
       </div>
@@ -5588,31 +6033,88 @@ function 打开关于() {
 function 打开认证中心() {
   const info = 身份文案[当前身份];
   if (info.isGuest) { 打开未登录引导(); return; }
-  const 是飞手 = info.isPilot;
-  const 已认证 = info.isAuth;
-  const 被诉 = info.isWarn;
+
+  // 双轨：飞手认证状态 / 企业认证状态 各自独立
+  const 飞手已认证 = !!用户认证.authedAsPilot;
+  const 企业已认证 = !!用户认证.authedAsDemand;
+  const 飞手被诉 = !!用户认证.pilotWarn;
+  const 企业被诉 = !!用户认证.demandWarn;
+  const 双向 = 飞手已认证 && 企业已认证;
+
+  // 实名锚卡：一旦任一边认证完成，姓名/身份证/手机号即被锁定，作为另一身份认证的强校验依据
+  const 实名锁定 = 飞手已认证 || 企业已认证;
+  const 实名卡 = 实名锁定 ? `
+    <div class="bg-white rounded-2xl p-4 border border-gray-100">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center"><i data-lucide="user-check" class="w-4 h-4 text-emerald-600"></i></div>
+          <div class="text-[14px] font-bold text-gray-900">实名信息（已锁定）</div>
+        </div>
+        <span class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 font-semibold">已核验</span>
+      </div>
+      <div class="text-[11px] text-gray-500 leading-relaxed">
+        身份证 <span class="text-gray-900 font-medium">${用户认证.idCard}</span>
+        ·
+        手机号 <span class="text-gray-900 font-medium">${用户认证.phone}</span>
+        <div class="mt-1 text-[10px] text-gray-400">一个身份证号在猎飞云仅可绑定一个手机号。新增另一身份认证时，姓名 / 身份证 / 手机号必须一致。</div>
+      </div>
+    </div>` : '';
+
+  // 飞手认证条目
+  const 飞手条目 = `
+    <div class="bg-white rounded-2xl p-4 border border-gray-100">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center"><i data-lucide="plane" class="w-4 h-4 text-blue-600"></i></div>
+          <div>
+            <div class="text-[14px] font-bold text-gray-900">飞手身份（CAAC 认证）</div>
+            <div class="text-[10px] text-gray-400 mt-0.5">完成后可在飞手态接单</div>
+          </div>
+        </div>
+        ${飞手已认证 ? `<span class="text-[11px] px-2 py-0.5 rounded-full bg-green-50 text-green-600 font-semibold">${飞手被诉?'已认证·有投诉':'已认证'}</span>` : `<button onclick="开始新增认证('pilot')" class="text-[11px] px-3 py-1.5 rounded-full bg-blue-600 text-white font-semibold">去认证</button>`}
+      </div>
+      ${飞手已认证 ? 飞手认证卡片(true) : '<div class="text-[11px] text-gray-500">提交：CAAC 执照、机型登记、保险信息</div>'}
+    </div>`;
+
+  // 企业认证条目
+  const 企业条目 = `
+    <div class="bg-white rounded-2xl p-4 border border-gray-100">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center"><i data-lucide="briefcase" class="w-4 h-4 text-indigo-600"></i></div>
+          <div>
+            <div class="text-[14px] font-bold text-gray-900">企业身份（营业执照认证）</div>
+            <div class="text-[10px] text-gray-400 mt-0.5">完成后可在企业态发布任务</div>
+          </div>
+        </div>
+        ${企业已认证 ? `<span class="text-[11px] px-2 py-0.5 rounded-full bg-green-50 text-green-600 font-semibold">${企业被诉?'已认证·有投诉':'已认证'}</span>` : `<button onclick="开始新增认证('demand')" class="text-[11px] px-3 py-1.5 rounded-full bg-indigo-600 text-white font-semibold">去认证</button>`}
+      </div>
+      ${企业已认证 ? 企业认证卡片(true) : '<div class="text-[11px] text-gray-500">提交：营业执照、法人实名、对公账户（可选）</div>'}
+    </div>`;
 
   document.getElementById('认证中心-内容').innerHTML = `
     <div class="p-4 space-y-3">
-      ${!已认证 ? `
-        <div class="bg-orange-50 border border-orange-100 rounded-xl p-3 flex items-start gap-2">
-          <i data-lucide="shield" class="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5"></i>
+      ${双向 ? `
+        <div class="bg-green-50 border border-green-100 rounded-xl p-3 flex items-start gap-2">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i>
           <div class="flex-1">
-            <div class="text-[12px] font-semibold text-orange-700">未完成${是飞手?'飞手':'企业'}认证</div>
-            <div class="text-[11px] text-orange-600/80 mt-0.5">完成认证后即可${是飞手?'申请任务':'发布任务并享受担保结算'}</div>
+            <div class="text-[12px] font-semibold text-green-700">已完成双向认证</div>
+            <div class="text-[11px] text-green-600/80 mt-0.5">可在「我的」页随时切换飞手 / 企业身份</div>
           </div>
         </div>
       ` : ''}
-      ${是飞手 ? 飞手认证卡片(已认证) : 企业认证卡片(已认证)}
-      ${被诉 ? `
+      ${实名卡}
+      ${飞手条目}
+      ${企业条目}
+      ${(飞手被诉 || 企业被诉) ? `
         <div class="bg-red-50 border border-red-100 rounded-2xl p-4">
           <h3 class="text-sm font-bold text-red-600 mb-1 flex items-center"><i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i>信用状态异常</h3>
-          <p class="text-[12px] text-gray-700 leading-relaxed mb-2">你当前有一条处理中的投诉，信用分已暂时下调。前往查看详情并发起申诉。</p>
+          <p class="text-[12px] text-gray-700 leading-relaxed mb-2">你的${飞手被诉?'飞手':''}${(飞手被诉&&企业被诉)?' / ':''}${企业被诉?'企业':''}身份有处理中的投诉。投诉只影响对应身份，另一身份的接单 / 发单不受牵连。</p>
           <button onclick="查看投诉详情('${当前身份}')" class="text-[11px] px-3 py-1.5 rounded-full bg-red-500 text-white font-medium">查看投诉</button>
         </div>
       ` : ''}
       <div class="bg-blue-50 border border-blue-100 rounded-xl p-3">
-        <p class="text-[11px] text-blue-700 leading-relaxed"><i data-lucide="info" class="w-3 h-3 inline mr-0.5 align-middle"></i>认证信息将作为平台信任背书展示给交易对方，请确保资料真实有效。${已认证?'如需更新或补充，请联系客服处理。':'审核时间约 1 个工作日。'}</p>
+        <p class="text-[11px] text-blue-700 leading-relaxed"><i data-lucide="info" class="w-3 h-3 inline mr-0.5 align-middle"></i>认证信息将作为平台信任背书。一个身份证 = 一个手机号，新增另一身份认证将复用已锁定的实名信息。审核时间约 1 个工作日。</p>
       </div>
     </div>
   `;
@@ -5620,10 +6122,53 @@ function 打开认证中心() {
   渲染全局图标();
 }
 
+// 演示：模拟新增认证完成
+function 开始新增认证(which) {
+  if (which === 'pilot') {
+    用户认证.authedAsPilot = true;
+  } else {
+    用户认证.authedAsDemand = true;
+  }
+  同步当前身份();
+  显示Toast(`已完成${which==='pilot'?'飞手':'企业'}认证（原型演示）`);
+  应用Tab可见性();
+  打开认证中心();
+  if (当前Tab === '我的') 渲染我的页();
+}
+
 function 打开设置() {
   const info = 身份文案[当前身份];
+  // 切换身份入口：仅登录用户可见
+  const 身份切换卡 = info.isGuest ? '' : (() => {
+    const 当前模式文案 = 用户认证.currentMode === 'pilot' ? '飞手身份（接单）' : '企业身份（发单）';
+    const 当前图标 = 用户认证.currentMode === 'pilot' ? 'plane' : 'briefcase';
+    const 双向 = 是否双向认证();
+    const 仅飞手 = !!用户认证.authedAsPilot && !用户认证.authedAsDemand;
+    const 仅企业 = !!用户认证.authedAsDemand && !用户认证.authedAsPilot;
+    const 副文案 = 双向 ? `点击切换为${用户认证.currentMode==='pilot'?'企业身份':'飞手身份'}`
+                    : (仅飞手 ? '另一身份（企业）未认证 · 点击去认证'
+                    : (仅企业 ? '另一身份（飞手）未认证 · 点击去认证'
+                    : '请先完成至少一项身份认证'));
+    const 角标 = 双向 ? `<i data-lucide="repeat" class="w-4 h-4 text-blue-600"></i>`
+                  : `<span class="text-[10px] px-2 py-0.5 rounded-full bg-orange-100 text-orange-600 font-medium">去认证</span>`;
+    return `
+      <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+        <div class="px-4 py-3.5 flex items-center gap-3 cursor-pointer active:bg-gray-50" onclick="从设置切换身份()">
+          <div class="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="${当前图标}" class="w-4 h-4 text-blue-600"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="text-[13px] font-semibold text-gray-900">切换身份</div>
+            <div class="text-[11px] text-gray-500 mt-0.5">当前：${当前模式文案} · ${副文案}</div>
+          </div>
+          ${角标}
+        </div>
+      </div>
+    `;
+  })();
   document.getElementById('设置-内容').innerHTML = `
     <div class="p-4 space-y-3">
+      ${身份切换卡}
       <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
         <div class="px-4 py-3 border-b border-gray-50 flex items-center justify-between">
           <span class="text-[13px] text-gray-800">消息推送</span>
@@ -5661,6 +6206,38 @@ function 打开设置() {
   渲染全局图标();
 }
 
+// V1.2.1：从设置页统一入口切换身份
+function 从设置切换身份() {
+  if (!用户认证.loggedIn) { 显示Toast('请先登录'); return; }
+  const 双向 = 是否双向认证();
+  const 仅飞手 = !!用户认证.authedAsPilot && !用户认证.authedAsDemand;
+  const 仅企业 = !!用户认证.authedAsDemand && !用户认证.authedAsPilot;
+
+  // 情况 1：双向认证 → 直接切到对方身份
+  if (双向) {
+    const 目标 = 用户认证.currentMode === 'pilot' ? 'demand' : 'pilot';
+    document.getElementById('页面-设置').classList.add('hidden');
+    切换激活身份(目标);
+    return;
+  }
+
+  // 情况 2：单边认证 → 引导认证另一边
+  if (仅飞手 || 仅企业) {
+    const 缺失 = 仅飞手 ? '企业' : '飞手';
+    if (confirm(`你的${缺失}身份尚未认证，无法切换。\n\n是否前往完成${缺失}认证？`)) {
+      document.getElementById('页面-设置').classList.add('hidden');
+      打开认证中心();
+    }
+    return;
+  }
+
+  // 情况 3：完全未认证 → 引导先完成至少一项
+  if (confirm('你尚未完成任何身份认证。\n\n是否前往认证中心？')) {
+    document.getElementById('页面-设置').classList.add('hidden');
+    打开认证中心();
+  }
+}
+
 function 打开退出确认() { document.getElementById('弹窗-退出确认').classList.remove('hidden'); 渲染全局图标(); }
 function 确认退出登录() {
   document.getElementById('弹窗-退出确认').classList.add('hidden');
@@ -5681,6 +6258,8 @@ const 原_切换身份2 = 切换身份;
 if (当前Tab === '我的') 渲染我的页();
 
 // 首次数据 & tab 计数初始化
+同步当前身份();
+应用Tab可见性();
 更新订单状态计数();
 更新所有角标();
 

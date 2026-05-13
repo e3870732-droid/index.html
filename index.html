@@ -6213,11 +6213,20 @@ function 从设置切换身份() {
   const 仅飞手 = !!用户认证.authedAsPilot && !用户认证.authedAsDemand;
   const 仅企业 = !!用户认证.authedAsDemand && !用户认证.authedAsPilot;
 
-  // 情况 1：双向认证 → 直接切到对方身份
+  // 情况 1：双向认证 → 弹确认窗 → 切换 → 跳"我的"页
   if (双向) {
     const 目标 = 用户认证.currentMode === 'pilot' ? 'demand' : 'pilot';
+    const 目标文案 = 目标 === 'pilot' ? '飞手身份（接单）' : '企业身份（发单）';
+    const 阻断 = 进行中订单数(用户认证.currentMode);
+    const 提示 = 阻断 > 0
+      ? `你当前作为${用户认证.currentMode==='pilot'?'飞手':'企业'}还有 ${阻断} 个进行中订单。\n切换后订单不会消失，但订单列表会切到另一身份。\n\n确认切换到${目标文案}？`
+      : `确认切换到${目标文案}？`;
+    if (!confirm(提示)) return;
+    用户认证.currentMode = 目标;
+    同步当前身份();
     document.getElementById('页面-设置').classList.add('hidden');
-    切换激活身份(目标);
+    切换Tab('我的');
+    显示Toast(`已切换至${目标==='pilot'?'飞手':'企业'}身份`);
     return;
   }
 

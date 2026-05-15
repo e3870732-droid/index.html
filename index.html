@@ -75,25 +75,32 @@
 
 <div class="relative bg-gray-50 flex flex-col font-sans overflow-hidden shadow-2xl border border-gray-200 sm:rounded-[40px]" style="width: 390px; height: 844px; margin: 24px auto;">
 
+  <!-- 微信小程序胶囊按钮（固定在每个页面右上角） -->
+  <div id="小程序-胶囊" class="absolute z-[90] flex items-center bg-white/70 backdrop-blur-sm border border-gray-200/80 rounded-full overflow-hidden" style="top: 10px; right: 10px; width: 87px; height: 32px;">
+    <button onclick="显示Toast('菜单（占位）')" class="flex-1 h-full flex items-center justify-center active:bg-gray-100/60 transition-colors">
+      <i data-lucide="more-horizontal" class="w-4 h-4 text-gray-700"></i>
+    </button>
+    <div class="w-px h-3.5 bg-gray-300/80"></div>
+    <button onclick="显示Toast('小程序退出（占位）')" class="flex-1 h-full flex items-center justify-center active:bg-gray-100/60 transition-colors">
+      <i data-lucide="circle" class="w-3.5 h-3.5 text-gray-700"></i>
+    </button>
+  </div>
+
   <div id="页面-首页" class="absolute inset-0 flex flex-col z-10">
-    <div class="bg-white px-4 pt-6 pb-3 flex items-center z-10 sticky top-0 shadow-sm">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 flex items-center z-10 sticky top-0 shadow-sm">
       <div id="btn-城市" class="flex items-center text-gray-800 font-medium whitespace-nowrap cursor-pointer">
         <span id="当前城市">深圳</span><i data-lucide="chevron-down" class="w-4 h-4 ml-0.5 text-gray-500"></i>
       </div>
-      <div class="flex-1 mx-3 bg-gray-100 rounded-full flex items-center px-3 py-2">
+      <div class="flex-1 ml-3 bg-gray-100 rounded-full flex items-center px-3 py-2">
         <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
         <input type="text" placeholder="搜索任务、地点..." class="bg-transparent border-none outline-none ml-2 text-sm w-full text-gray-700 placeholder-gray-400">
-      </div>
-      <div id="btn-打开筛选" class="text-gray-600 flex flex-col items-center cursor-pointer active:scale-95 transition-transform">
-        <i data-lucide="sliders-horizontal" class="w-5 h-5"></i>
-        <span class="text-[10px] mt-0.5">筛选</span>
       </div>
     </div>
     <div id="首页未登录遮罩" class="hidden absolute inset-x-0 top-[60px] bottom-[65px] bg-gradient-to-b from-transparent via-white/60 to-white z-30 pointer-events-none"></div>
 
     <div class="flex-1 overflow-y-auto pb-24 hide-scrollbar" id="首页主体">
       <div class="px-4 mt-3">
-        <div class="w-full h-32 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-sm relative overflow-hidden flex flex-col justify-center px-5 cursor-pointer">
+        <div class="w-full h-32 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-sm relative overflow-hidden flex flex-col justify-center px-5 cursor-pointer active:scale-[.99] transition-transform" onclick="打开平台介绍()">
           <div class="absolute -right-6 -top-6 w-24 h-24 bg-white/10 rounded-full"></div>
           <div class="absolute right-12 bottom-4 w-16 h-16 bg-white/5 rounded-full"></div>
           <h2 class="text-white text-lg font-bold mb-1">🚁 猎飞云 · 专业无人机任务平台</h2>
@@ -115,7 +122,7 @@
         </div>
       </div>
       <div class="mx-4 mt-3 bg-white rounded-2xl p-3 shadow-sm border border-gray-100">
-        <div class="grid grid-cols-5 gap-y-3" id="金刚区容器"></div>
+        <div class="grid grid-cols-4 gap-y-4" id="金刚区容器"></div>
       </div>
       <div class="sticky top-0 bg-gray-50 z-[5] px-4 pt-3">
         <div class="flex items-center space-x-1 bg-white rounded-full p-1 shadow-sm border border-gray-100">
@@ -149,7 +156,7 @@
   </div>
 
   <div id="页面-订单" class="absolute inset-0 flex flex-col bg-gray-50 z-10 hidden">
-    <div class="bg-white px-4 pt-6 pb-3 z-10 shadow-sm">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 z-10 shadow-sm">
       <div class="flex items-center justify-between mb-3">
         <h1 class="text-lg font-bold text-gray-900">订单管理</h1>
         <div class="flex items-center gap-2">
@@ -182,7 +189,7 @@
   </div>
 
   <div id="页面-任务详情" class="absolute inset-0 bg-gray-50 z-30 hidden flex flex-col">
-    <div class="bg-white px-4 pt-6 pb-3 flex items-center z-10 shadow-sm">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 flex items-center z-10 shadow-sm">
       <button id="btn-详情返回" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 transition-all mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
       <span class="text-base font-bold text-gray-900 flex-1">任务详情</span>
       <button id="btn-详情分享" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"><i data-lucide="share-2" class="w-4.5 h-4.5 text-gray-500"></i></button>
@@ -246,7 +253,7 @@
   </div>
 
   <div id="页面-公司详情" class="absolute inset-0 bg-gray-50 z-[35] hidden flex flex-col">
-    <div class="bg-white px-4 pt-6 pb-3 flex items-center z-10 shadow-sm">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 flex items-center z-10 shadow-sm">
       <button id="btn-公司返回" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 transition-all mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
       <span class="text-base font-bold text-gray-900 flex-1">发布方信息</span>
     </div>
@@ -281,7 +288,7 @@
 
   <div id="页面-发布" class="absolute inset-0 bg-gray-50 z-10" style="display:none">
     <div id="发布-角色选择" class="absolute inset-0 flex flex-col">
-      <div class="bg-white px-4 pt-6 pb-3 shadow-sm z-10">
+      <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 shadow-sm z-10">
         <h1 class="text-lg font-bold text-gray-900">发布任务</h1>
         <p class="text-xs text-gray-400 mt-0.5">选择你的发布身份</p>
       </div>
@@ -311,7 +318,7 @@
 
     <!-- 发布-场景选择（企业发布 / 飞手转包 共用） -->
     <div id="发布-场景选择" class="absolute top-0 left-0 right-0 bg-gray-50 flex flex-col" style="display:none; bottom:68px">
-      <div class="bg-white px-4 pt-6 pb-3 shadow-sm z-10 flex items-center">
+      <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 shadow-sm z-10 flex items-center">
         <button id="btn-场景返回" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
         <h1 id="场景页标题" class="text-base font-bold text-gray-900 flex-1">发布任务 — 场景选择</h1>
         <span id="场景页转包标签" class="hidden text-[10px] px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-medium">转包</span>
@@ -339,7 +346,7 @@
     </div>
 
     <div id="发布-表单页" class="absolute top-0 left-0 right-0 bg-gray-50 flex flex-col" style="display:none; bottom:68px">
-      <div class="bg-white px-4 pt-6 pb-3 shadow-sm z-10">
+      <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 shadow-sm z-10">
         <div class="flex items-center mb-3">
           <button id="btn-发布返回" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
           <h1 class="text-base font-bold text-gray-900 flex-1" id="发布页标题">发布任务</h1>
@@ -604,7 +611,7 @@
   </div>
   <div id="页面-消息" class="absolute inset-0 flex flex-col bg-gray-50 z-10 hidden">
     <!-- 顶栏 -->
-    <div class="bg-white px-4 pt-6 pb-0 z-10 shadow-sm flex-shrink-0">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-0 z-10 shadow-sm flex-shrink-0">
       <div class="flex items-center justify-between mb-3">
         <h1 class="text-lg font-bold text-gray-900">消息</h1>
         <button onclick="标记所有通知已读()" class="text-[12px] text-blue-600 font-medium px-2 py-1 rounded-lg active:bg-blue-50 transition-all">全部已读</button>
@@ -629,16 +636,397 @@
 
   <!-- 页面：收藏 -->
   <div id="页面-收藏" class="absolute inset-0 bg-gray-50 z-[35] hidden flex flex-col">
-    <div class="bg-white px-4 pt-6 pb-3 flex items-center z-10 shadow-sm">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 flex items-center z-10 shadow-sm">
       <button onclick="document.getElementById('页面-收藏').classList.add('hidden')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
       <span class="text-base font-bold text-gray-900 flex-1">我的收藏</span>
     </div>
     <div class="flex-1 overflow-y-auto hide-scrollbar pb-6" id="收藏-列表"></div>
   </div>
 
+  <!-- 页面：平台介绍（首页 banner 点击进入） -->
+  <div id="页面-平台介绍" class="absolute inset-0 bg-gray-50 z-[34] hidden flex flex-col">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-2 flex items-center z-10 shadow-sm">
+      <button onclick="document.getElementById('页面-平台介绍').classList.add('hidden')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
+      <span class="text-base font-bold text-gray-900 flex-1">飞鹰</span>
+    </div>
+
+    <!-- 顶部 chip 指示器（点 + 滑动均可切换） -->
+    <div class="bg-white px-4 pt-1 pb-0 border-b border-gray-100">
+      <div class="relative flex items-center">
+        <button data-pb="dispatch" class="pb-tab flex-1 py-3 text-sm font-semibold text-gray-900">派单</button>
+        <button data-pb="train"    class="pb-tab flex-1 py-3 text-sm font-semibold text-gray-400">培训</button>
+        <div id="pb-指示线" class="absolute bottom-0 left-0 h-[2.5px] bg-blue-600 rounded-full transition-all duration-300" style="width:50%; transform:translateX(0%);"></div>
+      </div>
+    </div>
+
+    <!-- 滑动容器：横向放两屏，整页切换 -->
+    <div id="pb-滚动区" class="flex-1 overflow-hidden relative">
+      <div id="pb-轨道" class="absolute inset-0 flex transition-transform duration-300 ease-out" style="width:200%; transform:translateX(0%);">
+      <!-- 派单 tab 内容（左屏） -->
+      <div id="pb-内容-派单" class="w-1/2 h-full overflow-y-auto hide-scrollbar pb-6">
+        <!-- Hero -->
+        <div class="mx-4 mt-3 rounded-2xl bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 text-white p-5 relative overflow-hidden">
+          <div class="absolute -right-8 -top-8 w-32 h-32 bg-blue-500/15 rounded-full blur-2xl"></div>
+          <div class="absolute right-6 bottom-2 w-24 h-24 bg-indigo-500/15 rounded-full blur-2xl"></div>
+          <h2 class="text-lg font-bold mb-1.5 relative">飞鹰无人机服务派单平台</h2>
+          <p class="text-[12px] text-white/80 leading-relaxed relative">连接全国持证飞手与有需求的政企客户<br/>一键派单 · 闭环交付 · 安全担保</p>
+          <div class="mt-3 flex flex-wrap gap-1.5 relative">
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20">吊运</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20">植保</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20">航拍</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20">维修</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20">测绘</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20">巡检</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20">教学</span>
+          </div>
+        </div>
+
+        <!-- 3 个 USP 卡片（图4样式） -->
+        <div class="mx-4 mt-3 bg-white rounded-2xl py-4 px-2 shadow-sm border border-gray-100">
+          <div class="grid grid-cols-3 divide-x divide-gray-100">
+            <div class="flex flex-col items-center text-center px-2">
+              <div class="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center mb-1.5">
+                <i data-lucide="shield-check" class="w-5 h-5 text-blue-600"></i>
+              </div>
+              <div class="text-[12px] font-bold text-gray-900">100% 持证上岗</div>
+              <div class="text-[10px] text-gray-500 mt-0.5">平台严审资质</div>
+            </div>
+            <div class="flex flex-col items-center text-center px-2">
+              <div class="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center mb-1.5">
+                <i data-lucide="zap" class="w-5 h-5 text-blue-600"></i>
+              </div>
+              <div class="text-[12px] font-bold text-gray-900">极速接单</div>
+              <div class="text-[10px] text-gray-500 mt-0.5">30 分钟响应勘测</div>
+            </div>
+            <div class="flex flex-col items-center text-center px-2">
+              <div class="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center mb-1.5">
+                <i data-lucide="circle-dollar-sign" class="w-5 h-5 text-blue-600"></i>
+              </div>
+              <div class="text-[12px] font-bold text-gray-900">不达标退款</div>
+              <div class="text-[10px] text-gray-500 mt-0.5">平台资金担保兜底</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 平台大数据 -->
+        <div class="mx-4 mt-3 bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+          <div class="flex items-center mb-3">
+            <i data-lucide="bar-chart-3" class="w-4 h-4 text-blue-600 mr-1.5"></i>
+            <h3 class="text-sm font-bold text-gray-900">平台数据</h3>
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="text-center">
+              <div class="text-xl font-extrabold text-blue-600">12,847</div>
+              <div class="text-[10px] text-gray-500 mt-0.5">累计完成单数</div>
+            </div>
+            <div class="text-center">
+              <div class="text-xl font-extrabold text-blue-600">6,500<span class="text-sm">+</span></div>
+              <div class="text-[10px] text-gray-500 mt-0.5">入驻飞手</div>
+            </div>
+            <div class="text-center">
+              <div class="text-xl font-extrabold text-blue-600">320<span class="text-sm">+</span></div>
+              <div class="text-[10px] text-gray-500 mt-0.5">服务企业</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 近期标杆任务 -->
+        <div class="mx-4 mt-3 bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+          <div class="flex items-center mb-3">
+            <i data-lucide="trophy" class="w-4 h-4 text-blue-600 mr-1.5"></i>
+            <h3 class="text-sm font-bold text-gray-900">近期标杆任务</h3>
+          </div>
+          <div class="space-y-2.5">
+            <div class="flex items-start gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center flex-shrink-0"><i data-lucide="zap" class="w-4 h-4 text-indigo-500"></i></div>
+              <div class="flex-1 min-w-0">
+                <p class="text-[12px] font-semibold text-gray-900">南方电网 · 高压线巡检（2 条 110kV / 30km）</p>
+                <p class="text-[10px] text-gray-400 mt-0.5">东莞松山湖 · 2 名飞手 · 红外检测 · 交付合格</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0"><i data-lucide="package" class="w-4 h-4 text-orange-500"></i></div>
+              <div class="flex-1 min-w-0">
+                <p class="text-[12px] font-semibold text-gray-900">万科集团 · 35 层玻璃幕墙吊运（120 片）</p>
+                <p class="text-[10px] text-gray-400 mt-0.5">深圳福田 · 3 名飞手 · 重型吊运机 · 交付合格</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center flex-shrink-0"><i data-lucide="sprout" class="w-4 h-4 text-green-500"></i></div>
+              <div class="flex-1 min-w-0">
+                <p class="text-[12px] font-semibold text-gray-900">粤北生态 · 500 亩连片水稻飞防</p>
+                <p class="text-[10px] text-gray-400 mt-0.5">韶关乐昌 · 3 天工期 · 飞手日结 · 交付合格</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 派单流程 -->
+        <div class="mx-4 mt-3 bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+          <div class="flex items-center mb-3">
+            <i data-lucide="git-branch" class="w-4 h-4 text-blue-600 mr-1.5"></i>
+            <h3 class="text-sm font-bold text-gray-900">派单全流程</h3>
+          </div>
+          <div class="space-y-2.5">
+            <div class="flex items-start gap-2.5">
+              <div class="w-6 h-6 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</div>
+              <p class="text-[12px] text-gray-700 leading-relaxed pt-0.5">企业发布任务，平台秒级派发到匹配飞手</p>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <div class="w-6 h-6 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</div>
+              <p class="text-[12px] text-gray-700 leading-relaxed pt-0.5">飞手抢单 / 应聘，企业筛选确认</p>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <div class="w-6 h-6 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</div>
+              <p class="text-[12px] text-gray-700 leading-relaxed pt-0.5">作业期资金担保，完工提交照片 / 视频 / 飞行数据</p>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <div class="w-6 h-6 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">4</div>
+              <p class="text-[12px] text-gray-700 leading-relaxed pt-0.5">企业验收 → 平台自动放款 → 双方互评</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 飞鹰是谁 -->
+        <div class="mx-4 mt-3 mb-4 bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+          <div class="flex items-center mb-3">
+            <i data-lucide="building-2" class="w-4 h-4 text-blue-600 mr-1.5"></i>
+            <h3 class="text-sm font-bold text-gray-900">飞鹰是谁</h3>
+          </div>
+          <p class="text-[12px] text-gray-600 leading-relaxed">
+            飞鹰无人机深耕行业 8 年，集无人机研发、应用服务、专业人才孵化于一体。拥有中国民航局（CAAC）官方授权培训资质，致力于打造全国领先的无人机服务交付平台与人才输出基地。
+          </p>
+        </div>
+      </div>
+
+      <!-- 培训 tab 内容（右屏） -->
+      <div id="pb-内容-培训" class="w-1/2 h-full overflow-y-auto hide-scrollbar pb-6">
+        <!-- Hero -->
+        <div class="mx-4 mt-3 rounded-2xl bg-gradient-to-br from-orange-500 via-red-500 to-rose-600 text-white p-5 relative overflow-hidden">
+          <div class="absolute -right-8 -top-8 w-32 h-32 bg-yellow-300/20 rounded-full blur-2xl"></div>
+          <div class="absolute right-10 bottom-4 w-20 h-20 bg-white/10 rounded-full blur-2xl"></div>
+          <h2 class="text-lg font-bold mb-1.5 relative">飞鹰飞手孵化营</h2>
+          <p class="text-[12px] text-white/90 leading-relaxed relative">大热职位 · 高薪赛道<br/>结业即享公司优质订单资源</p>
+        </div>
+
+        <!-- 师资 / 资质 -->
+        <div class="mx-4 mt-3 bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+          <h3 class="text-sm font-bold text-gray-900 mb-3">为什么选飞鹰孵化营</h3>
+          <div class="grid grid-cols-3 gap-2.5">
+            <div class="flex flex-col items-center text-center p-2 rounded-lg bg-orange-50">
+              <i data-lucide="badge-check" class="w-5 h-5 text-orange-600 mb-1"></i>
+              <span class="text-[11px] font-semibold text-gray-800">官方资质</span>
+              <span class="text-[10px] text-gray-500 mt-0.5">CAAC 授权机构</span>
+            </div>
+            <div class="flex flex-col items-center text-center p-2 rounded-lg bg-orange-50">
+              <i data-lucide="hammer" class="w-5 h-5 text-orange-600 mb-1"></i>
+              <span class="text-[11px] font-semibold text-gray-800">实操为主</span>
+              <span class="text-[10px] text-gray-500 mt-0.5">真机 + 真车间</span>
+            </div>
+            <div class="flex flex-col items-center text-center p-2 rounded-lg bg-orange-50">
+              <i data-lucide="rocket" class="w-5 h-5 text-orange-600 mb-1"></i>
+              <span class="text-[11px] font-semibold text-gray-800">优质资源</span>
+              <span class="text-[10px] text-gray-500 mt-0.5">公司订单优先享</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 课程列表（高薪赛道 + 大热职位）-->
+        <div class="mx-4 mt-3 space-y-3">
+          <!-- 课程 1：大疆维修工程师 -->
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+            <div class="h-32 bg-gradient-to-br from-orange-400 via-red-400 to-pink-500 relative">
+              <div class="absolute inset-0 flex items-center justify-center"><i data-lucide="wrench" class="w-14 h-14 text-white/90"></i></div>
+              <span class="absolute top-2 right-2 text-[10px] px-2 py-0.5 rounded-full bg-red-500 text-white font-bold shadow">大热职位</span>
+              <span class="absolute bottom-2 left-3 text-[11px] text-white font-medium bg-black/30 px-2 py-0.5 rounded">近期开课 · 限时小班</span>
+            </div>
+            <div class="p-4">
+              <h4 class="text-sm font-bold text-gray-900">大疆维修工程师课程</h4>
+              <p class="text-[11px] text-gray-500 leading-relaxed mt-1">系统学习大疆消费级 / 行业级机型的拆装、电调、飞控故障排查与维修，掌握"返厂级"维修能力。</p>
+              <div class="flex flex-wrap items-center gap-1.5 mt-2.5">
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-orange-50 text-orange-600 border border-orange-100">售后行业紧缺</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-orange-50 text-orange-600 border border-orange-100">高薪 · 自由职业</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-orange-50 text-orange-600 border border-orange-100">公司订单优先</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 课程 2：高级硬件工程师 -->
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+            <div class="h-32 bg-gradient-to-br from-indigo-500 via-blue-500 to-cyan-500 relative">
+              <div class="absolute inset-0 flex items-center justify-center"><i data-lucide="cpu" class="w-14 h-14 text-white/90"></i></div>
+              <span class="absolute top-2 right-2 text-[10px] px-2 py-0.5 rounded-full bg-yellow-400 text-yellow-900 font-bold shadow">进阶高薪</span>
+              <span class="absolute bottom-2 left-3 text-[11px] text-white font-medium bg-black/30 px-2 py-0.5 rounded">近期开课 · 限时小班</span>
+            </div>
+            <div class="p-4">
+              <h4 class="text-sm font-bold text-gray-900">高级硬件工程师课程</h4>
+              <p class="text-[11px] text-gray-500 leading-relaxed mt-1">深入飞控算法、电调原理、整机调校与定制化改装，培养能独立处理复杂故障与设备升级的硬核工程师。</p>
+              <div class="flex flex-wrap items-center gap-1.5 mt-2.5">
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-600 border border-indigo-100">飞控 / 电调</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-600 border border-indigo-100">高端定制改装</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-600 border border-indigo-100">大厂技术岗</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 飞鹰实力沉淀 -->
+        <div class="mx-4 mt-3 bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+          <div class="flex items-center mb-2">
+            <i data-lucide="building-2" class="w-4 h-4 text-blue-600 mr-1.5"></i>
+            <h3 class="text-sm font-bold text-gray-900">飞鹰实力沉淀</h3>
+          </div>
+          <div class="h-32 rounded-xl bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 relative overflow-hidden mb-3 flex items-center justify-center">
+            <i data-lucide="building" class="w-16 h-16 text-white/30"></i>
+            <span class="absolute bottom-2 left-3 text-[11px] text-white/80 font-medium">飞鹰总部 · 深圳</span>
+          </div>
+          <p class="text-[12px] text-gray-600 leading-relaxed">飞鹰无人机深耕行业多年，集无人机研发、应用服务、专业人才孵化于一体。拥有中国民航局（CAAC）官方授权培训资质，致力于打造全国最大的无人机服务交付平台与人才输出基地。</p>
+          <div class="grid grid-cols-3 gap-3 mt-3 bg-gray-50 rounded-xl p-3">
+            <div class="text-center">
+              <div class="text-base font-extrabold text-gray-900">8 年<span class="text-xs">+</span></div>
+              <div class="text-[10px] text-gray-500 mt-0.5">深耕行业</div>
+            </div>
+            <div class="text-center">
+              <div class="text-base font-extrabold text-gray-900">5000<span class="text-xs">+</span></div>
+              <div class="text-[10px] text-gray-500 mt-0.5">孵化飞手</div>
+            </div>
+            <div class="text-center">
+              <div class="text-base font-extrabold text-orange-600">100%</div>
+              <div class="text-[10px] text-gray-500 mt-0.5">派单保障</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 核心导师与专家团队 -->
+        <div class="mx-4 mt-3 bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+          <div class="flex items-center mb-3">
+            <i data-lucide="users" class="w-4 h-4 text-blue-600 mr-1.5"></i>
+            <h3 class="text-sm font-bold text-gray-900">核心导师与专家团队</h3>
+          </div>
+          <div class="flex gap-2.5 overflow-x-auto hide-scrollbar -mx-1 px-1 pb-1">
+            <div class="flex-shrink-0 w-28 bg-gray-50 rounded-xl p-3 text-center">
+              <div class="w-14 h-14 rounded-full bg-gradient-to-br from-blue-200 to-indigo-300 mx-auto mb-2 flex items-center justify-center text-white text-xl font-bold">张</div>
+              <p class="text-[12px] font-bold text-gray-900">张工</p>
+              <p class="text-[10px] text-orange-600 font-medium mt-0.5 flex items-center justify-center gap-0.5"><i data-lucide="star" class="w-2.5 h-2.5"></i>前大疆资深工程师</p>
+              <p class="text-[10px] text-gray-500 mt-1 leading-tight">8 年硬件维修经验，精通全系机型底层</p>
+            </div>
+            <div class="flex-shrink-0 w-28 bg-gray-50 rounded-xl p-3 text-center">
+              <div class="w-14 h-14 rounded-full bg-gradient-to-br from-gray-700 to-slate-800 mx-auto mb-2 flex items-center justify-center text-white text-xl font-bold">刘</div>
+              <p class="text-[12px] font-bold text-gray-900">刘教官</p>
+              <p class="text-[10px] text-orange-600 font-medium mt-0.5 flex items-center justify-center gap-0.5"><i data-lucide="star" class="w-2.5 h-2.5"></i>CAAC 金牌考官</p>
+              <p class="text-[10px] text-gray-500 mt-1 leading-tight">3000+ 小时安全飞行，专攻大型植保机</p>
+            </div>
+            <div class="flex-shrink-0 w-28 bg-gray-50 rounded-xl p-3 text-center">
+              <div class="w-14 h-14 rounded-full bg-gradient-to-br from-pink-200 to-rose-300 mx-auto mb-2 flex items-center justify-center text-white text-xl font-bold">陈</div>
+              <p class="text-[12px] font-bold text-gray-900">陈导</p>
+              <p class="text-[10px] text-orange-600 font-medium mt-0.5 flex items-center justify-center gap-0.5"><i data-lucide="star" class="w-2.5 h-2.5"></i>商业航拍总监</p>
+              <p class="text-[10px] text-gray-500 mt-1 leading-tight">参与多部院线电影拍摄，擅长高难度运镜</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 沉浸式实操基地实拍 -->
+        <div class="mx-4 mt-3 bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+          <div class="flex items-center mb-3">
+            <i data-lucide="camera" class="w-4 h-4 text-blue-600 mr-1.5"></i>
+            <h3 class="text-sm font-bold text-gray-900">沉浸式实操基地实拍</h3>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="aspect-[4/3] rounded-xl relative overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 flex items-end p-2">
+              <i data-lucide="circuit-board" class="absolute right-2 top-2 w-7 h-7 text-cyan-300/50"></i>
+              <span class="text-[11px] font-semibold text-white relative">硬件精修车间</span>
+            </div>
+            <div class="aspect-[4/3] rounded-xl relative overflow-hidden bg-gradient-to-br from-indigo-900 via-violet-800 to-purple-900 flex items-end p-2">
+              <i data-lucide="moon-star" class="absolute right-2 top-2 w-7 h-7 text-yellow-200/50"></i>
+              <span class="text-[11px] font-semibold text-white relative">1 对 1 外场飞行教学</span>
+            </div>
+            <div class="col-span-2 aspect-[16/9] rounded-xl relative overflow-hidden bg-gradient-to-br from-green-700 via-emerald-700 to-teal-800 flex items-end p-2.5">
+              <i data-lucide="plane" class="absolute right-3 top-3 w-9 h-9 text-white/40"></i>
+              <span class="text-[11px] font-semibold text-white relative">CAAC 考证冲刺理论大课</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 底部 CTA：课程咨询（弹出报名表单） -->
+        <div class="mx-4 mt-4">
+          <button onclick="打开报名表单()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 text-white text-sm font-bold shadow-md shadow-orange-200 active:scale-[.99]">课程咨询</button>
+          <p class="text-[10px] text-gray-400 text-center mt-2">留下姓名 + 电话，由飞鹰课程顾问 1v1 对接</p>
+        </div>
+
+        <!-- 版权 footer -->
+        <p class="text-[10px] text-gray-400 text-center mt-5 mb-2">版权所有 © 飞鹰无人机服务与孵化平台</p>
+      </div>
+      </div><!-- /pb-轨道 -->
+    </div><!-- /pb-滚动区 -->
+  </div>
+
+  <!-- 弹窗：报名表单 -->
+  <div id="弹窗-报名表单" class="hidden absolute inset-0 z-[66] flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/50" onclick="document.getElementById('弹窗-报名表单').classList.add('hidden')"></div>
+    <div class="relative bg-white rounded-3xl p-5 w-[88%] animate-fade-in-up">
+      <div class="w-12 h-12 rounded-2xl bg-orange-50 flex items-center justify-center mb-3">
+        <i data-lucide="graduation-cap" class="w-6 h-6 text-orange-600"></i>
+      </div>
+      <h3 class="text-lg font-extrabold text-gray-900 mb-1">报名孵化营</h3>
+      <p class="text-[12px] text-gray-500 leading-relaxed mb-4">获取完整课程大纲、学费减免政策及派单保障协议书。</p>
+      <input id="报名-姓名" type="text" placeholder="您的姓名" class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 text-sm outline-none focus:border-orange-300 mb-2.5"/>
+      <input id="报名-电话" type="tel"  placeholder="联系电话 (微信同号)" class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 text-sm outline-none focus:border-orange-300 mb-4"/>
+      <button onclick="提交报名表单()" class="w-full py-3 rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 text-white text-sm font-bold shadow-md shadow-orange-200 active:scale-[.99]">免费获取学习资料</button>
+      <button onclick="document.getElementById('弹窗-报名表单').classList.add('hidden')" class="w-full mt-2 py-2 text-[12px] text-gray-400">稍后再说</button>
+    </div>
+  </div>
+
+  <!-- 页面：分类（金刚区点击进入） -->
+  <div id="页面-分类" class="absolute inset-0 bg-gray-50 z-[34] hidden flex flex-col">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 flex items-center z-10 shadow-sm">
+      <button onclick="关闭分类页()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
+      <span id="分类-标题" class="text-base font-bold text-gray-900 flex-1">航拍</span>
+      <button id="分类-筛选入口" onclick="打开筛选()" class="flex flex-col items-center text-gray-600 active:scale-95">
+        <i data-lucide="sliders-horizontal" class="w-5 h-5"></i>
+        <span class="text-[10px] mt-0.5">筛选</span>
+      </button>
+    </div>
+
+    <!-- 工种 Tab：全职 / 兼职 -->
+    <div class="bg-white px-4 pt-2 pb-2">
+      <div class="flex items-center space-x-1 bg-gray-100 rounded-full p-1">
+        <button data-job="全部" class="cat-job-tab flex-1 py-1.5 rounded-full text-xs font-medium bg-white text-gray-900 shadow-sm">全部</button>
+        <button data-job="全职" class="cat-job-tab flex-1 py-1.5 rounded-full text-xs font-medium text-gray-500">全职</button>
+        <button data-job="兼职" class="cat-job-tab flex-1 py-1.5 rounded-full text-xs font-medium text-gray-500">兼职</button>
+      </div>
+    </div>
+
+    <!-- 二级分类 chips 横滑栏 -->
+    <div class="bg-white px-4 pt-2 pb-2 border-b border-gray-100">
+      <div id="分类-二级chips" class="flex items-center gap-2 overflow-x-auto hide-scrollbar pb-0.5"></div>
+    </div>
+
+    <!-- 排序 -->
+    <div class="bg-gray-50 px-4 pt-2.5 pb-2 flex items-center justify-end relative">
+      <button id="分类-排序按钮" class="flex items-center gap-0.5 text-[11px] text-gray-600 font-medium active:scale-95 px-2 py-1 rounded-lg hover:bg-white">
+        <span id="分类-排序标签">综合</span>
+        <i data-lucide="chevron-down" class="w-3 h-3" id="分类-排序箭头"></i>
+      </button>
+      <!-- 下拉菜单（贴在按钮下方） -->
+      <div id="分类-排序下拉" class="hidden absolute right-4 top-9 z-30 w-36 bg-white rounded-xl shadow-lg border border-gray-100 py-1 animate-fade-in">
+        <button class="sort-opt w-full text-left px-3 py-2 text-[12px] hover:bg-gray-50" data-sort="综合">综合排序</button>
+        <button class="sort-opt w-full text-left px-3 py-2 text-[12px] hover:bg-gray-50 flex items-center gap-1.5" data-sort="急单">
+          <span class="inline-block w-1.5 h-1.5 bg-red-500 rounded-full pulse-dot"></span>
+          <span class="text-red-600 font-medium">仅看急单</span>
+        </button>
+        <button class="sort-opt w-full text-left px-3 py-2 text-[12px] hover:bg-gray-50" data-sort="最新发布">最新发布</button>
+        <button class="sort-opt w-full text-left px-3 py-2 text-[12px] hover:bg-gray-50" data-sort="价格">价格高 → 低</button>
+        <button class="sort-opt w-full text-left px-3 py-2 text-[12px] hover:bg-gray-50" data-sort="距离">距离近 → 远</button>
+      </div>
+    </div>
+
+    <!-- 任务列表 -->
+    <div class="flex-1 overflow-y-auto hide-scrollbar pb-6 px-4 pt-2 space-y-2.5" id="分类-任务列表"></div>
+  </div>
+
   <!-- 页面：认证中心 -->
   <div id="页面-认证中心" class="absolute inset-0 bg-gray-50 z-[35] hidden flex flex-col">
-    <div class="bg-white px-4 pt-6 pb-3 flex items-center z-10 shadow-sm">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 flex items-center z-10 shadow-sm">
       <button onclick="document.getElementById('页面-认证中心').classList.add('hidden')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
       <span class="text-base font-bold text-gray-900 flex-1">认证中心</span>
     </div>
@@ -647,7 +1035,7 @@
 
   <!-- 页面：设置 -->
   <div id="页面-设置" class="absolute inset-0 bg-gray-50 z-[35] hidden flex flex-col">
-    <div class="bg-white px-4 pt-6 pb-3 flex items-center z-10 shadow-sm">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 flex items-center z-10 shadow-sm">
       <button onclick="document.getElementById('页面-设置').classList.add('hidden')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
       <span class="text-base font-bold text-gray-900 flex-1">设置</span>
     </div>
@@ -656,7 +1044,7 @@
 
   <!-- 页面：账户安全 -->
   <div id="页面-账户安全" class="absolute inset-0 bg-gray-50 z-[36] hidden flex flex-col">
-    <div class="bg-white px-4 pt-6 pb-3 flex items-center z-10 shadow-sm">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 flex items-center z-10 shadow-sm">
       <button onclick="关闭账户安全()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
       <span class="text-base font-bold text-gray-900 flex-1">账户安全</span>
     </div>
@@ -665,7 +1053,7 @@
 
   <!-- 页面：帮助与反馈 -->
   <div id="页面-帮助反馈" class="absolute inset-0 bg-gray-50 z-[36] hidden flex flex-col">
-    <div class="bg-white px-4 pt-6 pb-3 flex items-center z-10 shadow-sm">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 flex items-center z-10 shadow-sm">
       <button onclick="关闭帮助反馈()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
       <span class="text-base font-bold text-gray-900 flex-1">帮助与反馈</span>
     </div>
@@ -674,7 +1062,7 @@
 
   <!-- 页面：服务协议 / 隐私政策 -->
   <div id="页面-协议" class="absolute inset-0 bg-gray-50 z-[36] hidden flex flex-col">
-    <div class="bg-white px-4 pt-6 pb-3 flex items-center z-10 shadow-sm">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 flex items-center z-10 shadow-sm">
       <button onclick="关闭协议页()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
       <span id="协议-标题" class="text-base font-bold text-gray-900 flex-1">服务协议 · 隐私政策</span>
     </div>
@@ -683,7 +1071,7 @@
 
   <!-- 页面：使用指南（新手指引 / 认证流程） -->
   <div id="页面-指南" class="absolute inset-0 bg-gray-50 z-[36] hidden flex flex-col">
-    <div class="bg-white px-4 pt-6 pb-3 flex items-center z-10 shadow-sm">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 flex items-center z-10 shadow-sm">
       <button onclick="关闭指南()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
       <span id="指南-标题" class="text-base font-bold text-gray-900 flex-1">使用指南</span>
     </div>
@@ -692,11 +1080,64 @@
 
   <!-- 页面：关于猎飞云 -->
   <div id="页面-关于" class="absolute inset-0 bg-gray-50 z-[36] hidden flex flex-col">
-    <div class="bg-white px-4 pt-6 pb-3 flex items-center z-10 shadow-sm">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 flex items-center z-10 shadow-sm">
       <button onclick="关闭关于()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
       <span class="text-base font-bold text-gray-900 flex-1">关于猎飞云</span>
     </div>
     <div class="flex-1 overflow-y-auto hide-scrollbar pb-6" id="关于-内容"></div>
+  </div>
+
+  <!-- 页面：信用分明细 -->
+  <div id="页面-信用分" class="absolute inset-0 bg-gray-50 z-[36] hidden flex flex-col">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 flex items-center z-10 shadow-sm">
+      <button onclick="document.getElementById('页面-信用分').classList.add('hidden')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
+      <span class="text-base font-bold text-gray-900 flex-1">信用分</span>
+    </div>
+    <div class="flex-1 overflow-y-auto hide-scrollbar pb-6" id="信用分-内容"></div>
+  </div>
+
+  <!-- 页面：我的申诉 -->
+  <div id="页面-我的申诉" class="absolute inset-0 bg-gray-50 z-[36] hidden flex flex-col">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 flex items-center z-10 shadow-sm">
+      <button onclick="document.getElementById('页面-我的申诉').classList.add('hidden')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 mr-2"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
+      <span class="text-base font-bold text-gray-900 flex-1">我的申诉</span>
+      <button onclick="打开申诉提交()" class="text-[11px] text-blue-600 font-medium px-2 py-1">新建</button>
+    </div>
+    <div class="flex-1 overflow-y-auto hide-scrollbar pb-6" id="我的申诉-内容"></div>
+  </div>
+
+  <!-- 弹窗：申诉提交（底部滑出表单） -->
+  <div id="弹窗-申诉提交-V2" class="hidden absolute inset-0 z-[70] flex items-end">
+    <div class="absolute inset-0 bg-black/50" onclick="关闭申诉提交()"></div>
+    <div class="relative bg-white w-full rounded-t-3xl p-5 max-h-[85%] overflow-y-auto animate-slide-in-up">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-base font-bold text-gray-900">提交申诉</h3>
+        <button onclick="关闭申诉提交()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"><i data-lucide="x" class="w-5 h-5 text-gray-500"></i></button>
+      </div>
+      <div class="bg-blue-50 rounded-xl p-3 mb-3 border border-blue-100">
+        <p class="text-[11px] text-blue-800 leading-relaxed"><i data-lucide="info" class="w-3 h-3 inline mr-0.5"></i>对扣分结果不服可提交申诉，平台审核团队将在 1-3 个工作日内反馈。恶意申诉将额外扣分。</p>
+      </div>
+      <label class="text-[11px] text-gray-600 font-medium mb-1.5 block">申诉类型 <span class="text-red-500">*</span></label>
+      <select id="申诉-类型" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-[12px] text-gray-800 outline-none focus:border-blue-400 focus:bg-white mb-3">
+        <option value="">请选择…</option>
+        <option value="扣分异议">扣分异议（信用分扣减不合理）</option>
+        <option value="派生指标异议">派生指标异议（取消率/角标计算错误）</option>
+        <option value="不可抗力补登">不可抗力补登（漏勾或证据补充）</option>
+        <option value="对方违约">对方违约导致取消</option>
+        <option value="其他">其他</option>
+      </select>
+      <label class="text-[11px] text-gray-600 font-medium mb-1.5 block">关联订单（可选）</label>
+      <input id="申诉-订单号" type="text" placeholder="如 O-D-101" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-[12px] text-gray-800 outline-none focus:border-blue-400 focus:bg-white mb-3">
+      <label class="text-[11px] text-gray-600 font-medium mb-1.5 block">申诉说明 <span class="text-red-500">*</span></label>
+      <textarea id="申诉-说明" rows="4" maxlength="200" placeholder="请详细说明申诉理由，附时间、地点、对方行为等关键信息" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-[12px] text-gray-800 outline-none focus:border-blue-400 focus:bg-white resize-none mb-2"></textarea>
+      <p class="text-[10px] text-gray-400 mb-3">最多 200 字</p>
+      <label class="text-[11px] text-gray-600 font-medium mb-1.5 block">凭证图片（选填）</label>
+      <div class="flex gap-2 mb-4">
+        <div class="w-16 h-16 rounded-lg border-2 border-dashed border-gray-200 flex items-center justify-center bg-gray-50 cursor-pointer active:bg-gray-100" onclick="显示Toast('原型不演示上传')"><i data-lucide="camera" class="w-5 h-5 text-gray-300"></i></div>
+        <div class="w-16 h-16 rounded-lg border-2 border-dashed border-gray-200 flex items-center justify-center bg-gray-50 cursor-pointer active:bg-gray-100" onclick="显示Toast('原型不演示上传')"><i data-lucide="plus" class="w-5 h-5 text-gray-300"></i></div>
+      </div>
+      <button onclick="提交申诉V2()" class="w-full py-3 rounded-full bg-blue-600 text-white text-sm font-bold shadow-md shadow-blue-200">提交申诉</button>
+    </div>
   </div>
 
   <!-- 弹窗：注销账号确认 -->
@@ -717,6 +1158,78 @@
         <button onclick="document.getElementById('弹窗-注销确认').classList.add('hidden')" class="flex-1 py-2.5 rounded-full bg-gray-100 text-gray-700 text-[13px] font-medium active:bg-gray-200">取消</button>
         <button onclick="确认注销账号()" class="flex-1 py-2.5 rounded-full bg-red-500 text-white text-[13px] font-semibold active:scale-95">确认注销</button>
       </div>
+    </div>
+  </div>
+
+  <!-- 全屏：新增另一身份认证流程（Step1 二次实名 / Step2 上传材料 / Step3 待审核）-->
+  <div id="页面-新增认证" class="hidden absolute inset-0 z-[70] bg-gray-50 overflow-y-auto">
+    <!-- 顶栏 -->
+    <div class="sticky top-0 z-10 bg-white px-4 py-3 flex items-center gap-3 border-b border-gray-100">
+      <button onclick="新增认证_返回()" class="w-8 h-8 flex items-center justify-center -ml-1"><i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i></button>
+      <div class="flex-1">
+        <div id="新增认证-顶栏标题" class="text-[15px] font-bold text-gray-900">新增企业身份认证</div>
+        <div id="新增认证-顶栏副" class="text-[11px] text-gray-400 mt-0.5">第 1 步 / 共 3 步</div>
+      </div>
+    </div>
+
+    <!-- Step 进度条 -->
+    <div class="px-4 py-3 bg-white flex items-center gap-2 border-b border-gray-100">
+      <div id="新增认证-step1" class="flex-1 h-1 rounded-full bg-blue-500"></div>
+      <div id="新增认证-step2" class="flex-1 h-1 rounded-full bg-gray-200"></div>
+      <div id="新增认证-step3" class="flex-1 h-1 rounded-full bg-gray-200"></div>
+    </div>
+
+    <!-- Step 1: 二次实名 -->
+    <div id="新增认证-页1" class="p-4">
+      <div class="bg-white rounded-2xl p-4 mb-3">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center"><i data-lucide="user-check" class="w-4 h-4 text-blue-600"></i></div>
+          <div>
+            <div class="text-[14px] font-bold text-gray-900">二次实名验证</div>
+            <div class="text-[11px] text-gray-400">必须与账号已锁定的实名一致；MVP 阶段不做人脸</div>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div>
+            <label class="text-[12px] text-gray-600 mb-1.5 block">姓名 <span class="text-red-500">*</span></label>
+            <input id="新增认证-姓名" type="text" placeholder="请输入身份证上的姓名" class="w-full px-3 py-2.5 text-[14px] bg-gray-50 rounded-xl border border-gray-200 focus:border-blue-500 focus:bg-white outline-none"/>
+          </div>
+          <div>
+            <label class="text-[12px] text-gray-600 mb-1.5 block">身份证号 <span class="text-red-500">*</span></label>
+            <input id="新增认证-身份证" type="text" placeholder="请输入 18 位身份证号" class="w-full px-3 py-2.5 text-[14px] bg-gray-50 rounded-xl border border-gray-200 focus:border-blue-500 focus:bg-white outline-none"/>
+          </div>
+        </div>
+        <div class="mt-3 bg-amber-50 border border-amber-100 rounded-xl p-2.5 flex items-start gap-1.5">
+          <i data-lucide="alert-circle" class="w-3 h-3 text-amber-600 flex-shrink-0 mt-0.5"></i>
+          <p class="text-[11px] text-amber-700 leading-relaxed">提醒：必须与账号已锁定的实名（姓名 + 身份证号）完全一致，否则将无法继续。</p>
+        </div>
+      </div>
+      <button onclick="新增认证_校验实名()" class="w-full py-3 rounded-full bg-blue-600 text-white text-[14px] font-semibold shadow-md shadow-blue-200">下一步</button>
+    </div>
+
+    <!-- Step 2: 上传材料 -->
+    <div id="新增认证-页2" class="hidden p-4">
+      <div id="新增认证-材料容器" class="bg-white rounded-2xl p-4 mb-3"></div>
+      <div class="flex gap-2">
+        <button onclick="新增认证_回到Step1()" class="flex-1 py-3 rounded-full bg-gray-100 text-gray-600 text-[14px] font-medium">上一步</button>
+        <button onclick="新增认证_提交()" class="flex-[2] py-3 rounded-full bg-blue-600 text-white text-[14px] font-semibold shadow-md shadow-blue-200">提交审核</button>
+      </div>
+    </div>
+
+    <!-- Step 3: 已提交 -->
+    <div id="新增认证-页3" class="hidden p-4">
+      <div class="bg-white rounded-2xl p-6 text-center">
+        <div class="w-16 h-16 rounded-full bg-amber-100 mx-auto mb-3 flex items-center justify-center"><i data-lucide="clock" class="w-8 h-8 text-amber-600"></i></div>
+        <h3 class="text-[16px] font-bold text-gray-900 mb-1.5">材料已提交，等待审核</h3>
+        <p class="text-[12px] text-gray-500 leading-relaxed mb-4">预计 <span class="text-gray-900 font-semibold">约 1 个工作日</span> 完成审核<br/>审核结果会以系统消息推送给你</p>
+        <div class="bg-blue-50 border border-blue-100 rounded-xl p-3 text-left">
+          <p class="text-[11px] text-blue-800 leading-relaxed flex items-start gap-1.5">
+            <i data-lucide="info" class="w-3 h-3 flex-shrink-0 mt-0.5"></i>
+            <span>审核通过后，请在「我的 → 设置 → 切换身份」中手动切换到新身份。审核期间仍以当前身份使用本平台。</span>
+          </p>
+        </div>
+      </div>
+      <button onclick="新增认证_返回()" class="w-full mt-4 py-3 rounded-full bg-blue-600 text-white text-[14px] font-semibold shadow-md shadow-blue-200">完成，返回</button>
     </div>
   </div>
 
@@ -757,20 +1270,90 @@
 
   <div id="弹窗-取消确认" class="absolute inset-0 z-[55] flex items-center justify-center" style="display:none">
     <div class="absolute inset-0 bg-black/50 animate-fade-in" id="取消遮罩"></div>
-    <div class="relative bg-white rounded-3xl p-5 w-[88%] animate-fade-in-up">
+    <div class="relative bg-white rounded-3xl p-5 w-[88%] max-h-[80%] overflow-y-auto animate-fade-in-up">
+      <!-- 头部 -->
       <div class="flex items-center mb-3">
-        <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mr-3"><i data-lucide="alert-circle" class="w-5 h-5 text-red-500"></i></div>
-        <h3 class="text-base font-bold text-gray-900">确认取消任务？</h3>
+        <div id="取消-图标盒" class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mr-3"><i id="取消-图标" data-lucide="alert-circle" class="w-5 h-5 text-red-500"></i></div>
+        <h3 id="取消-标题" class="text-base font-bold text-gray-900">确认取消任务？</h3>
       </div>
       <p class="text-sm text-gray-600 mb-2" id="取消任务名">--</p>
-      <div class="bg-amber-50 rounded-xl p-3 mb-4 border border-amber-100">
-        <p class="text-[11px] text-amber-800 leading-relaxed"><i data-lucide="info" class="w-3 h-3 inline mr-0.5"></i>取消后该任务将从大厅下线，已申请的飞手将收到通知。如需后续发布类似任务，可点击「再次发布」快速创建。</p>
+
+      <!-- 阶段提示框（颜色按阶段切换） -->
+      <div id="取消-提示框" class="rounded-xl p-3 mb-3 border bg-amber-50 border-amber-100">
+        <p id="取消-提示文案" class="text-[11px] leading-relaxed text-amber-800"><i data-lucide="info" class="w-3 h-3 inline mr-0.5"></i>取消后该任务将从大厅下线，已申请的飞手将收到通知。</p>
       </div>
+
+      <!-- 信用影响提示（已确认/进行中可见） -->
+      <div id="取消-信用提示" class="hidden rounded-xl p-2.5 mb-3 bg-gray-50 border border-gray-200 flex items-start gap-2">
+        <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-gray-500 mt-0.5 flex-shrink-0"></i>
+        <p id="取消-信用文案" class="text-[11px] text-gray-700 leading-relaxed">本次取消将扣减 <span id="取消-扣分值" class="font-bold">-5</span> 信用分，并计入"近 30 天取消率"派生指标（公开）。</p>
+      </div>
+
+      <!-- 取消原因下拉 -->
+      <div id="取消-原因区" class="hidden mb-3">
+        <label class="text-[11px] text-gray-600 font-medium mb-1.5 block">取消原因 <span class="text-red-500">*</span></label>
+        <select id="取消-原因" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-[12px] text-gray-800 outline-none focus:border-blue-400 focus:bg-white">
+          <option value="">请选择原因…</option>
+          <option value="项目延期">项目延期 / 取消</option>
+          <option value="预算调整">预算调整</option>
+          <option value="另寻飞手">已通过其他渠道找到飞手</option>
+          <option value="需求变更">需求变更（机型/范围）</option>
+          <option value="飞手不匹配">飞手能力与需求不匹配</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+
+      <!-- 协商内容（仅进行中 · 协商解除） -->
+      <div id="取消-协商区" class="hidden mb-3">
+        <label class="text-[11px] text-gray-600 font-medium mb-1.5 block">协商说明 <span class="text-red-500">*</span></label>
+        <textarea id="取消-协商内容" rows="3" placeholder="请说明协商解除原因" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-[12px] text-gray-800 outline-none focus:border-blue-400 focus:bg-white resize-none"></textarea>
+        <label class="text-[11px] text-gray-600 font-medium mb-1.5 mt-2 block">补偿方案（可选 · 平台不强制）</label>
+        <input id="取消-协商补偿" type="text" placeholder="如：线下补 200 元误工费" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-[12px] text-gray-800 outline-none focus:border-blue-400 focus:bg-white">
+        <p class="text-[10px] text-gray-400 mt-2 leading-relaxed">飞手在 IM 中收到协商请求；同意后订单关闭，双方不扣分。如被拒，可走"强制取消"（信用 -30）</p>
+      </div>
+
+      <!-- 不可抗力 -->
+      <div id="取消-不可抗力区" class="hidden mb-3">
+        <label class="flex items-start gap-2 cursor-pointer">
+          <input id="取消-不可抗力" type="checkbox" class="mt-0.5">
+          <div class="flex-1">
+            <p class="text-[12px] text-gray-800 font-medium">本次取消属于不可抗力</p>
+            <p class="text-[10px] text-gray-500 leading-relaxed">如极端天气 / 政府管制等，提交凭证后进入人工审核，审核通过则不扣分</p>
+          </div>
+        </label>
+      </div>
+
+      <!-- 按钮区 -->
       <div class="flex flex-col gap-2">
         <button id="btn-确认取消" class="w-full py-2.5 rounded-full bg-red-500 text-white text-sm font-medium">确认取消</button>
         <button id="btn-取消后再发布" class="w-full py-2.5 rounded-full bg-blue-600 text-white text-sm font-medium shadow-md shadow-blue-200">取消并再次发布</button>
         <button id="btn-不取消" class="w-full py-2 text-gray-400 text-xs">我再想想</button>
       </div>
+    </div>
+  </div>
+
+  <!-- 弹窗：强制取消（协商被拒后的兜底链路） -->
+  <div id="弹窗-强制取消" class="hidden absolute inset-0 z-[68] flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/60" onclick="关闭强制取消弹窗()"></div>
+    <div class="relative bg-white rounded-3xl p-5 w-[88%] animate-fade-in-up border-2 border-red-200">
+      <div class="w-16 h-16 rounded-full bg-red-100 mx-auto mb-3 flex items-center justify-center">
+        <i data-lucide="alert-octagon" class="w-9 h-9 text-red-600"></i>
+      </div>
+      <h3 class="text-base font-bold text-red-700 text-center mb-2">强制取消进行中订单？</h3>
+      <p class="text-[12px] text-gray-600 text-center mb-3">协商解除已被对方拒绝。继续强制取消将产生以下后果：</p>
+      <div class="bg-red-50 border border-red-200 rounded-xl p-3 mb-3">
+        <ul class="text-[11px] text-red-700 leading-relaxed space-y-1.5 list-disc pl-4">
+          <li><b>信用分 -30</b>（基础分 100，扣后接近警示线）</li>
+          <li><b>派生指标</b>：本月"强制取消"+1，对外公开展示</li>
+          <li><b>降权</b>：高强制取消的企业不进推荐大厅</li>
+          <li>飞手将收到平台官方通知</li>
+        </ul>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="关闭强制取消弹窗()" class="flex-1 py-2.5 rounded-full bg-gray-100 text-gray-700 text-[13px] font-medium active:bg-gray-200">放弃 · 不取消</button>
+        <button id="btn-强制取消-确认" onclick="确认强制取消()" class="flex-1 py-2.5 rounded-full bg-red-600 text-white text-[13px] font-semibold active:scale-95 shadow-md shadow-red-200">我已知悉 · 强制取消</button>
+      </div>
+      <p id="强制取消-二次提示" class="hidden text-center text-[11px] text-red-600 font-bold mt-3 animate-pulse">⚠️ 再次点击即生效，不可撤销</p>
     </div>
   </div>
 
@@ -819,7 +1402,7 @@
 
   <!-- 聊天详情页 -->
   <div id="页面-聊天详情" class="absolute inset-0 flex flex-col bg-gray-50 z-[38] hidden">
-    <div class="bg-white px-4 pt-6 pb-3 flex items-center z-10 shadow-sm flex-shrink-0">
+    <div class="bg-white pl-4 pr-[100px] pt-6 pb-3 flex items-center z-10 shadow-sm flex-shrink-0">
       <button onclick="关闭聊天详情()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 transition-all mr-2">
         <i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i>
       </button>
@@ -1135,22 +1718,46 @@ window.addEventListener('resize', 初始化身份切换器位置);
 const 任务数据 = [
   {id:'T1001', type:'吊运', typeColor:'orange', title:'高层建筑玻璃幕墙吊运（35层，共120片）',
     company:'万科集团·深圳', auth:'企业认证', creditScore: 125, avatar:'万', avatarBg:'bg-blue-100', avatarColor:'text-blue-600',
-    location:'深圳 · 福田区', distance:'3.2km', budget:'35,000', publishTime:'2小时前', applicants:8, 招募人数:3, hire:'全职', settle:'-', urgent:true, heavy:true, isRepack:false, mine:true, mineFor:'demand', tags:['重型吊运机','CAAC执照','含保险']},
+    location:'深圳 · 福田区', distance:'3.2km', budget:'35,000', publishTime:'2小时前', applicants:8, 招募人数:3, hire:'全职', settle:'-', urgent:true, heavy:true, isRepack:false, mine:true, mineFor:'demand', tags:['重型吊运机','CAAC执照','含保险'], subType:'建筑吊装', cancelRate30d:2, urgentCancelCount30d:0, forceCancelCount30d:0},
   {id:'T1002', type:'植保', typeColor:'green', title:'春季水稻病虫害防治 · 500亩连片作业',
     company:'粤北生态农业合作社', auth:'企业认证', creditScore: 102, avatar:'粤', avatarBg:'bg-green-100', avatarColor:'text-green-600',
-    location:'韶关 · 乐昌市', distance:'外省', budget:'12,800', publishTime:'5小时前', applicants:3, hire:'兼职', settle:'日结', urgent:false, heavy:false, isRepack:false, tags:['植保机','3天工期','包食宿']},
+    location:'韶关 · 乐昌市', distance:'外省', budget:'12,800', publishTime:'5小时前', applicants:3, hire:'兼职', settle:'日结', urgent:false, heavy:false, isRepack:false, tags:['植保机','3天工期','包食宿'], subType:'水稻'},
   {id:'T1003', type:'航拍', typeColor:'blue', title:'商业综合体宣传片航拍（含运镜指导）',
     company:'张导演·飞手', auth:'CAAC认证', creditScore: 118, avatar:'张', avatarBg:'bg-purple-100', avatarColor:'text-purple-600',
-    location:'广州 · 天河区', distance:'45km', budget:'8,500', publishTime:'昨天', applicants:12, hire:'兼职', settle:'完工结', urgent:false, heavy:false, isRepack:true, mine:true, mineFor:'pilot', tags:['多旋翼','航拍经验','大疆系列']},
+    location:'广州 · 天河区', distance:'45km', budget:'8,500', publishTime:'昨天', applicants:12, hire:'兼职', settle:'完工结', urgent:false, heavy:false, isRepack:true, mine:true, mineFor:'pilot', tags:['多旋翼','航拍经验','大疆系列'], subType:'城市宣传'},
   {id:'T1004', type:'巡检', typeColor:'purple', title:'高压输电线路定期巡检（2条线，30km）',
     company:'南方电网某支公司', auth:'企业认证', creditScore: 135, avatar:'南', avatarBg:'bg-indigo-100', avatarColor:'text-indigo-600',
-    location:'东莞 · 松山湖', distance:'72km', budget:'18,000', publishTime:'1天前', applicants:5, hire:'全职', settle:'-', urgent:true, heavy:false, isRepack:false, tags:['CAAC执照','红外检测','多旋翼']},
+    location:'东莞 · 松山湖', distance:'72km', budget:'18,000', publishTime:'1天前', applicants:5, hire:'全职', settle:'-', urgent:true, heavy:false, isRepack:false, tags:['CAAC执照','红外检测','多旋翼'], subType:'电力线路', cancelRate30d:1, urgentCancelCount30d:0, forceCancelCount30d:0},
   {id:'T1005', type:'吊运', typeColor:'orange', title:'建筑工地钢材吊运临时用工（2天）',
     company:'李工·飞手', auth:'CAAC认证', creditScore: 88, avatar:'李', avatarBg:'bg-orange-100', avatarColor:'text-orange-600',
-    location:'深圳 · 龙华区', distance:'12km', budget:'5,200', publishTime:'3小时前', applicants:2, hire:'兼职', settle:'日结', urgent:false, heavy:true, isRepack:true, tags:['重型吊运机','短期2天','日结']},
+    location:'深圳 · 龙华区', distance:'12km', budget:'5,200', publishTime:'3小时前', applicants:2, hire:'兼职', settle:'日结', urgent:false, heavy:true, isRepack:true, tags:['重型吊运机','短期2天','日结'], subType:'货物吊运', cancelRate30d:15, urgentCancelCount30d:2, forceCancelCount30d:0},
   {id:'T1006', type:'航拍', typeColor:'blue', title:'古建筑360°航测建模（深圳博物馆项目）',
     company:'深圳市博物馆', auth:'企业认证', creditScore: 115, avatar:'深', avatarBg:'bg-red-100', avatarColor:'text-red-600',
-    location:'深圳 · 福田区', distance:'5.1km', budget:'26,500', publishTime:'8小时前', applicants:4, hire:'全职', settle:'-', urgent:false, heavy:false, isRepack:false, tags:['测绘经验','固定翼+多旋翼','建模交付']},
+    location:'深圳 · 福田区', distance:'5.1km', budget:'26,500', publishTime:'8小时前', applicants:4, hire:'全职', settle:'-', urgent:false, heavy:false, isRepack:false, tags:['测绘经验','固定翼+多旋翼','建模交付'], subType:'三维建模', cat:'测绘'},
+  {id:'T1007', type:'植保', typeColor:'green', title:'山区果园飞防（柑橘园 200 亩）',
+    company:'惠州绿丰农业', auth:'企业认证', creditScore: 96, avatar:'惠', avatarBg:'bg-green-100', avatarColor:'text-green-600',
+    location:'惠州 · 博罗县', distance:'85km', budget:'7,200', publishTime:'1小时前', applicants:1, hire:'兼职', settle:'完工结', urgent:false, heavy:false, isRepack:false, tags:['植保机','短期','包午餐'], subType:'果树'},
+  {id:'T1008', type:'航拍', typeColor:'blue', title:'户外婚礼全程跟拍（含无人机航拍）',
+    company:'林先生', auth:'CAAC认证', creditScore: 76, avatar:'林', avatarBg:'bg-pink-100', avatarColor:'text-pink-600',
+    location:'深圳 · 大鹏新区', distance:'48km', budget:'3,800', publishTime:'30分钟前', applicants:2, hire:'兼职', settle:'完工结', urgent:false, heavy:false, isRepack:false, tags:['多旋翼','婚礼经验'], subType:'婚礼跟拍', cancelRate30d:32, urgentCancelCount30d:1, forceCancelCount30d:1},
+  {id:'T1009', type:'维修', typeColor:'gray', title:'光伏电站逆变器现场抢修配合', cat:'维修',
+    company:'阳光电力服务公司', auth:'企业认证', creditScore: 108, avatar:'阳', avatarBg:'bg-yellow-100', avatarColor:'text-yellow-600',
+    location:'广州 · 番禺区', distance:'52km', budget:'4,500', publishTime:'3小时前', applicants:0, hire:'兼职', settle:'日结', urgent:true, heavy:false, isRepack:false, tags:['维修配合','短期1天'], subType:'高空设备维修协助'},
+  {id:'T1010', type:'维修', typeColor:'gray', title:'风电叶片表面裂纹维修跟飞', cat:'维修',
+    company:'金风科技', auth:'企业认证', creditScore: 142, avatar:'金', avatarBg:'bg-amber-100', avatarColor:'text-amber-600',
+    location:'汕尾 · 红海湾', distance:'外省', budget:'22,000', publishTime:'昨天', applicants:3, hire:'全职', settle:'-', urgent:false, heavy:false, isRepack:false, tags:['高空作业','叶片经验'], subType:'风电叶片维修'},
+  {id:'T1011', type:'巡检', typeColor:'purple', title:'某省高速桥梁结构季度巡检',
+    company:'广东省交通投资', auth:'企业认证', creditScore: 132, avatar:'交', avatarBg:'bg-indigo-100', avatarColor:'text-indigo-600',
+    location:'佛山 · 南海区', distance:'68km', budget:'14,500', publishTime:'5小时前', applicants:2, hire:'全职', settle:'-', urgent:false, heavy:false, isRepack:false, tags:['CAAC执照','桥梁巡检'], subType:'桥梁结构'},
+  {id:'T1012', type:'测绘', typeColor:'pink', title:'乡镇地形测绘项目（约 300 亩）',
+    company:'地之韵测绘公司', auth:'企业认证', creditScore: 121, avatar:'测', avatarBg:'bg-pink-100', avatarColor:'text-pink-600',
+    location:'清远 · 英德市', distance:'外省', budget:'19,800', publishTime:'2天前', applicants:6, hire:'全职', settle:'-', urgent:false, heavy:false, isRepack:false, tags:['RTK','固定翼+多旋翼'], subType:'地形测绘'},
+  {id:'T1013', type:'教学服务', typeColor:'indigo', title:'CAAC 多旋翼考证陪练教员（兼职）', cat:'教学服务',
+    company:'蓝天飞行学院', auth:'企业认证', creditScore: 99, avatar:'蓝', avatarBg:'bg-indigo-100', avatarColor:'text-indigo-600',
+    location:'深圳 · 龙岗区', distance:'18km', budget:'400', publishTime:'2小时前', applicants:4, hire:'兼职', settle:'日结', urgent:false, heavy:false, isRepack:false, tags:['CAAC教员','耐心'], subType:'CAAC 考证教练'},
+  {id:'T1014', type:'教学服务', typeColor:'indigo', title:'某高校无人机社团长期教员（每周 2 次）', cat:'教学服务',
+    company:'深圳某大学', auth:'企业认证', creditScore: 110, avatar:'校', avatarBg:'bg-indigo-100', avatarColor:'text-indigo-600',
+    location:'深圳 · 南山区', distance:'9km', budget:'6,000', publishTime:'1天前', applicants:2, hire:'全职', settle:'-', urgent:false, heavy:false, isRepack:false, tags:['教学经验','长期'], subType:'院校合作'},
 ];
 
 // ============ 任务详情扩展数据 ============
@@ -1172,7 +1779,8 @@ const 订单数据 = {
       {id:'O-D-003', taskId:'T1006', type:'航拍', title:'古建筑360°航测建模（深圳博物馆项目）', location:'深圳 · 福田区', budget:'26,500', publishTime:'8小时前', applicants:4, urgent:false, heavy:false, hire:'全职', settle:'-'},
     ],
     ongoing: [
-      {id:'O-D-100', type:'吊运', title:'商用建筑外墙清洗无人机作业', location:'深圳 · 南山区', budget:'12,000', pilotName:'张飞手', pilotAvatar:'张', pilotScore:115, progress:'已开工 · 第2天/共3天', hire:'全职', settle:'-'},
+      {id:'O-D-100', type:'吊运', title:'商用建筑外墙清洗无人机作业', location:'深圳 · 南山区', budget:'12,000', pilotName:'张飞手', pilotAvatar:'张', pilotScore:115, progress:'已开工 · 第2天/共3天', hire:'全职', settle:'-', negotiateRejected:true},
+      {id:'O-D-101', type:'吊运', title:'工地钢材吊运（二期）', location:'深圳 · 龙岗区', budget:'8,000', pilotName:'王师傅', pilotAvatar:'王', pilotScore:4.9, progress:'已开工 · 第3天/共3天', hire:'兼职', settle:'周结', completionSubmitted:true, completionSubmittedAt:'04-22 17:30'},
     ],
     ended: [
       {id:'O-D-200', type:'植保', title:'春季果园病虫害防治（80亩）', location:'惠州 · 博罗县', budget:'6,800', pilotName:'李飞手', pilotAvatar:'李', pilotScore:105, completedDate:'2026-04-10', rated:true, rating:5, hire:'兼职', settle:'完工结'},
@@ -1186,6 +1794,7 @@ const 订单数据 = {
     recruiting: [
       {id:'O-P-001', appStatus:'待确认', type:'吊运', title:'高层建筑玻璃幕墙吊运（35层，共120片）', company:'万科集团·深圳', location:'深圳 · 福田区', budget:'35,000', appliedTime:'刚刚', hire:'全职', settle:'-'},
       {id:'O-P-002', appStatus:'待确认', type:'巡检', title:'高压输电线路定期巡检（2条线，30km）', company:'南方电网', location:'东莞 · 松山湖', budget:'18,000', appliedTime:'3小时前', hire:'全职', settle:'-'},
+      {id:'O-P-004', appStatus:'已确认', type:'测绘', title:'乡镇地形测绘项目（约 300 亩）', company:'地之韵测绘公司', location:'清远 · 英德市', budget:'19,800', appliedTime:'昨天 已确认', hire:'全职', settle:'-', urgent:false},
       {id:'O-P-003', appStatus:'已撤回', type:'航拍', title:'婚礼航拍（户外）', company:'林先生', location:'深圳 · 大鹏新区', budget:'2,800', appliedTime:'昨天', hire:'兼职', settle:'完工结'},
     ],
     ongoing: [
@@ -1216,6 +1825,7 @@ let 用户认证 = {
   demandWarn: false,         // 企业身份是否被投诉
   currentMode: 'pilot',      // 'pilot' | 'demand' —— 当前激活的身份
   // 实名锚点（飞手与企业必须为同一人）
+  realName: '陈某飞',
   idCard: '440300********1234',
   phone:  '138****0000',
 };
@@ -1424,12 +2034,35 @@ document.querySelectorAll('.hall-tab').forEach(btn => {
 });
 
 // ============ 渲染任务卡片列表 ============
+// 派生指标角标：根据 cancelRate30d / urgentCancelCount30d / forceCancelCount30d 输出对外公开角标
+// 返回 [{text, color}] 数组（最多展示一个最显眼的）
+function 派生指标角标(o) {
+  if (!o) return '';
+  const c = o.cancelRate30d || 0;
+  const u = o.urgentCancelCount30d || 0;
+  const f = o.forceCancelCount30d || 0;
+  const badges = [];
+  // 优先级：强制取消 > 高取消率 > 临期常发 > 守约
+  if (f >= 1) {
+    badges.push({text:`强制取消 ${f}`, cls:'bg-red-50 text-red-600 border border-red-200', icon:'alert-octagon'});
+  } else if (c > 20) {
+    badges.push({text:`高取消率 ${c}%`, cls:'bg-orange-50 text-orange-600 border border-orange-200', icon:'alert-triangle'});
+  } else if (u >= 2) {
+    badges.push({text:`临期常发 ×${u}`, cls:'bg-amber-50 text-amber-700 border border-amber-200', icon:'alert-circle'});
+  } else if ((o.cancelRate30d !== undefined) && c <= 5 && u === 0 && f === 0) {
+    badges.push({text:'守约商家', cls:'bg-emerald-50 text-emerald-600 border border-emerald-200', icon:'shield-check'});
+  }
+  return badges.map(b => `<span class="text-[10px] px-1.5 py-0.5 rounded font-medium ${b.cls} inline-flex items-center gap-0.5"><i data-lucide="${b.icon}" class="w-2.5 h-2.5"></i>${b.text}</span>`).join('');
+}
+
 function 渲染任务列表() {
   const 容器 = document.getElementById('任务卡片列表');
   const 类型色 = {
     '吊运':'linear-gradient(135deg, #F97316, #EA580C)', '植保':'linear-gradient(135deg, #22C55E, #16A34A)',
     '航拍':'linear-gradient(135deg, #3B82F6, #2563EB)', '巡检':'linear-gradient(135deg, #A855F7, #9333EA)',
-    '监测':'linear-gradient(135deg, #0EA5E9, #0284C7)', '测绘':'linear-gradient(135deg, #EC4899, #DB2777)', '其他':'linear-gradient(135deg, #64748B, #475569)',
+    '监测':'linear-gradient(135deg, #0EA5E9, #0284C7)', '测绘':'linear-gradient(135deg, #EC4899, #DB2777)',
+    '维修':'linear-gradient(135deg, #64748B, #475569)', '教学服务':'linear-gradient(135deg, #6366F1, #4F46E5)',
+    '其他':'linear-gradient(135deg, #64748B, #475569)',
   };
   let 数据 = [...任务数据];
   if (当前大厅 === 'nearby') { 数据 = 数据.filter(t => t.distance !== '外省').sort((a,b)=> parseFloat(a.distance) - parseFloat(b.distance)); } 
@@ -1445,11 +2078,11 @@ function 渲染任务列表() {
         ${t.isRepack ? '<span class="text-[10px] px-1.5 py-0.5 rounded font-medium bg-purple-100 text-purple-700 border border-purple-200">转包</span>' : ''}
       </div>
       <h3 class="text-sm font-semibold text-gray-900 leading-relaxed mb-2 line-clamp-2">${t.title}</h3>
-      <div class="flex items-center mb-2.5">
+      <div class="flex items-center mb-2.5 flex-wrap gap-y-1">
         <div class="w-6 h-6 rounded-full ${t.avatarBg} flex items-center justify-center ${t.avatarColor} text-[11px] font-bold mr-1.5">${t.avatar}</div>
-        <span class="text-[11px] text-gray-600 font-medium truncate max-w-[140px]">${t.company}</span>
+        <span class="text-[11px] text-gray-600 font-medium truncate max-w-[120px]">${t.company}</span>
         <span class="text-[9px] px-1 py-0.5 rounded ${t.auth==='企业认证'?'bg-blue-50 text-blue-600':'bg-green-50 text-green-600'} font-medium ml-1.5">${t.auth}</span>
-        <span class="ml-1.5 text-[10px] text-amber-600 flex items-center"><i data-lucide="shield-check" class="w-3 h-3 mr-0.5"></i>${t.creditScore}</span>
+        ${派生指标角标(t)}
       </div>
       <div class="flex items-end justify-between pt-2 border-t border-gray-50">
         <div class="flex-1 min-w-0">
@@ -2016,8 +2649,8 @@ function 渲染任务详情(renderArg, 订单) {
       <div class="flex items-center">
         <div class="w-12 h-12 rounded-full ${t.avatarBg} flex items-center justify-center ${t.avatarColor} text-lg font-bold mr-3">${t.avatar}</div>
         <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-1.5 mb-1"><span class="text-sm font-semibold text-gray-900 truncate">${t.company}</span><span class="text-[10px] px-1.5 py-0.5 rounded ${t.auth==='企业认证'?'bg-blue-50 text-blue-600':'bg-green-50 text-green-600'} font-medium flex-shrink-0">${t.auth}</span></div>
-          <div class="flex items-center gap-3 text-[11px] text-gray-500"><span class="flex items-center"><i data-lucide="shield-check" class="w-3 h-3 mr-0.5 text-amber-500"></i>信用分 ${t.creditScore}</span><span>·</span><span>历史发单 ${Math.floor(Math.random()*30+5)} 个</span></div>
+          <div class="flex items-center gap-1.5 mb-1 flex-wrap"><span class="text-sm font-semibold text-gray-900 truncate">${t.company}</span><span class="text-[10px] px-1.5 py-0.5 rounded ${t.auth==='企业认证'?'bg-blue-50 text-blue-600':'bg-green-50 text-green-600'} font-medium flex-shrink-0">${t.auth}</span>${派生指标角标(t)}</div>
+          <div class="flex items-center gap-3 text-[11px] text-gray-500"><span>历史发单 ${Math.floor(Math.random()*30+5)} 个</span>${t.cancelRate30d !== undefined ? `<span>·</span><span>近 30 天取消率 <span class="${(t.cancelRate30d||0)>20?'text-red-500':'text-gray-700'} font-medium">${t.cancelRate30d}%</span></span>` : ''}</div>
         </div>
         <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 ml-2"></i>
       </div>
@@ -2058,6 +2691,7 @@ function 是否我的任务(t) {
 
 function 渲染详情底栏(t, 订单) {
   const 底栏 = document.getElementById('详情底栏');
+  底栏.style.display = ''; // 重置：默认显示，特殊场景内再隐藏
   const info = 身份文案[当前身份];
 
   // 1) 未登录
@@ -2103,10 +2737,15 @@ function 渲染详情底栏(t, 订单) {
             <button class="flex-[1.4] py-3 rounded-full bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold text-sm shadow-md shadow-emerald-200 active:scale-[.98]" onclick="打开查看完工('${订单.id||''}')"><i data-lucide="check-circle-2" class="w-3.5 h-3.5 inline mr-1 align-text-bottom"></i>验收</button>
           `;
         } else {
-          const 提示文案 = 被打回 ? '已打回，等待飞手重新提交' : '等待飞手提交完工材料';
+          // 飞手尚未提交（含被打回）：去掉重复的"等待提交"提示，改为「协商解除」入口
+          const 提示 = 被打回 ? '已打回 · 等待飞手重新提交' : '协商解除';
+          const tonedown = 被打回; // 被打回时不强调协商
           底栏.innerHTML = `
             <button class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center flex-shrink-0 active:scale-90" onclick="document.getElementById('页面-任务详情').classList.add('hidden')"><i data-lucide="chevron-left" class="w-4 h-4 text-gray-500"></i></button>
-            <button class="flex-1 py-3 rounded-full bg-gray-100 text-gray-400 text-sm font-medium flex items-center justify-center gap-1.5" disabled><i data-lucide="clock" class="w-3.5 h-3.5"></i>${提示文案}</button>
+            ${tonedown
+              ? `<button class="flex-1 py-3 rounded-full bg-gray-100 text-gray-400 text-sm font-medium flex items-center justify-center gap-1.5" disabled><i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>${提示}</button>`
+              : `<button class="flex-1 py-3 rounded-full bg-white border border-blue-300 text-blue-600 text-sm font-medium flex items-center justify-center gap-1.5 active:bg-blue-50" onclick='弹出取消确认订单(${JSON.stringify(订单).replace(/"/g,"&quot;").replace(/'/g,"\\'")})'><i data-lucide="handshake" class="w-3.5 h-3.5"></i>${提示}</button>`
+            }
           `;
         }
       }
@@ -2198,7 +2837,7 @@ function 打开公司详情(t) {
           <div class="flex items-center gap-1.5 mt-1 flex-wrap">
             <span class="text-[10px] px-1.5 py-0.5 rounded bg-white/20 font-medium">${t.auth}</span>
             ${isPilotPublisher?'<span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-200/90 text-purple-800 font-medium">飞手转包</span>':''}
-            <span class="text-[10px] flex items-center"><i data-lucide="shield-check" class="w-3 h-3 mr-0.5"></i>信用 ${t.creditScore}</span>
+            ${派生指标角标(t)}
           </div>
         </div>
       </div>
@@ -2218,6 +2857,26 @@ function 打开公司详情(t) {
         <div class="text-[10px] text-gray-400 mt-0.5">综合评分</div>
       </div>
     </div>
+
+    ${t.cancelRate30d !== undefined ? `
+    <div class="bg-white mx-4 mt-3 rounded-2xl p-4 shadow-sm border border-gray-100">
+      <h3 class="text-sm font-bold text-gray-900 mb-3 flex items-center"><div class="w-1 h-4 bg-amber-500 rounded-full mr-2"></div>履约表现（近 30 天）</h3>
+      <div class="grid grid-cols-3 gap-2">
+        <div class="text-center bg-gray-50 rounded-xl py-3">
+          <div class="text-base font-extrabold ${(t.cancelRate30d||0)>20?'text-red-500':((t.cancelRate30d||0)>10?'text-orange-500':'text-emerald-600')}">${t.cancelRate30d||0}%</div>
+          <div class="text-[10px] text-gray-500 mt-0.5">取消率</div>
+        </div>
+        <div class="text-center bg-gray-50 rounded-xl py-3">
+          <div class="text-base font-extrabold ${(t.urgentCancelCount30d||0)>=2?'text-amber-600':'text-gray-700'}">${t.urgentCancelCount30d||0}</div>
+          <div class="text-[10px] text-gray-500 mt-0.5">临期取消</div>
+        </div>
+        <div class="text-center bg-gray-50 rounded-xl py-3">
+          <div class="text-base font-extrabold ${(t.forceCancelCount30d||0)>=1?'text-red-500':'text-gray-700'}">${t.forceCancelCount30d||0}</div>
+          <div class="text-[10px] text-gray-500 mt-0.5">强制取消</div>
+        </div>
+      </div>
+      <p class="text-[10px] text-gray-400 mt-2 leading-relaxed"><i data-lucide="info" class="w-2.5 h-2.5 inline"></i> 履约数据由平台基于近 30 天订单自动统计，可作为合作决策参考</p>
+    </div>` : ''}
 
     ${isCompany ? `
     <div class="bg-white mx-4 mt-3 rounded-2xl p-4 shadow-sm border border-gray-100">
@@ -2322,14 +2981,14 @@ function 打开申请人列表(t) {
 
   // 申请人数据：city / flyYears / rating / school / caac / utc / drones / tags / intro / orders / completion / apptime
   const 申请人 = [
-    {name:'王师傅',avatar:'王',avatarBg:'bg-blue-100',avatarColor:'text-blue-600',city:'深圳',flyYears:8,rating:4.9,school:true,caac:true,utc:false,drones:['重型吊运机','DJI M350'],tags:['吊运','航拍'],intro:'8年吊运经验，持有重型机操作执照，自备80kg级吊运机，曾参与多个万科工地项目。',orders:56,completion:97,apptime:'15分钟前'},
-    {name:'陈飞手',avatar:'陈',avatarBg:'bg-green-100',avatarColor:'text-green-600',city:'广州',flyYears:5,rating:4.7,school:false,caac:true,utc:true,drones:['植保机','DJI T50'],tags:['植保','吊运'],intro:'CAAC + AOPA 双证，主做植保 5 年，旺季可调度多台 T50，接受跨省作业。',orders:38,completion:95,apptime:'1小时前'},
-    {name:'飞鹰赵',avatar:'赵',avatarBg:'bg-amber-100',avatarColor:'text-amber-600',city:'深圳',flyYears:3,rating:5.0,school:true,caac:true,utc:false,drones:['重型吊运机'],tags:['吊运'],intro:'专注吊运3年，零事故记录，设备齐全，随时可到场。',orders:18,completion:100,apptime:'2小时前'},
-    {name:'李建军',avatar:'李',avatarBg:'bg-orange-100',avatarColor:'text-orange-600',city:'东莞',flyYears:4,rating:4.6,school:false,caac:true,utc:false,drones:['DJI Inspire 3'],tags:['航拍','吊运'],intro:'CAAC 持证 4 年，主做工程类吊运项目，有个人责任险，接受全国出差。',orders:42,completion:93,apptime:'3小时前'},
-    {name:'王摄远',avatar:'王',avatarBg:'bg-purple-100',avatarColor:'text-purple-600',city:'佛山',flyYears:8,rating:4.9,school:false,caac:true,utc:true,drones:['DJI M350','DJI Inspire 3'],tags:['航拍','测绘'],intro:'资深航拍+吊运双栖飞手，8年经验，曾服务于万科、华润等大型地产项目。',orders:72,completion:98,apptime:'昨天'},
-    {name:'孙浩',avatar:'孙',avatarBg:'bg-indigo-100',avatarColor:'text-indigo-600',city:'惠州',flyYears:2,rating:4.5,school:false,caac:false,utc:true,drones:['DJI Mavic 3'],tags:['航拍'],intro:'新入场飞手，持有大疆 UTC 认证，希望积累大型项目经验。',orders:9,completion:90,apptime:'昨天'},
-    {name:'刘大伟',avatar:'刘',avatarBg:'bg-cyan-100',avatarColor:'text-cyan-600',city:'珠海',flyYears:7,rating:4.8,school:false,caac:true,utc:true,drones:['重型吊运机','DJI M30'],tags:['吊运','巡检'],intro:'7年专业吊运经验，设备齐全（含保险），可提供历史项目视频参考。',orders:64,completion:96,apptime:'2天前'},
-    {name:'周凯',avatar:'周',avatarBg:'bg-pink-100',avatarColor:'text-pink-600',city:'中山',flyYears:4,rating:4.7,school:true,caac:true,utc:false,drones:['DJI M350'],tags:['航拍','测绘'],intro:'持 CAAC 二级执照，专注商业综合体类项目。',orders:31,completion:94,apptime:'3天前'},
+    {name:'王师傅',avatar:'王',avatarBg:'bg-blue-100',avatarColor:'text-blue-600',city:'深圳',flyYears:8,rating:4.9,school:true,caac:true,utc:false,drones:['重型吊运机','DJI M350'],tags:['吊运','航拍'],intro:'8年吊运经验，持有重型机操作执照，自备80kg级吊运机，曾参与多个万科工地项目。',orders:56,completion:97,apptime:'15分钟前',cancelRate30d:2,urgentCancelCount30d:0,forceCancelCount30d:0},
+    {name:'陈飞手',avatar:'陈',avatarBg:'bg-green-100',avatarColor:'text-green-600',city:'广州',flyYears:5,rating:4.7,school:false,caac:true,utc:true,drones:['植保机','DJI T50'],tags:['植保','吊运'],intro:'CAAC + AOPA 双证，主做植保 5 年，旺季可调度多台 T50，接受跨省作业。',orders:38,completion:95,apptime:'1小时前',cancelRate30d:5,urgentCancelCount30d:0,forceCancelCount30d:0},
+    {name:'飞鹰赵',avatar:'赵',avatarBg:'bg-amber-100',avatarColor:'text-amber-600',city:'深圳',flyYears:3,rating:5.0,school:true,caac:true,utc:false,drones:['重型吊运机'],tags:['吊运'],intro:'专注吊运3年，零事故记录，设备齐全，随时可到场。',orders:18,completion:100,apptime:'2小时前',cancelRate30d:0,urgentCancelCount30d:0,forceCancelCount30d:0},
+    {name:'李建军',avatar:'李',avatarBg:'bg-orange-100',avatarColor:'text-orange-600',city:'东莞',flyYears:4,rating:4.6,school:false,caac:true,utc:false,drones:['DJI Inspire 3'],tags:['航拍','吊运'],intro:'CAAC 持证 4 年，主做工程类吊运项目，有个人责任险，接受全国出差。',orders:42,completion:93,apptime:'3小时前',cancelRate30d:25,urgentCancelCount30d:2,forceCancelCount30d:0},
+    {name:'王摄远',avatar:'王',avatarBg:'bg-purple-100',avatarColor:'text-purple-600',city:'佛山',flyYears:8,rating:4.9,school:false,caac:true,utc:true,drones:['DJI M350','DJI Inspire 3'],tags:['航拍','测绘'],intro:'资深航拍+吊运双栖飞手，8年经验，曾服务于万科、华润等大型地产项目。',orders:72,completion:98,apptime:'昨天',cancelRate30d:3,urgentCancelCount30d:0,forceCancelCount30d:0},
+    {name:'孙浩',avatar:'孙',avatarBg:'bg-indigo-100',avatarColor:'text-indigo-600',city:'惠州',flyYears:2,rating:4.5,school:false,caac:false,utc:true,drones:['DJI Mavic 3'],tags:['航拍'],intro:'新入场飞手，持有大疆 UTC 认证，希望积累大型项目经验。',orders:9,completion:90,apptime:'昨天',cancelRate30d:12,urgentCancelCount30d:1,forceCancelCount30d:0},
+    {name:'刘大伟',avatar:'刘',avatarBg:'bg-cyan-100',avatarColor:'text-cyan-600',city:'珠海',flyYears:7,rating:4.8,school:false,caac:true,utc:true,drones:['重型吊运机','DJI M30'],tags:['吊运','巡检'],intro:'7年专业吊运经验，设备齐全（含保险），可提供历史项目视频参考。',orders:64,completion:96,apptime:'2天前',cancelRate30d:4,urgentCancelCount30d:0,forceCancelCount30d:0},
+    {name:'周凯',avatar:'周',avatarBg:'bg-pink-100',avatarColor:'text-pink-600',city:'中山',flyYears:4,rating:4.7,school:true,caac:true,utc:false,drones:['DJI M350'],tags:['航拍','测绘'],intro:'持 CAAC 二级执照，专注商业综合体类项目。',orders:31,completion:94,apptime:'3天前',cancelRate30d:35,urgentCancelCount30d:1,forceCancelCount30d:1},
   ].slice(0, t.applicants);
 
   const 容器 = document.getElementById('申请人列表容器');
@@ -2384,6 +3043,7 @@ function 打开申请人列表(t) {
             <div class="flex items-center gap-1.5 mb-0.5 flex-wrap">
               <span class="text-base font-bold text-gray-900">${p.name}</span>
               ${p.school?'<span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-50 text-purple-600 font-medium">机构学员</span>':''}
+              ${派生指标角标(p)}
             </div>
             <div class="flex items-center gap-1.5 text-[12px] text-gray-500">
               <span>${p.city}</span>
@@ -2455,32 +3115,252 @@ document.getElementById('申请人遮罩').addEventListener('click', () => { doc
 
 // ============ 取消/认证弹窗 ============
 let 待取消任务数据 = null;
+let 待取消阶段 = 'recruiting'; // recruiting | confirmed_normal | confirmed_urgent | ongoing_negotiate
+let 取消二次确认中 = false;     // <24h 临期取消需要 2 次确认
+
+// 推断取消阶段（基于订单状态 + 是否选定飞手 + 是否临期）
+function 推断取消阶段(o) {
+  // 进行中（已开工或已提交完工材料）→ 协商解除
+  if (o.progress || o.completionSubmitted || 当前订单状态 === 'ongoing') return 'ongoing_negotiate';
+  // 飞手侧：appStatus 直接给出阶段
+  if (o.appStatus) {
+    if (o.appStatus === '待确认' || o.appStatus === '已撤回') return 'recruiting';
+    if (o.appStatus === '已确认') return o.urgent ? 'confirmed_urgent' : 'confirmed_normal';
+  }
+  // 需求方招募中 → 看是否已选定飞手
+  const tid = o.taskId || o.id;
+  const sel = (typeof 申请选定状态 !== 'undefined') ? 申请选定状态[tid] : null;
+  const 已选 = (sel && sel.已选 && sel.已选.length) || 0;
+  if (已选 === 0) return 'recruiting';
+  // 已确认：用 urgent 作为"距开工 <24h"的代理判断
+  return o.urgent ? 'confirmed_urgent' : 'confirmed_normal';
+}
+
 // 新版：订单卡的取消入口（来自订单列表/任务详情底栏）。先把任务详情扩展并入草稿再弹确认
 function 弹出取消确认订单(o) {
   const ext = 任务详情扩展[o.taskId || o.id] || {};
-  // 将完整字段合并为草稿
   待取消任务数据 = Object.assign({}, o, ext);
-  document.getElementById('取消任务名').textContent = o.title;
+  待取消阶段 = 推断取消阶段(待取消任务数据);
+  取消二次确认中 = false;
+  配置取消弹窗(待取消阶段);
+  document.getElementById('取消任务名').textContent = o.title || '--';
   document.getElementById('弹窗-取消确认').style.display = '';
   关闭任务详情();
   渲染全局图标();
 }
+
+// 按阶段配置弹窗（图标 / 标题 / 提示框 / 表单区 / 按钮）
+function 配置取消弹窗(stage) {
+  const $ = id => document.getElementById(id);
+  const 图标盒 = $('取消-图标盒'), 图标 = $('取消-图标'), 标题 = $('取消-标题');
+  const 提示框 = $('取消-提示框'), 提示文案 = $('取消-提示文案');
+  const 信用提示 = $('取消-信用提示'), 扣分值 = $('取消-扣分值');
+  const 原因区 = $('取消-原因区'), 协商区 = $('取消-协商区'), 不可抗力区 = $('取消-不可抗力区');
+  const btn确认 = $('btn-确认取消'), btn再发布 = $('btn-取消后再发布');
+
+  // 默认全隐藏
+  原因区.classList.add('hidden');
+  协商区.classList.add('hidden');
+  不可抗力区.classList.add('hidden');
+  信用提示.classList.add('hidden');
+  btn再发布.classList.remove('hidden');
+
+  if (stage === 'recruiting') {
+    图标盒.className = 'w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center mr-3';
+    图标.setAttribute('data-lucide', 'alert-circle'); 图标.className = 'w-5 h-5 text-amber-500';
+    标题.textContent = '确认取消任务？';
+    提示框.className = 'rounded-xl p-3 mb-3 border bg-amber-50 border-amber-100';
+    提示文案.className = 'text-[11px] leading-relaxed text-amber-800';
+    提示文案.innerHTML = '<i data-lucide="info" class="w-3 h-3 inline mr-0.5"></i>当前未选定飞手，可一键取消。任务将从大厅下线，已申请飞手将收到通知。不扣信用分。';
+    btn确认.className = 'w-full py-2.5 rounded-full bg-amber-500 text-white text-sm font-medium';
+    btn确认.textContent = '确认取消';
+  } else if (stage === 'confirmed_normal') {
+    图标盒.className = 'w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center mr-3';
+    图标.setAttribute('data-lucide', 'alert-triangle'); 图标.className = 'w-5 h-5 text-orange-500';
+    标题.textContent = '取消已确认任务';
+    提示框.className = 'rounded-xl p-3 mb-3 border bg-orange-50 border-orange-100';
+    提示文案.className = 'text-[11px] leading-relaxed text-orange-800';
+    提示文案.innerHTML = '<i data-lucide="info" class="w-3 h-3 inline mr-0.5"></i>飞手已确认接单。建议线下沟通补偿事宜（平台不强制）。';
+    信用提示.classList.remove('hidden'); 扣分值.textContent = '-5';
+    原因区.classList.remove('hidden');
+    不可抗力区.classList.remove('hidden');
+    btn再发布.classList.add('hidden');
+    btn确认.className = 'w-full py-2.5 rounded-full bg-orange-500 text-white text-sm font-medium';
+    btn确认.textContent = '确认取消（扣 5 信用分）';
+  } else if (stage === 'confirmed_urgent') {
+    图标盒.className = 'w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mr-3';
+    图标.setAttribute('data-lucide', 'alert-octagon'); 图标.className = 'w-5 h-5 text-red-500';
+    标题.textContent = '⚠️ 临期取消（距开工 <24h）';
+    提示框.className = 'rounded-xl p-3 mb-3 border bg-red-50 border-red-200';
+    提示文案.className = 'text-[11px] leading-relaxed text-red-700 font-medium';
+    提示文案.innerHTML = '<i data-lucide="alert-triangle" class="w-3 h-3 inline mr-0.5"></i>距开工不足 24 小时，飞手可能已在准备 / 在途。临期取消将严重影响您的信用与后续推荐权重，请慎重。';
+    信用提示.classList.remove('hidden'); 扣分值.textContent = '-15';
+    信用提示.className = 'rounded-xl p-2.5 mb-3 bg-red-50 border border-red-200 flex items-start gap-2';
+    原因区.classList.remove('hidden');
+    不可抗力区.classList.remove('hidden');
+    btn再发布.classList.add('hidden');
+    btn确认.className = 'w-full py-2.5 rounded-full bg-red-600 text-white text-sm font-bold';
+    btn确认.textContent = '仍要取消（扣 15 信用分 + 公开角标）';
+  } else if (stage === 'ongoing_negotiate') {
+    图标盒.className = 'w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3';
+    图标.setAttribute('data-lucide', 'handshake'); 图标.className = 'w-5 h-5 text-blue-600';
+    标题.textContent = '协商解除任务';
+    提示框.className = 'rounded-xl p-3 mb-3 border bg-blue-50 border-blue-100';
+    提示文案.className = 'text-[11px] leading-relaxed text-blue-800';
+    提示文案.innerHTML = '<i data-lucide="info" class="w-3 h-3 inline mr-0.5"></i>进行中订单不支持单方取消。发起协商后飞手将在 IM 中收到请求，双方同意才能关闭订单。双方不扣分。';
+    协商区.classList.remove('hidden');
+    不可抗力区.classList.remove('hidden');
+    btn再发布.classList.add('hidden');
+    btn确认.className = 'w-full py-2.5 rounded-full bg-blue-600 text-white text-sm font-medium shadow-md shadow-blue-200';
+    btn确认.textContent = '发送协商请求';
+  }
+}
 // 保留原函数入口兼容老调用
 function 弹出取消确认(data) { 弹出取消确认订单(data); }
+
+// ============ 强制取消（协商被拒后兜底） ============
+let 待强制取消订单 = null;
+let 强制取消二次确认中 = false;
+function 弹出强制取消确认(data) {
+  待强制取消订单 = data;
+  强制取消二次确认中 = false;
+  const btn = document.getElementById('btn-强制取消-确认');
+  if (btn) { btn.textContent = '我已知悉 · 强制取消'; btn.classList.remove('animate-pulse'); }
+  const 提示 = document.getElementById('强制取消-二次提示');
+  if (提示) 提示.classList.add('hidden');
+  document.getElementById('弹窗-强制取消').classList.remove('hidden');
+  渲染全局图标();
+}
+function 关闭强制取消弹窗() {
+  document.getElementById('弹窗-强制取消').classList.add('hidden');
+  待强制取消订单 = null;
+  强制取消二次确认中 = false;
+}
+function 确认强制取消() {
+  // 二次确认：第一次点击仅切换状态，第二次才执行
+  if (!强制取消二次确认中) {
+    强制取消二次确认中 = true;
+    const btn = document.getElementById('btn-强制取消-确认');
+    if (btn) {
+      btn.textContent = '再次确认：扣 30 分';
+      btn.classList.add('animate-pulse');
+      setTimeout(() => btn.classList.remove('animate-pulse'), 1500);
+    }
+    document.getElementById('强制取消-二次提示').classList.remove('hidden');
+    return;
+  }
+  // 执行强制取消：把 ongoing 订单转 ended，并附标记
+  const data = 待强制取消订单;
+  关闭强制取消弹窗();
+  if (!data) return;
+  const tid = data.taskId || data.id;
+  ['demand','pilot'].forEach(side => {
+    const arr = (订单数据[side]||{}).ongoing || [];
+    const idx = arr.findIndex(o => (o.taskId||o.id) === tid);
+    if (idx >= 0) {
+      const o = arr.splice(idx, 1)[0];
+      o.cancelled = true;
+      o.forceCancelled = true;
+      o.cancelReason = '强制取消（协商解除被拒后）';
+      o.cancelInitiator = side === 'demand' ? 'demand' : 'pilot';
+      o.completedDate = new Date().toISOString().slice(0,10);
+      (订单数据[side].ended = 订单数据[side].ended || []).unshift(o);
+    }
+  });
+  // 信用分扣减 + 派生指标 +1（mock：更新档案）
+  const me = 我的档案[当前身份];
+  if (me) {
+    me.credit = Math.max(0, (me.credit || 100) - 30);
+    me.forceCancelCount30d = (me.forceCancelCount30d || 0) + 1;
+    me.cancelRate30d = (me.cancelRate30d || 0) + 5; // 假设取消率上调
+  }
+  // 信用变动记录追加一条
+  const log = 信用变动记录[当前身份] = 信用变动记录[当前身份] || [];
+  log.unshift({date: new Date().toISOString().slice(0,10), delta: -30, reason: `进行中订单协商被拒后强制取消（${data.title||''}）`, orderId: data.id, appealable: true});
+  显示Toast('已强制取消 · 信用 -30 · 已记入强制取消标记 · 可在"我的→信用与申诉"申诉');
+  切换Tab('订单'); 当前订单身份 = 'demand'; 当前订单状态 = 'ended'; 渲染订单列表();
+}
 function 关闭任务详情() {
   const 详情 = document.getElementById('页面-任务详情');
   if (详情 && !详情.classList.contains('hidden')) 详情.classList.add('hidden');
 }
-document.getElementById('btn-不取消').addEventListener('click', () => { document.getElementById('弹窗-取消确认').style.display = 'none'; });
-document.getElementById('取消遮罩').addEventListener('click', () => { document.getElementById('弹窗-取消确认').style.display = 'none'; });
-document.getElementById('btn-确认取消').addEventListener('click', () => {
+function 关闭取消弹窗() {
   document.getElementById('弹窗-取消确认').style.display = 'none';
+  取消二次确认中 = false;
+}
+document.getElementById('btn-不取消').addEventListener('click', 关闭取消弹窗);
+document.getElementById('取消遮罩').addEventListener('click', 关闭取消弹窗);
+
+document.getElementById('btn-确认取消').addEventListener('click', () => {
+  const stage = 待取消阶段;
+  const 不可抗力 = document.getElementById('取消-不可抗力')?.checked;
+
+  // 校验：已确认阶段必选原因
+  if (stage === 'confirmed_normal' || stage === 'confirmed_urgent') {
+    const 原因 = document.getElementById('取消-原因').value;
+    if (!原因) { 显示Toast('请选择取消原因'); return; }
+  }
+  // 校验：协商解除必填说明
+  if (stage === 'ongoing_negotiate') {
+    const 内容 = document.getElementById('取消-协商内容').value.trim();
+    if (!内容) { 显示Toast('请填写协商说明'); return; }
+  }
+
+  // 临期取消（<24h）：二次确认
+  if (stage === 'confirmed_urgent' && !取消二次确认中 && !不可抗力) {
+    取消二次确认中 = true;
+    const btn = document.getElementById('btn-确认取消');
+    btn.textContent = '再次确认：扣 15 分并公开临期取消角标';
+    btn.classList.add('animate-pulse');
+    setTimeout(() => btn.classList.remove('animate-pulse'), 1200);
+    return;
+  }
+
+  // 执行：根据阶段给出不同结果
+  关闭取消弹窗();
+  if (stage === 'ongoing_negotiate') {
+    // 把协商解除请求注入到 IM —— 找当前订单对应的飞手会话
+    const 内容 = document.getElementById('取消-协商内容').value.trim();
+    const 补偿 = document.getElementById('取消-协商补偿') ? document.getElementById('取消-协商补偿').value.trim() : '';
+    const tid = 待取消任务数据 && (待取消任务数据.taskId || 待取消任务数据.id);
+    const 标题 = 待取消任务数据 && 待取消任务数据.title;
+    // 在飞手对面侧 (demand 视角下 → 找 demand 角色的聊天)
+    const role = (身份文案[当前身份]||{}).isPilot ? 'pilot' : 'demand';
+    const 候选 = (聊天列表数据[role]||[]).filter(c => !c.official && c.matched);
+    const 目标 = 候选.find(c => (c.taskId||c.taskName||'').includes(标题||'') || c.id === 'C-D-002') || 候选[0];
+    if (目标) {
+      const now = new Date();
+      const time = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+      (聊天消息详情[目标.id] = 聊天消息详情[目标.id] || []).push({
+        from: 'negotiate', initiator: 'self', status: 'pending',
+        taskId: tid, taskTitle: 标题, reason: 内容, compensation: 补偿,
+        time
+      });
+      目标.lastMsg = '【协商解除请求】' + (内容||'');
+      目标.time = '刚刚';
+      显示Toast('协商解除请求已发送 · 已在 IM 中创建');
+    } else {
+      显示Toast('协商解除请求已发送 · 在 IM 中等待对方确认');
+    }
+    return;
+  }
+
   执行取消任务(待取消任务数据);
-  显示Toast('任务已取消 · 已申请的飞手将收到通知');
+
+  // 信用分提示（不可抗力豁免审核中，先不扣）
+  if (不可抗力) {
+    显示Toast('已提交不可抗力凭证 · 审核通过后不扣信用分');
+  } else if (stage === 'confirmed_normal') {
+    显示Toast('任务已取消 · 信用 -5 · 已通知飞手');
+  } else if (stage === 'confirmed_urgent') {
+    显示Toast('任务已取消 · 信用 -15 · 已记入临期取消角标');
+  } else {
+    显示Toast('任务已取消 · 已申请的飞手将收到通知');
+  }
   切换Tab('订单'); 当前订单身份 = 'demand'; 当前订单状态 = 'ended'; 渲染订单列表();
 });
 document.getElementById('btn-取消后再发布').addEventListener('click', () => {
-  document.getElementById('弹窗-取消确认').style.display = 'none';
+  关闭取消弹窗();
   if (待取消任务数据) { 执行取消任务(待取消任务数据); 再次发布(待取消任务数据); }
 });
 
@@ -2691,29 +3571,13 @@ let 当前订单身份 = 'demand';
 let 当前订单状态 = 'recruiting'; 
 
 // 顶部选项卡（发单方 / 接单方）文案控制
+// V1.2.3：按身份单视角展示，不再做切换 —— 飞手只看接单，企业只看发布
 function 更新订单身份按钮文案() {
-  const info = 身份文案[当前身份];
-  const btns = document.querySelectorAll('.order-side-btn');
+  const info = 身份文案[当前身份] || {};
   const 切换器 = document.getElementById('订单身份切换');
-  // 已认证企业（demand_ok / demand_warn）：不能做飞手 → 隐藏"我接单的"
-  const 隐藏接单 = !!info.isAuth && !info.isPilot;
-  if (info.isPilot) {
-    btns[0].textContent = '我的转包'; // 飞手发单即为转包
-    btns[1].textContent = '我接单的';
-    btns[1].style.display = '';
-    切换器.classList.remove('hidden');
-  } else if (隐藏接单) {
-    btns[0].textContent = '我发布的';
-    btns[1].style.display = 'none';
-    // 强制选中需求侧
-    if (当前订单身份 !== 'demand') 当前订单身份 = 'demand';
-    切换器.classList.remove('hidden');
-  } else {
-    btns[0].textContent = '我发布的';
-    btns[1].textContent = '我接单的';
-    btns[1].style.display = '';
-    切换器.classList.remove('hidden');
-  }
+  if (切换器) 切换器.classList.add('hidden'); // 永久隐藏顶部切换器
+  // 按当前身份强制视角
+  当前订单身份 = info.isPilot ? 'pilot' : 'demand';
 }
 
 // 选项卡点击事件与拦截逻辑
@@ -2840,14 +3704,35 @@ function 渲染订单列表() {
           : '';
         底部 = `${进度条}<div class="flex items-center justify-between pt-3 border-t border-gray-50 mt-3"><span class="text-[11px] text-gray-500">${o.applicants} 人申请</span><div class="flex gap-2"><button class="obtn text-[11px] px-3 py-1 rounded-full bg-white border border-red-200 text-red-500 font-medium" onclick='event.stopPropagation();弹出取消确认订单(${JSON.stringify(o).replace(/"/g,"&quot;")})'>取消任务</button><button class="obtn text-[11px] px-3 py-1 rounded-full bg-blue-600 text-white font-medium shadow-sm" onclick='event.stopPropagation();打开申请人列表({id:"${tid}",title:${JSON.stringify(o.title)},applicants:${o.applicants||0},招募人数:${o.招募人数||1}})'>查看申请</button></div></div>`;
       } else {
-        const sc = o.appStatus==='待确认'?'bg-blue-50 text-blue-600':'bg-gray-100 text-gray-500';
+        const sc = o.appStatus==='待确认'?'bg-blue-50 text-blue-600':(o.appStatus==='已确认'?'bg-emerald-50 text-emerald-600':'bg-gray-100 text-gray-500');
         状态标签 = `<span class="text-[10px] px-1.5 py-0.5 rounded ${sc} font-medium">${o.appStatus}</span>`;
-        底部 = `<div class="flex items-center justify-between pt-3 border-t border-gray-50 mt-3"><span class="text-[11px] text-gray-400">${o.appliedTime}申请</span><div class="flex gap-2">${o.appStatus==='待确认'?'<button class="obtn text-[11px] px-3 py-1 rounded-full bg-white border border-gray-200 text-gray-600 font-medium" onclick="event.stopPropagation();显示Toast(\'已撤回\')">撤回</button>':''}<button class="obtn text-[11px] px-3 py-1 rounded-full bg-blue-600 text-white font-medium shadow-sm" onclick="event.stopPropagation();${跳详情}">查看详情</button></div></div>`;
+        // 飞手镜像：待确认 → "撤回申请"（0 分）；已确认 → "取消接单"（走 confirmed 阶段扣分）
+        const 取消payload = JSON.stringify(o).replace(/"/g,"&quot;").replace(/'/g,"\\'");
+        const 飞手取消按钮 = o.appStatus==='待确认'
+          ? `<button class="obtn text-[11px] px-3 py-1 rounded-full bg-white border border-gray-200 text-gray-600 font-medium" onclick="event.stopPropagation();显示Toast('已撤回申请 · 招募中阶段不扣分')">撤回</button>`
+          : (o.appStatus==='已确认'
+              ? `<button class="obtn text-[11px] px-3 py-1 rounded-full bg-white border border-red-200 text-red-500 font-medium" onclick='event.stopPropagation();弹出取消确认订单(${取消payload})'>取消接单</button>`
+              : '');
+        底部 = `<div class="flex items-center justify-between pt-3 border-t border-gray-50 mt-3"><span class="text-[11px] text-gray-400">${o.appliedTime}申请</span><div class="flex gap-2">${飞手取消按钮}<button class="obtn text-[11px] px-3 py-1 rounded-full bg-blue-600 text-white font-medium shadow-sm" onclick="event.stopPropagation();${跳详情}">查看详情</button></div></div>`;
       }
     } else if (当前订单状态 === 'ongoing') {
       状态标签 = '<span class="text-[10px] px-1.5 py-0.5 rounded bg-orange-50 text-orange-600 font-medium">进行中</span>';
       const p = isDemand ? {n:o.pilotName,a:o.pilotAvatar} : {n:o.company,a:o.company.charAt(0)};
-      底部 = `<div class="bg-orange-50/60 rounded-lg px-3 py-2 mt-3 mb-3 flex items-center"><div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-700 font-bold text-xs mr-2">${p.a}</div><div class="flex-1 min-w-0"><div class="text-xs text-gray-800 font-medium truncate">${p.n}</div><div class="text-[10px] text-orange-600">${o.progress}</div></div></div><div class="flex gap-2"><button class="obtn flex-1 py-2 rounded-full bg-gray-100 text-gray-600 text-[11px] font-medium" onclick="event.stopPropagation();${跳详情}">查看详情</button></div>`;
+      // 发布方 + 飞手已提交完工材料 → 卡片底部显示「发消息 + 确认验收」
+      // 发布方 + 进行中未提交 → 「协商解除 + 查看详情」
+      const 已提交 = isDemand && !!o.completionSubmitted && !o.completionRejected;
+      const 协商payload = JSON.stringify(o).replace(/"/g,"&quot;").replace(/'/g,"\\'");
+      const 操作区 = 已提交
+        ? `<div class="flex gap-2"><button class="obtn flex-1 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-[11px] font-medium active:bg-blue-100" onclick="event.stopPropagation();申请人发消息('${(o.pilotName||'飞手').replace(/'/g,"\\'")}','${tid}','${(o.title||'').replace(/'/g,"\\'")}')">发消息</button><button class="obtn flex-[1.4] py-2 rounded-full bg-blue-600 text-white text-[11px] font-bold shadow-sm" onclick="event.stopPropagation();打开查看完工('${tid}')">确认验收</button></div>`
+        : (isDemand
+            ? (o.negotiateRejected
+                ? `<div class="flex gap-2"><button class="obtn flex-1 py-2 rounded-full bg-red-600 text-white text-[11px] font-bold shadow-sm shadow-red-200 flex items-center justify-center gap-1" onclick='event.stopPropagation();弹出强制取消确认(${协商payload})'><i data-lucide=\"alert-octagon\" class=\"w-3 h-3\"></i>强制取消</button><button class="obtn flex-1 py-2 rounded-full bg-gray-100 text-gray-600 text-[11px] font-medium" onclick="event.stopPropagation();${跳详情}">查看详情</button></div>`
+                : `<div class="flex gap-2"><button class="obtn flex-1 py-2 rounded-full bg-white border border-blue-200 text-blue-600 text-[11px] font-medium active:bg-blue-50" onclick='event.stopPropagation();弹出取消确认订单(${协商payload})'>协商解除</button><button class="obtn flex-[1.4] py-2 rounded-full bg-gray-100 text-gray-600 text-[11px] font-medium" onclick="event.stopPropagation();${跳详情}">查看详情</button></div>`)
+            // 飞手镜像：进行中订单 → 协商解除（或被拒后 → 强制取消）
+            : (o.negotiateRejected
+                ? `<div class="flex gap-2"><button class="obtn flex-1 py-2 rounded-full bg-red-600 text-white text-[11px] font-bold shadow-sm shadow-red-200 flex items-center justify-center gap-1" onclick='event.stopPropagation();弹出强制取消确认(${协商payload})'><i data-lucide=\"alert-octagon\" class=\"w-3 h-3\"></i>强制取消</button><button class="obtn flex-1 py-2 rounded-full bg-gray-100 text-gray-600 text-[11px] font-medium" onclick="event.stopPropagation();${跳详情}">查看详情</button></div>`
+                : `<div class="flex gap-2"><button class="obtn flex-1 py-2 rounded-full bg-white border border-blue-200 text-blue-600 text-[11px] font-medium active:bg-blue-50" onclick='event.stopPropagation();弹出取消确认订单(${协商payload})'>协商解除</button><button class="obtn flex-[1.4] py-2 rounded-full bg-gray-100 text-gray-600 text-[11px] font-medium" onclick="event.stopPropagation();${跳详情}">查看详情</button></div>`));
+      底部 = `<div class="bg-orange-50/60 rounded-lg px-3 py-2 mt-3 mb-3 flex items-center"><div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-700 font-bold text-xs mr-2">${p.a}</div><div class="flex-1 min-w-0"><div class="text-xs text-gray-800 font-medium truncate">${p.n}</div><div class="text-[10px] text-orange-600">${o.progress}</div></div>${已提交?'<span class="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-600 font-medium whitespace-nowrap">待验收</span>':''}</div>${操作区}`;
     } else {
       if (o.cancelled) {
         状态标签 = '<span class="text-[10px] px-1.5 py-0.5 rounded bg-red-50 text-red-500 font-medium">已取消</span>';
@@ -2883,7 +3768,8 @@ function 渲染订单列表() {
 // ============ 筛选抽屉 ============
 // (筛选抽屉等其他代码保持原本功能)
 const 筛选抽屉 = document.getElementById('筛选抽屉容器');
-document.getElementById('btn-打开筛选').addEventListener('click', () => { 筛选抽屉.classList.remove('hidden'); 筛选抽屉.querySelector('#筛选面板').classList.add('animate-slide-in-right'); 渲染全局图标(); });
+function 打开筛选() { 筛选抽屉.classList.remove('hidden'); 筛选抽屉.querySelector('#筛选面板').classList.add('animate-slide-in-right'); 渲染全局图标(); }
+document.getElementById('btn-打开筛选')?.addEventListener('click', 打开筛选);
 function 关闭筛选() { 筛选抽屉.querySelector('#筛选面板').classList.remove('animate-slide-in-right'); setTimeout(()=>筛选抽屉.classList.add('hidden'), 200); }
 document.getElementById('btn-关闭筛选').addEventListener('click', 关闭筛选); document.getElementById('筛选遮罩').addEventListener('click', 关闭筛选);
 document.getElementById('btn-重置筛选').addEventListener('click', () => { document.querySelectorAll('.filter-chip').forEach((c, i) => { const isFirst = c === c.parentElement.firstElementChild; c.classList.toggle('chip-active', isFirst); c.classList.toggle('chip-inactive', !isFirst); }); });
@@ -3105,6 +3991,7 @@ const 聊天消息详情 = {
     {from:'other', content:'太好了！地址是福田区华强北XXX项目工地，进门在门卫处登记', time:'09:50'},
     {from:'other', content:'明天有地面协作人员全程配合你的作业', time:'09:51'},
     {from:'self',  content:'好的，明天8点我会准时到达', time:'10:02'},
+    {from:'negotiate', initiator:'other', status:'pending', taskId:'T1001', taskTitle:'高层建筑玻璃幕墙吊运（35层，共120片）', reason:'今早突发：业主方提出推迟整改幕墙固定结构，工期延长至下月。希望与飞手协商解除当前订单，下月新档期再合作。', compensation:'线下补 500 元误工补偿（微信转账）', time:'今天 14:20'},
   ],
   'C-P-002': [
     {from:'other', content:'张飞手，韶关的任务顺利完成了，辛苦你了！', time:'昨天 17:30'},
@@ -3425,10 +4312,49 @@ function 打开聊天详情(chatId) {
 function 渲染聊天消息(chatId, 聊天) {
   const msgs = 聊天消息详情[chatId] || [];
   const 区 = document.getElementById('聊天消息区');
-  区.innerHTML = msgs.map(msg => {
+  区.innerHTML = msgs.map((msg, idx) => {
     if (msg.from === 'system') {
       return `<div class="flex justify-center my-2">
         <span class="text-[10px] text-gray-400 bg-white/70 px-2.5 py-1 rounded-full border border-gray-100">${msg.content}</span>
+      </div>`;
+    }
+    if (msg.from === 'negotiate') {
+      // 协商解除特殊气泡：标题 + 原因 + 可选补偿 + 状态/按钮
+      const 我是发起方 = msg.initiator === 'self';
+      const 状态 = msg.status || 'pending'; // pending / accepted / rejected
+      const 头部色 = 状态==='accepted' ? 'from-emerald-500 to-emerald-600' : (状态==='rejected' ? 'from-gray-400 to-gray-500' : 'from-orange-500 to-amber-500');
+      const 状态文案 = {
+        pending: 我是发起方 ? '协商解除请求 · 等待对方确认' : '对方申请协商解除',
+        accepted: '协商解除已达成 · 订单已终止',
+        rejected: '协商解除已拒绝',
+      }[状态];
+      const 状态图标 = {pending:'handshake', accepted:'check-circle-2', rejected:'x-circle'}[状态];
+      const 按钮区 = (状态==='pending' && !我是发起方) ? `
+        <div class="flex gap-2 mt-3">
+          <button onclick="拒绝协商解除('${chatId}', ${idx})" class="flex-1 py-2 rounded-full bg-white border border-gray-200 text-gray-600 text-[12px] font-medium active:bg-gray-50">拒绝</button>
+          <button onclick="同意协商解除('${chatId}', ${idx})" class="flex-[1.4] py-2 rounded-full bg-emerald-600 text-white text-[12px] font-semibold shadow-md shadow-emerald-200 active:scale-95">同意解除</button>
+        </div>` : (状态==='rejected' && 我是发起方 ? `
+        <div class="mt-3 bg-red-50 border border-red-100 rounded-xl p-2 text-[11px] text-red-700 leading-relaxed">
+          <i data-lucide="alert-octagon" class="w-3 h-3 inline mr-0.5"></i>对方已拒绝。如仍需取消，可在订单详情走"强制取消"（信用 -30 + 公开标记）
+        </div>` : '');
+      return `<div class="flex justify-center my-3 px-3">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden max-w-[92%] w-full">
+          <div class="bg-gradient-to-r ${头部色} px-4 py-2.5 flex items-center gap-2 text-white">
+            <i data-lucide="${状态图标}" class="w-4 h-4"></i>
+            <span class="text-[12px] font-semibold flex-1">${状态文案}</span>
+          </div>
+          <div class="p-3 space-y-2">
+            <div class="text-[11px] text-gray-400">关联订单</div>
+            <div class="text-[12px] text-gray-800 font-medium leading-snug">${msg.taskTitle||'--'}</div>
+            <div class="bg-gray-50 rounded-xl p-2.5 mt-1">
+              <div class="text-[10px] text-gray-400 mb-0.5">协商原因</div>
+              <p class="text-[12px] text-gray-700 leading-relaxed">${msg.reason||'--'}</p>
+              ${msg.compensation ? `<div class="text-[10px] text-gray-400 mt-2 mb-0.5">补偿方案（非平台担保）</div><p class="text-[12px] text-gray-700 leading-relaxed">${msg.compensation}</p>` : ''}
+            </div>
+            ${按钮区}
+            <p class="text-[10px] text-gray-400 text-right">${msg.time}</p>
+          </div>
+        </div>
       </div>`;
     }
     return `<div class="flex ${msg.from==='self'?'justify-end':'justify-start'} items-end gap-2">
@@ -3440,6 +4366,61 @@ function 渲染聊天消息(chatId, 聊天) {
       ${msg.from==='self' ? '<div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-bold flex-shrink-0">我</div>' : ''}
     </div>`;
   }).join('');
+  渲染全局图标();
+}
+
+// 协商解除：飞手同意 → 订单转"已取消（协商解除）"，双方不扣分
+function 同意协商解除(chatId, msgIdx) {
+  const msgs = 聊天消息详情[chatId] || [];
+  const m = msgs[msgIdx];
+  if (!m) return;
+  m.status = 'accepted';
+  const now = new Date();
+  const time = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+  msgs.push({from:'system', content:'✓ 双方达成协商解除 · 订单已终止 · 不扣信用分', time});
+  // 同步订单状态：在两侧订单数据中找到 taskId 把它从 ongoing 移到 ended（协商解除标记）
+  if (m.taskId) 标记订单为协商解除(m.taskId);
+  const 聊天 = (聊天列表数据.pilot||[]).concat(聊天列表数据.demand||[]).find(c=>c.id===chatId);
+  if (聊天) { 聊天.lastMsg = '✓ 协商解除已达成'; 聊天.time = '刚刚'; }
+  渲染聊天消息(chatId, 聊天 || {});
+  显示Toast('已同意协商解除 · 订单已终止');
+}
+
+// 协商解除：飞手拒绝 → 提示发起方可走"强制取消"
+function 拒绝协商解除(chatId, msgIdx) {
+  const msgs = 聊天消息详情[chatId] || [];
+  const m = msgs[msgIdx];
+  if (!m) return;
+  m.status = 'rejected';
+  const now = new Date();
+  const time = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+  msgs.push({from:'system', content:'✗ 协商解除被拒绝 · 订单继续 · 发起方可选择强制取消（信用 -30）', time});
+  if (m.taskId) 标记订单协商被拒(m.taskId);
+  const 聊天 = (聊天列表数据.pilot||[]).concat(聊天列表数据.demand||[]).find(c=>c.id===chatId);
+  if (聊天) { 聊天.lastMsg = '✗ 协商解除已拒绝'; 聊天.time = '刚刚'; }
+  渲染聊天消息(chatId, 聊天 || {});
+  显示Toast('已拒绝协商 · 发起方可走强制取消链路');
+}
+
+// 在所有订单数据中找到 taskId 对应的进行中订单并标记
+function 标记订单为协商解除(taskId) {
+  ['demand','pilot'].forEach(side => {
+    const arr = (订单数据[side]||{}).ongoing || [];
+    const idx = arr.findIndex(o => (o.taskId||o.id) === taskId);
+    if (idx >= 0) {
+      const o = arr.splice(idx, 1)[0];
+      o.cancelReason = '协商解除';
+      o.cancelDate = new Date().toISOString().slice(0,10);
+      (订单数据[side].ended = 订单数据[side].ended || []).unshift(o);
+    }
+  });
+}
+function 标记订单协商被拒(taskId) {
+  ['demand','pilot'].forEach(side => {
+    const arr = (订单数据[side]||{}).ongoing || [];
+    const o = arr.find(x => (x.taskId||x.id) === taskId);
+    if (o) { o.negotiateRejected = true; }
+  });
 }
 
 function 关闭聊天详情() {
@@ -4381,33 +5362,274 @@ function 执行选定飞手(name, taskId, taskTitle) {
 (function 渲染金刚区(){
   const 容器 = document.getElementById('金刚区容器');
   if (!容器) return;
+  // 金刚区 8 格（4 列 × 2 行）；Lucide 线性图标 + 渐变底
   const items = [
-    {icon:'🏗️', label:'吊运',   type:'吊运'},
-    {icon:'🌾', label:'植保',   type:'植保'},
-    {icon:'📷', label:'航拍',   type:'航拍'},
-    {icon:'🔍', label:'巡检',   type:'巡检'},
-    {icon:'🌍', label:'测绘',   type:'测绘'},
-    {icon:'📦', label:'物流',   type:'物流'},
-    {icon:'🚨', label:'应急',   type:'应急'},
-    {icon:'🎥', label:'活动',   type:'航拍'},
-    {icon:'⚡', label:'急单',   type:'urgent'},
-    {icon:'➕', label:'全部',   type:'all'},
+    {icon:'package',          label:'吊运',     type:'吊运',     bg:'from-orange-50 to-amber-50',   color:'text-orange-600'},
+    {icon:'sprout',           label:'植保',     type:'植保',     bg:'from-green-50 to-emerald-50',  color:'text-green-600'},
+    {icon:'camera',           label:'航拍',     type:'航拍',     bg:'from-blue-50 to-sky-50',       color:'text-blue-600'},
+    {icon:'wrench',           label:'维修',     type:'维修',     bg:'from-slate-50 to-gray-100',    color:'text-slate-600'},
+    {icon:'map',              label:'测绘',     type:'测绘',     bg:'from-pink-50 to-rose-50',      color:'text-pink-600'},
+    {icon:'search',           label:'巡检',     type:'巡检',     bg:'from-purple-50 to-violet-50',  color:'text-purple-600'},
+    {icon:'graduation-cap',   label:'教学服务', type:'教学服务', bg:'from-indigo-50 to-blue-50',    color:'text-indigo-600'},
+    {icon:'layout-grid',      label:'更多',     type:'more',     bg:'from-gray-50 to-zinc-50',      color:'text-gray-500'},
   ];
   容器.innerHTML = items.map(it => `
     <div class="flex flex-col items-center cursor-pointer active:scale-90 transition-transform" data-jk="${it.type}">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center text-xl mb-1">${it.icon}</div>
-      <span class="text-[10px] text-gray-600">${it.label}</span>
+      <div class="w-11 h-11 rounded-2xl bg-gradient-to-br ${it.bg} flex items-center justify-center ${it.color} mb-1 shadow-sm">
+        <i data-lucide="${it.icon}" class="w-5 h-5"></i>
+      </div>
+      <span class="text-[10px] text-gray-700 font-medium">${it.label}</span>
     </div>
   `).join('');
   容器.querySelectorAll('[data-jk]').forEach(el => {
     el.addEventListener('click', () => {
       const k = el.dataset.jk;
-      if (k === 'urgent') { 当前大厅 = 'urgent'; document.querySelectorAll('.hall-tab').forEach(b => { const a = b.dataset.hall === 'urgent'; b.classList.toggle('bg-blue-600', a); b.classList.toggle('text-white', a); b.classList.toggle('shadow-sm', a); b.classList.toggle('text-gray-500', !a); }); 渲染任务列表(); return; }
-      if (k === 'all') { 显示Toast('已是全部任务'); return; }
-      显示Toast(`筛选：${k}`);
+      if (k === 'more') { 显示Toast('更多分类即将开放'); return; }
+      打开分类页(k);
     });
   });
+  渲染全局图标();
 })();
+
+// ---------- 平台介绍页（首页 banner 点击进入） ----------
+function 打开平台介绍() {
+  切换平台介绍Tab('dispatch');
+  document.getElementById('页面-平台介绍').classList.remove('hidden');
+  渲染全局图标();
+}
+function 切换平台介绍Tab(key) {
+  document.querySelectorAll('.pb-tab').forEach(b => {
+    const a = b.dataset.pb === key;
+    b.classList.toggle('text-gray-900', a);
+    b.classList.toggle('text-gray-400', !a);
+  });
+  // 指示线移动
+  const ind = document.getElementById('pb-指示线');
+  ind.style.transform = key === 'dispatch' ? 'translateX(0%)' : 'translateX(100%)';
+  // 轨道滑动（左屏 0%，右屏 -50%）
+  const track = document.getElementById('pb-轨道');
+  track.style.transform = key === 'dispatch' ? 'translateX(0%)' : 'translateX(-50%)';
+}
+document.querySelectorAll('.pb-tab').forEach(b => {
+  b.addEventListener('click', () => 切换平台介绍Tab(b.dataset.pb));
+});
+
+// 手势滑动：超过阈值切换整页
+(function 接入平台介绍滑动(){
+  const area = document.getElementById('pb-滚动区');
+  if (!area) return;
+  let startX = 0, startY = 0, tracking = false;
+  area.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX; startY = e.touches[0].clientY; tracking = true;
+  }, {passive:true});
+  area.addEventListener('touchend', e => {
+    if (!tracking) return; tracking = false;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy)) return; // 纵向滚动优先
+    const 当前 = document.getElementById('pb-轨道').style.transform.includes('-50') ? 'train' : 'dispatch';
+    if (dx < 0 && 当前 === 'dispatch') 切换平台介绍Tab('train');
+    else if (dx > 0 && 当前 === 'train') 切换平台介绍Tab('dispatch');
+  }, {passive:true});
+})();
+
+// 报名表单
+function 打开报名表单() {
+  document.getElementById('报名-姓名').value = '';
+  document.getElementById('报名-电话').value = '';
+  document.getElementById('弹窗-报名表单').classList.remove('hidden');
+  渲染全局图标();
+}
+function 提交报名表单() {
+  const 名 = document.getElementById('报名-姓名').value.trim();
+  const 话 = document.getElementById('报名-电话').value.trim();
+  if (!名) { 显示Toast('请填写姓名'); return; }
+  if (!/^\d{11}$/.test(话)) { 显示Toast('请填写 11 位手机号'); return; }
+  document.getElementById('弹窗-报名表单').classList.add('hidden');
+  显示Toast('已提交，1 个工作日内课程顾问联系');
+}
+
+// ---------- 分类页（金刚区点击进入） ----------
+const 二级分类 = {
+  '吊运':     ['建筑吊装','高空安装','应急吊运','货物吊运','索道架设','海上平台','其他'],
+  '植保':     ['水稻','小麦','果树','棉花','中草药','茶园','杂草飞防','其他'],
+  '航拍':     ['房产航拍','婚礼跟拍','影视拍摄','风光延时','城市宣传','工程进度','活动跟拍','其他'],
+  '维修':     ['巡检后报修','高空设备维修协助','风电叶片维修','配件更换现场','设备故障排查','其他'],
+  '测绘':     ['地形测绘','房产测绘','矿区测量','道路测设','三维建模','应急测绘','其他'],
+  '巡检':     ['电力线路','光伏电站','风电叶片','桥梁结构','油气管线','林业防护','通讯基站','其他'],
+  '教学服务': ['CAAC 考证教练','复训教员','入门陪练','企业团训','院校合作','其他'],
+};
+
+let 分类状态 = { 一级:'', 工种:'全部', 二级:'全部', 排序:'综合' };
+
+function 打开分类页(一级) {
+  if (当前身份 === 'guest') { 打开未登录引导(); return; }
+  分类状态 = { 一级, 工种:'全部', 二级:'全部', 排序:'综合' };
+  document.getElementById('分类-标题').textContent = 一级;
+  // 渲染二级 chips
+  const chipsDom = document.getElementById('分类-二级chips');
+  const chipsArr = ['全部', ...(二级分类[一级] || [])];
+  chipsDom.innerHTML = chipsArr.map(c => `
+    <button class="cat-sub-chip flex-shrink-0 px-3 py-1 rounded-full text-[11px] font-medium border ${c==='全部'?'bg-blue-600 text-white border-blue-600':'bg-white text-gray-600 border-gray-200'}" data-sub="${c}">${c}</button>
+  `).join('');
+  // 重置工种 tab UI
+  document.querySelectorAll('.cat-job-tab').forEach(b => {
+    const a = b.dataset.job === '全部';
+    b.classList.toggle('bg-white', a); b.classList.toggle('shadow-sm', a);
+    b.classList.toggle('text-gray-900', a); b.classList.toggle('text-gray-500', !a);
+  });
+  // 重置排序 UI
+  document.getElementById('分类-排序标签').textContent = '综合';
+
+  document.getElementById('页面-分类').classList.remove('hidden');
+  渲染分类列表();
+  渲染全局图标();
+}
+
+function 关闭分类页() {
+  document.getElementById('页面-分类').classList.add('hidden');
+}
+
+function 渲染分类列表() {
+  const 容器 = document.getElementById('分类-任务列表');
+  const 计数 = document.getElementById('分类-计数');
+  const 类型色 = {
+    '吊运':'linear-gradient(135deg, #F97316, #EA580C)', '植保':'linear-gradient(135deg, #22C55E, #16A34A)',
+    '航拍':'linear-gradient(135deg, #3B82F6, #2563EB)', '巡检':'linear-gradient(135deg, #A855F7, #9333EA)',
+    '测绘':'linear-gradient(135deg, #EC4899, #DB2777)', '维修':'linear-gradient(135deg, #64748B, #475569)',
+    '教学服务':'linear-gradient(135deg, #6366F1, #4F46E5)', '其他':'linear-gradient(135deg, #64748B, #475569)',
+  };
+  // 1) 按一级筛
+  let 数据 = 任务数据.filter(t => (t.cat || t.type) === 分类状态.一级);
+  // 2) 工种
+  if (分类状态.工种 !== '全部') 数据 = 数据.filter(t => t.hire === 分类状态.工种);
+  // 3) 二级
+  if (分类状态.二级 !== '全部') 数据 = 数据.filter(t => t.subType === 分类状态.二级);
+  // 4) 排序模式 = 急单 → 仅看急单
+  if (分类状态.排序 === '急单') 数据 = 数据.filter(t => t.urgent);
+  // 5) 排序
+  const 取价 = b => parseInt((b.budget||'0').replace(/,/g,''))||0;
+  const 取距 = d => d === '外省' ? 9999 : (parseFloat(d)||9999);
+  const 取时 = p => { if (p.includes('分钟')) return 0.1; if (p.includes('刚刚')) return 0; if (p.includes('小时')) return parseFloat(p); if (p.includes('昨天')) return 24; if (p.includes('天')) return parseFloat(p)*24; return 999; };
+  if (分类状态.排序 === '最新发布') 数据.sort((a,b)=> 取时(a.publishTime) - 取时(b.publishTime));
+  else if (分类状态.排序 === '价格') 数据.sort((a,b)=> 取价(b) - 取价(a));
+  else if (分类状态.排序 === '距离') 数据.sort((a,b)=> 取距(a.distance) - 取距(b.distance));
+
+  计数.textContent = `${数据.length} 个任务`;
+
+  if (数据.length === 0) {
+    容器.innerHTML = `
+      <div class="flex flex-col items-center justify-center py-16 text-center">
+        <div class="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 mb-3"><i data-lucide="inbox" class="w-6 h-6"></i></div>
+        <p class="text-sm text-gray-500 mb-1">当前筛选下暂无任务</p>
+        <p class="text-[11px] text-gray-400 mb-3">试试切换二级分类或重置筛选</p>
+        <button onclick="重置分类筛选()" class="px-4 py-1.5 rounded-full bg-blue-600 text-white text-xs font-medium">重置筛选</button>
+      </div>
+    `;
+    渲染全局图标();
+    return;
+  }
+
+  容器.innerHTML = 数据.map((t, i) => `
+    <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 cursor-pointer active:scale-[.99] transition-all" data-tid="${t.id}">
+      <div class="flex items-center flex-wrap gap-1.5 mb-2">
+        <span class="text-[10px] px-2 py-0.5 rounded font-medium text-white" style="background:${类型色[t.type]||类型色['其他']}">${t.type}</span>
+        ${t.subType ? `<span class="text-[10px] px-1.5 py-0.5 rounded font-medium bg-gray-100 text-gray-600">${t.subType}</span>` : ''}
+        ${t.urgent ? '<span class="text-[10px] px-1.5 py-0.5 rounded font-medium bg-red-500 text-white flex items-center"><span class="inline-block w-1 h-1 bg-white rounded-full mr-0.5 pulse-dot"></span>急</span>' : ''}
+        <span class="text-[10px] px-1.5 py-0.5 rounded font-medium bg-blue-600 text-white">${t.hire}${t.settle!=='-'?'·'+t.settle:''}</span>
+      </div>
+      <h3 class="text-sm font-semibold text-gray-900 leading-relaxed mb-2 line-clamp-2">${t.title}</h3>
+      <div class="flex items-center mb-2.5">
+        <div class="w-6 h-6 rounded-full ${t.avatarBg} flex items-center justify-center ${t.avatarColor} text-[11px] font-bold mr-1.5">${t.avatar}</div>
+        <span class="text-[11px] text-gray-600 font-medium truncate max-w-[140px]">${t.company}</span>
+        <span class="text-[9px] px-1 py-0.5 rounded ${t.auth==='企业认证'?'bg-blue-50 text-blue-600':'bg-green-50 text-green-600'} font-medium ml-1.5">${t.auth}</span>
+      </div>
+      <div class="flex items-end justify-between pt-2 border-t border-gray-50">
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center text-[11px] text-gray-500 mb-1"><i data-lucide="map-pin" class="w-3 h-3 mr-0.5 flex-shrink-0"></i><span class="truncate">${t.location}</span><span class="mx-1">·</span><span class="${t.distance==='外省'?'text-gray-400':'text-blue-600 font-medium'} flex-shrink-0">${t.distance}</span></div>
+          <div class="flex items-center text-[10px] text-gray-400"><i data-lucide="clock" class="w-3 h-3 mr-0.5"></i>${t.publishTime} · ${t.applicants}人已申请</div>
+        </div>
+        <div class="text-right ml-3 flex-shrink-0">
+          <div class="flex items-baseline text-blue-600"><span class="text-xs font-bold mr-0.5">¥</span><span class="text-lg font-extrabold">${t.budget}</span></div>
+          <button class="mt-1 text-[10px] px-3 py-1 rounded-full bg-blue-600 text-white font-medium shadow-sm">立即查看</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  容器.querySelectorAll('[data-tid]').forEach(card => {
+    card.addEventListener('click', () => 打开任务详情(card.dataset.tid));
+  });
+  渲染全局图标();
+}
+
+function 重置分类筛选() {
+  分类状态.工种 = '全部';
+  分类状态.二级 = '全部';
+  分类状态.排序 = '综合';
+  document.querySelectorAll('.cat-job-tab').forEach(b => {
+    const a = b.dataset.job === '全部';
+    b.classList.toggle('bg-white', a); b.classList.toggle('shadow-sm', a);
+    b.classList.toggle('text-gray-900', a); b.classList.toggle('text-gray-500', !a);
+  });
+  document.querySelectorAll('.cat-sub-chip').forEach(c => {
+    const a = c.dataset.sub === '全部';
+    c.classList.toggle('bg-blue-600', a); c.classList.toggle('text-white', a); c.classList.toggle('border-blue-600', a);
+    c.classList.toggle('bg-white', !a); c.classList.toggle('text-gray-600', !a); c.classList.toggle('border-gray-200', !a);
+  });
+  document.getElementById('分类-排序标签').textContent = '综合';
+  渲染分类列表();
+}
+
+// 工种 tab 切换（事件委托，因为 DOM 已存在）
+document.querySelectorAll('.cat-job-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    分类状态.工种 = btn.dataset.job;
+    document.querySelectorAll('.cat-job-tab').forEach(b => {
+      const a = b === btn;
+      b.classList.toggle('bg-white', a); b.classList.toggle('shadow-sm', a);
+      b.classList.toggle('text-gray-900', a); b.classList.toggle('text-gray-500', !a);
+    });
+    渲染分类列表();
+  });
+});
+
+// 二级 chip（委托）
+document.getElementById('分类-二级chips').addEventListener('click', e => {
+  const chip = e.target.closest('.cat-sub-chip');
+  if (!chip) return;
+  分类状态.二级 = chip.dataset.sub;
+  document.querySelectorAll('.cat-sub-chip').forEach(c => {
+    const a = c === chip;
+    c.classList.toggle('bg-blue-600', a); c.classList.toggle('text-white', a); c.classList.toggle('border-blue-600', a);
+    c.classList.toggle('bg-white', !a); c.classList.toggle('text-gray-600', !a); c.classList.toggle('border-gray-200', !a);
+  });
+  渲染分类列表();
+});
+
+// 排序下拉
+document.getElementById('分类-排序按钮').addEventListener('click', e => {
+  e.stopPropagation();
+  document.getElementById('分类-排序下拉').classList.toggle('hidden');
+});
+document.querySelectorAll('.sort-opt').forEach(b => {
+  b.addEventListener('click', e => {
+    e.stopPropagation();
+    分类状态.排序 = b.dataset.sort;
+    document.getElementById('分类-排序标签').textContent = b.textContent.trim();
+    document.getElementById('分类-排序下拉').classList.add('hidden');
+    渲染分类列表();
+  });
+});
+// 点击其他位置关闭下拉
+document.addEventListener('click', e => {
+  const dd = document.getElementById('分类-排序下拉');
+  if (dd && !dd.classList.contains('hidden')) {
+    if (!e.target.closest('#分类-排序按钮') && !e.target.closest('#分类-排序下拉')) {
+      dd.classList.add('hidden');
+    }
+  }
+});
 
 // ---------- 筛选抽屉内容 ----------
 (function 填充筛选(){
@@ -4464,12 +5686,51 @@ function 更新订单状态计数() {
 // 用户档案数据（按身份）
 const 我的档案 = {
   guest:       { name:'未登录', sub:'点击登录，开启你的无人机任务之旅', avatar:'?', avatarBg:'bg-gray-200', avatarColor:'text-gray-500', credit:null },
-  pilot_new:   { name:'张飞手',  sub:'飞手 · 未认证',     avatar:'张', avatarBg:'bg-blue-100',   avatarColor:'text-blue-600',   credit:null, flyYears:0,  completed:0, drones:0 },
-  pilot_ok:    { name:'张飞手',  sub:'飞手 · CAAC 认证',   avatar:'张', avatarBg:'bg-blue-100',   avatarColor:'text-blue-600',   credit:125,  flyYears:4, completed:18, drones:3 },
-  pilot_warn:  { name:'张飞手',  sub:'飞手 · CAAC 认证',   avatar:'张', avatarBg:'bg-blue-100',   avatarColor:'text-blue-600',   credit:117,  flyYears:4, completed:18, drones:3 },
-  demand_new:  { name:'深圳某科技有限公司', sub:'需求方 · 未认证', avatar:'深', avatarBg:'bg-orange-100', avatarColor:'text-orange-600', credit:null, published:0, completed:0 },
-  demand_ok:   { name:'深圳某科技有限公司', sub:'需求方 · 企业认证', avatar:'深', avatarBg:'bg-blue-100',   avatarColor:'text-blue-600',   credit:118,  published:12, completed:8 },
-  demand_warn: { name:'深圳某科技有限公司', sub:'需求方 · 企业认证', avatar:'深', avatarBg:'bg-blue-100',   avatarColor:'text-blue-600',   credit:108,  published:12, completed:8 },
+  pilot_new:   { name:'张飞手',  sub:'飞手 · 未认证',     avatar:'张', avatarBg:'bg-blue-100',   avatarColor:'text-blue-600',   credit:null, flyYears:0,  completed:0, drones:0, cancelRate30d:0, urgentCancelCount30d:0, forceCancelCount30d:0 },
+  pilot_ok:    { name:'张飞手',  sub:'飞手 · CAAC 认证',   avatar:'张', avatarBg:'bg-blue-100',   avatarColor:'text-blue-600',   credit:125,  flyYears:4, completed:18, drones:3, cancelRate30d:3, urgentCancelCount30d:0, forceCancelCount30d:0 },
+  pilot_warn:  { name:'张飞手',  sub:'飞手 · CAAC 认证',   avatar:'张', avatarBg:'bg-blue-100',   avatarColor:'text-blue-600',   credit:117,  flyYears:4, completed:18, drones:3, cancelRate30d:8, urgentCancelCount30d:1, forceCancelCount30d:0 },
+  demand_new:  { name:'深圳某科技有限公司', sub:'需求方 · 未认证', avatar:'深', avatarBg:'bg-orange-100', avatarColor:'text-orange-600', credit:null, published:0, completed:0, cancelRate30d:0, urgentCancelCount30d:0, forceCancelCount30d:0 },
+  demand_ok:   { name:'深圳某科技有限公司', sub:'需求方 · 企业认证', avatar:'深', avatarBg:'bg-blue-100',   avatarColor:'text-blue-600',   credit:118,  published:12, completed:8, cancelRate30d:5, urgentCancelCount30d:0, forceCancelCount30d:0 },
+  demand_warn: { name:'深圳某科技有限公司', sub:'需求方 · 企业认证', avatar:'深', avatarBg:'bg-blue-100',   avatarColor:'text-blue-600',   credit:108,  published:12, completed:8, cancelRate30d:18, urgentCancelCount30d:2, forceCancelCount30d:1 },
+};
+
+// 信用分变动记录（按身份 mock，每条：date / delta / reason / orderId / appealable）
+const 信用变动记录 = {
+  pilot_ok: [
+    {date:'2026-04-22', delta:+2, reason:'完成"商用建筑外墙清洗"订单，获 5 星好评', orderId:'O-P-100', appealable:false},
+    {date:'2026-04-12', delta:+2, reason:'完成"春季水稻病虫害防治"订单', orderId:'O-P-200', appealable:false},
+    {date:'2026-03-22', delta:+3, reason:'完成"风电场叶片巡检"订单', orderId:'O-P-202', appealable:false},
+  ],
+  pilot_warn: [
+    {date:'2026-04-22', delta:+2, reason:'完成"商用建筑外墙清洗"订单', orderId:'O-P-100', appealable:false},
+    {date:'2026-04-15', delta:-5, reason:'已确认订单临开工 28h 单方取消', orderId:'O-P-099', appealable:true},
+    {date:'2026-04-12', delta:+2, reason:'完成"春季水稻病虫害防治"订单', orderId:'O-P-200', appealable:false},
+    {date:'2026-04-05', delta:-15, reason:'已确认订单距开工 8h 临期取消（公开角标）', orderId:'O-P-098', appealable:true},
+  ],
+  demand_ok: [
+    {date:'2026-04-10', delta:+3, reason:'订单"春季果园病虫害防治"5 星完成', orderId:'O-D-200', appealable:false},
+    {date:'2026-04-08', delta:+2, reason:'订单"楼盘开盘活动航拍"完成', orderId:'O-D-201', appealable:false},
+    {date:'2026-03-28', delta:+2, reason:'订单"工厂厂区例行巡检"完成', orderId:'O-D-202', appealable:false},
+  ],
+  demand_warn: [
+    {date:'2026-04-22', delta:+2, reason:'订单完成获 5 星好评', orderId:'O-D-100', appealable:false},
+    {date:'2026-04-18', delta:-30, reason:'进行中订单协商被拒后强制取消（公开标记）', orderId:'O-D-099', appealable:true},
+    {date:'2026-04-10', delta:-15, reason:'已确认订单距开工 12h 临期取消', orderId:'O-D-098', appealable:true},
+    {date:'2026-04-05', delta:-5, reason:'已确认订单距开工 30h 取消', orderId:'O-D-097', appealable:true},
+  ],
+};
+
+// 我的申诉列表（mock）
+let 我的申诉列表 = {
+  pilot_ok: [],
+  pilot_warn: [
+    {id:'AP-001', type:'扣分异议', orderId:'O-P-099', desc:'当时甲方临时变更作业地点超过 30km，已在 IM 中沟通，应属对方违约', status:'审核中', submitTime:'2026-04-16'},
+  ],
+  demand_ok: [],
+  demand_warn: [
+    {id:'AP-101', type:'不可抗力补登', orderId:'O-D-098', desc:'取消当日深圳发布暴雨橙色预警，全市禁飞，提交气象局截图', status:'已通过', submitTime:'2026-04-11', result:'审核通过 · 已回滚 -15 分扣减', resultTime:'2026-04-13'},
+    {id:'AP-102', type:'对方违约', orderId:'O-D-099', desc:'飞手到场后设备不符合招标要求且拒绝整改，被迫强制取消', status:'审核中', submitTime:'2026-04-19'},
+  ],
 };
 
 function 渲染我的页() {
@@ -4572,6 +5833,9 @@ function 渲染我的页() {
       `).join('')}
     </div>
 
+    <!-- 身份切换/新增卡（参考 Boss 直聘）-->
+    ${渲染身份切换卡(info)}
+
     <!-- 被投诉警示条 -->
     ${是被诉 ? `
       <div class="mx-4 mt-3 bg-gradient-to-r from-red-50 to-rose-50 border border-red-200 rounded-2xl p-3.5 flex items-center gap-3 cursor-pointer active:scale-[.99] transition-transform" onclick="查看投诉详情('${当前身份}')">
@@ -4601,6 +5865,52 @@ function 渲染我的页() {
   渲染全局图标();
 }
 
+// V1.2.1：身份切换/新增卡（参考 Boss 直聘"我要招聘"卡）
+function 渲染身份切换卡(info) {
+  if (info.isGuest || !info.isAuth) return ''; // 未登录或完全未认证：不显示（已认证引导条接管）
+  const 双向 = 是否双向认证();
+  const 飞手已认证 = !!用户认证.authedAsPilot;
+  const 企业已认证 = !!用户认证.authedAsDemand;
+  const 审核中侧 = 用户认证.pendingAuthSide || ''; // 'pilot' | 'demand' | ''
+
+  // 双向认证 → 不在「我的」页显示切换卡，请在「设置」中切换
+  if (双向) return '';
+
+  // 单边认证，且对面正在审核中 → 显示审核中状态卡（不可点）
+  const 缺失 = 飞手已认证 ? 'demand' : 'pilot';
+  if (审核中侧 === 缺失) {
+    const 缺名 = 缺失 === 'demand' ? '企业身份' : '飞手身份';
+    return `
+      <div class="mx-4 mt-3 bg-amber-50 rounded-2xl border border-amber-200 p-3.5 flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
+          <i data-lucide="loader" class="w-5 h-5 text-amber-600 animate-spin"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[14px] font-bold text-gray-900">${缺名}认证审核中</div>
+          <div class="text-[11px] text-amber-700 mt-0.5">材料已提交，通过后请在「设置」中手动切换到${缺名}</div>
+        </div>
+        <span class="text-[11px] px-3 py-1.5 rounded-full bg-amber-200 text-amber-800 font-semibold flex-shrink-0">审核中</span>
+      </div>`;
+  }
+
+  // 单边认证 → 新增另一身份认证卡
+  const 缺名 = 缺失 === 'demand' ? '我要发布任务' : '我要接单飞行';
+  const 缺副 = 缺失 === 'demand' ? '成为发布方，认证后即可发布任务' : '成为飞手，认证后即可接单飞行';
+  const 缺图标 = 缺失 === 'demand' ? 'briefcase' : 'plane';
+  const 缺色 = 缺失 === 'demand' ? 'from-indigo-500 to-blue-700' : 'from-blue-500 to-indigo-600';
+  return `
+    <div class="mx-4 mt-3 bg-white rounded-2xl shadow-sm border border-gray-100 p-3.5 flex items-center gap-3">
+      <div class="w-11 h-11 rounded-xl bg-gradient-to-br ${缺色} flex items-center justify-center flex-shrink-0">
+        <i data-lucide="${缺图标}" class="w-5 h-5 text-white"></i>
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[14px] font-bold text-gray-900">${缺名}</div>
+        <div class="text-[11px] text-gray-400 mt-0.5">${缺副}</div>
+      </div>
+      <button onclick="触发身份切换()" class="text-[12px] px-4 py-2 rounded-full bg-gradient-to-r ${缺色} text-white font-semibold shadow-sm flex-shrink-0">去认证</button>
+    </div>`;
+}
+
 // 功能列表（共用）
 function 渲染我的功能列表(info, p) {
   const 是飞手 = info.isPilot;
@@ -4618,6 +5928,13 @@ function 渲染我的功能列表(info, p) {
         {icon:'settings',     color:'text-slate-600', bg:'bg-slate-100',label:'设置', sub:'通用偏好、缓存、隐私', action:'打开设置()'},
       ]
     },
+    !访客 && {
+      title: '信用与申诉',
+      items: [
+        {icon:'shield-check', color:'text-amber-600', bg:'bg-amber-50',  label:'信用分', sub:`当前 ${p.credit || '--'} 分 · 查看变动明细`, action:'打开信用分()'},
+        {icon:'gavel',        color:'text-purple-600',bg:'bg-purple-50', label:'我的申诉', sub:'对扣分结果不服 · 提交人工申诉', action:'打开我的申诉()'},
+      ]
+    },
     {
       title: '服务与支持',
       items: [
@@ -4626,7 +5943,7 @@ function 渲染我的功能列表(info, p) {
         {icon:'info',         color:'text-slate-600', bg:'bg-slate-100',label:'关于猎飞云', sub:'Version 1.0.0 (prototype)', action:'打开关于()'},
       ]
     }
-  ];
+  ].filter(Boolean);
 
   let html = '';
   分组.forEach(g => {
@@ -6030,6 +7347,215 @@ function 打开关于() {
   渲染全局图标();
 }
 
+// ========= 信用分明细 =========
+function 打开信用分() {
+  渲染信用分();
+  document.getElementById('页面-信用分').classList.remove('hidden');
+  渲染全局图标();
+}
+function 渲染信用分() {
+  const p = 我的档案[当前身份] || {};
+  const 列 = 信用变动记录[当前身份] || [];
+  const 总分 = p.credit || 100;
+  // 评级阈值：≥110 优秀 / 90-109 良好 / 60-89 警示 / <60 受限
+  let 等级 = '良好', 等级色 = 'from-emerald-500 to-emerald-600', 等级Pill='bg-emerald-50 text-emerald-600', 等级图标='shield-check';
+  if (总分 >= 110)      { 等级='优秀'; 等级色='from-amber-500 to-orange-500'; 等级Pill='bg-amber-50 text-amber-600'; 等级图标='award'; }
+  else if (总分 >= 90)  { 等级='良好'; 等级色='from-emerald-500 to-emerald-600'; 等级Pill='bg-emerald-50 text-emerald-600'; 等级图标='shield-check'; }
+  else if (总分 >= 60)  { 等级='警示'; 等级色='from-orange-500 to-red-500'; 等级Pill='bg-orange-50 text-orange-600'; 等级图标='shield-alert'; }
+  else                  { 等级='受限'; 等级色='from-red-500 to-rose-600'; 等级Pill='bg-red-50 text-red-600'; 等级图标='shield-x'; }
+
+  const 派生 = `
+    <div class="grid grid-cols-3 gap-2 mt-3">
+      <div class="bg-white/15 backdrop-blur-sm rounded-xl p-2.5 text-center">
+        <div class="text-[16px] font-extrabold text-white">${p.cancelRate30d ?? 0}%</div>
+        <div class="text-[10px] text-white/80 mt-0.5">近 30 天取消率</div>
+      </div>
+      <div class="bg-white/15 backdrop-blur-sm rounded-xl p-2.5 text-center">
+        <div class="text-[16px] font-extrabold text-white">${p.urgentCancelCount30d ?? 0}</div>
+        <div class="text-[10px] text-white/80 mt-0.5">近 30 天临期取消</div>
+      </div>
+      <div class="bg-white/15 backdrop-blur-sm rounded-xl p-2.5 text-center">
+        <div class="text-[16px] font-extrabold text-white">${p.forceCancelCount30d ?? 0}</div>
+        <div class="text-[10px] text-white/80 mt-0.5">强制取消次数</div>
+      </div>
+    </div>`;
+
+  const 顶部 = `
+    <div class="bg-gradient-to-br ${等级色} px-5 pt-5 pb-5 text-white relative overflow-hidden">
+      <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full"></div>
+      <div class="absolute right-12 bottom-2 w-20 h-20 bg-white/5 rounded-full"></div>
+      <div class="relative">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-[11px] text-white/80 font-medium">当前信用分</div>
+            <div class="flex items-baseline gap-2 mt-0.5">
+              <span class="text-[40px] font-extrabold leading-none">${总分}</span>
+              <span class="text-[12px] font-medium text-white/90">/ 130</span>
+            </div>
+            <div class="mt-2 inline-flex items-center gap-1 text-[11px] bg-white/20 px-2 py-0.5 rounded-full">
+              <i data-lucide="${等级图标}" class="w-3 h-3"></i>${等级}
+            </div>
+          </div>
+          <div class="text-right text-[10px] text-white/80 leading-relaxed max-w-[140px]">
+            <p>扣分仅本人可见；</p>
+            <p>派生指标公开展示。</p>
+          </div>
+        </div>
+        ${派生}
+      </div>
+    </div>`;
+
+  const 规则提示 = `
+    <div class="mx-4 mt-3 bg-blue-50 border border-blue-100 rounded-xl p-3 flex items-start gap-2">
+      <i data-lucide="info" class="w-3.5 h-3.5 text-blue-600 mt-0.5 flex-shrink-0"></i>
+      <p class="text-[11px] text-blue-800 leading-relaxed">
+        基础分 100。完成订单 +2~+3；恶意取消 -5/-15/-30；不可抗力可豁免。
+        分数 &lt;90 进入警示，&lt;60 进入受限（不能接急单 / 不能上推荐池）。
+      </p>
+    </div>`;
+
+  const 明细 = 列.length === 0 ? `
+    <div class="flex flex-col items-center justify-center py-16 text-center px-6">
+      <div class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-3"><i data-lucide="file-text" class="w-8 h-8 text-gray-300"></i></div>
+      <p class="text-[12px] text-gray-400">暂无信用变动记录</p>
+    </div>` : `
+    <div class="mx-4 mt-3 mb-4 bg-white rounded-2xl border border-gray-100 overflow-hidden">
+      <div class="px-4 pt-3 pb-2 text-[11px] text-gray-400 font-medium flex items-center justify-between">
+        <span>变动明细（${列.length}）</span>
+        <span class="text-[10px] text-gray-300">近 90 天</span>
+      </div>
+      ${列.map((e, i) => {
+        const 加 = e.delta > 0;
+        const 色 = 加 ? 'text-emerald-600' : 'text-red-500';
+        const 图 = 加 ? 'arrow-up-circle' : 'arrow-down-circle';
+        const 图色 = 加 ? 'text-emerald-500 bg-emerald-50' : 'text-red-500 bg-red-50';
+        const last = i === 列.length - 1;
+        return `
+          <div class="px-4 py-3 flex items-start gap-3 ${last?'':'border-b border-gray-50'}">
+            <div class="w-8 h-8 rounded-full ${图色} flex items-center justify-center flex-shrink-0">
+              <i data-lucide="${图}" class="w-4 h-4"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-2">
+                <div class="text-[13px] text-gray-800 leading-snug flex-1 min-w-0">${e.reason}</div>
+                <div class="text-[15px] font-extrabold ${色} flex-shrink-0">${加?'+':''}${e.delta}</div>
+              </div>
+              <div class="flex items-center gap-2 mt-1.5 text-[10px] text-gray-400">
+                <span>${e.date}</span>
+                ${e.orderId?`<span>·</span><span class="text-gray-500">${e.orderId}</span>`:''}
+                ${e.appealable?`<span>·</span><button onclick="打开申诉提交('${e.orderId||''}','扣分异议')" class="text-blue-600 font-medium">申诉</button>`:''}
+              </div>
+            </div>
+          </div>`;
+      }).join('')}
+    </div>`;
+
+  document.getElementById('信用分-内容').innerHTML = 顶部 + 规则提示 + 明细;
+}
+
+// ========= 我的申诉 =========
+function 打开我的申诉() {
+  渲染我的申诉();
+  document.getElementById('页面-我的申诉').classList.remove('hidden');
+  渲染全局图标();
+}
+function 渲染我的申诉() {
+  const 列 = 我的申诉列表[当前身份] || [];
+  const 统计 = {
+    审核中: 列.filter(x=>x.status==='审核中').length,
+    已通过: 列.filter(x=>x.status==='已通过').length,
+    已驳回: 列.filter(x=>x.status==='已驳回').length,
+  };
+  const 头 = `
+    <div class="bg-white px-4 pt-3 pb-3 border-b border-gray-100">
+      <div class="grid grid-cols-3 gap-2">
+        <div class="text-center bg-amber-50 rounded-xl py-2">
+          <div class="text-[18px] font-extrabold text-amber-600">${统计.审核中}</div>
+          <div class="text-[10px] text-amber-700/80 mt-0.5">审核中</div>
+        </div>
+        <div class="text-center bg-emerald-50 rounded-xl py-2">
+          <div class="text-[18px] font-extrabold text-emerald-600">${统计.已通过}</div>
+          <div class="text-[10px] text-emerald-700/80 mt-0.5">已通过</div>
+        </div>
+        <div class="text-center bg-gray-50 rounded-xl py-2">
+          <div class="text-[18px] font-extrabold text-gray-500">${统计.已驳回}</div>
+          <div class="text-[10px] text-gray-500/80 mt-0.5">已驳回</div>
+        </div>
+      </div>
+    </div>`;
+
+  const 状态色 = {
+    '审核中': 'bg-amber-50 text-amber-600 border-amber-200',
+    '已通过': 'bg-emerald-50 text-emerald-600 border-emerald-200',
+    '已驳回': 'bg-gray-100 text-gray-500 border-gray-200',
+  };
+
+  const 列表 = 列.length === 0 ? `
+    <div class="flex flex-col items-center justify-center py-20 text-center px-6">
+      <div class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-3"><i data-lucide="gavel" class="w-8 h-8 text-gray-300"></i></div>
+      <p class="text-[13px] text-gray-500 mb-1">暂无申诉记录</p>
+      <p class="text-[11px] text-gray-400 mb-4">对扣分结果不服可发起申诉，运营会人工介入</p>
+      <button onclick="打开申诉提交()" class="px-5 py-2 rounded-full bg-blue-600 text-white text-[12px] font-semibold shadow-md shadow-blue-200">新建申诉</button>
+    </div>` : `
+    <div class="px-4 pt-3 space-y-3 pb-4">
+      ${列.map(e => `
+        <div class="bg-white rounded-2xl p-4 border border-gray-100">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="text-[13px] font-bold text-gray-900 truncate">${e.type}</span>
+              ${e.orderId?`<span class="text-[10px] text-gray-400">· ${e.orderId}</span>`:''}
+            </div>
+            <span class="text-[10px] px-2 py-0.5 rounded-full border font-semibold flex-shrink-0 ${状态色[e.status]||'bg-gray-100 text-gray-500 border-gray-200'}">${e.status}</span>
+          </div>
+          <p class="text-[12px] text-gray-600 leading-relaxed line-clamp-3">${e.desc}</p>
+          ${e.result?`
+            <div class="mt-2 bg-emerald-50 border border-emerald-100 rounded-xl p-2.5">
+              <div class="text-[11px] font-semibold text-emerald-700 mb-0.5"><i data-lucide="check-circle-2" class="w-3 h-3 inline mr-0.5"></i>审核结果</div>
+              <p class="text-[11px] text-emerald-700/90 leading-relaxed">${e.result}</p>
+              <p class="text-[10px] text-emerald-600/70 mt-1">${e.resultTime}</p>
+            </div>`:''}
+          <div class="mt-2 text-[10px] text-gray-400 flex items-center justify-between">
+            <span>申诉编号：${e.id}</span>
+            <span>提交于 ${e.submitTime}</span>
+          </div>
+        </div>
+      `).join('')}
+    </div>`;
+
+  document.getElementById('我的申诉-内容').innerHTML = 头 + 列表;
+}
+
+// ========= 申诉提交弹窗 =========
+function 打开申诉提交(订单号, 类型) {
+  document.getElementById('申诉-订单号').value = 订单号 || '';
+  document.getElementById('申诉-类型').value = 类型 || '';
+  document.getElementById('申诉-说明').value = '';
+  document.getElementById('弹窗-申诉提交-V2').classList.remove('hidden');
+  渲染全局图标();
+}
+function 关闭申诉提交() {
+  document.getElementById('弹窗-申诉提交-V2').classList.add('hidden');
+}
+function 提交申诉V2() {
+  const 类型 = document.getElementById('申诉-类型').value;
+  const 订单号 = document.getElementById('申诉-订单号').value.trim();
+  const 说明 = document.getElementById('申诉-说明').value.trim();
+  if (!类型) { 显示Toast('请选择申诉类型'); return; }
+  if (说明.length < 10) { 显示Toast('申诉说明至少 10 字'); return; }
+
+  const 列 = 我的申诉列表[当前身份] || (我的申诉列表[当前身份] = []);
+  const 新编号 = 'AP-' + String(900 + 列.length + 1);
+  const 今日 = new Date().toISOString().slice(0, 10);
+  列.unshift({ id: 新编号, type: 类型, orderId: 订单号 || '-', desc: 说明, status: '审核中', submitTime: 今日 });
+
+  关闭申诉提交();
+  显示Toast('申诉已提交 · 1-3 个工作日内反馈');
+  // 若用户当前在"我的申诉"页则刷新
+  if (!document.getElementById('页面-我的申诉').classList.contains('hidden')) {
+    渲染我的申诉();
+  }
+}
+
 function 打开认证中心() {
   const info = 身份文案[当前身份];
   if (info.isGuest) { 打开未登录引导(); return; }
@@ -6206,22 +7732,24 @@ function 打开设置() {
   渲染全局图标();
 }
 
-// V1.2.1：从设置页统一入口切换身份
-function 从设置切换身份() {
+// V1.2.1：身份切换统一入口（可从「我的」页卡片 或 「设置」页 触发）
+// 参考 Boss 直聘：新增另一身份需重做人脸 + 上传材料 + 异步审核，通过后自动切换
+function 触发身份切换() {
   if (!用户认证.loggedIn) { 显示Toast('请先登录'); return; }
   const 双向 = 是否双向认证();
   const 仅飞手 = !!用户认证.authedAsPilot && !用户认证.authedAsDemand;
   const 仅企业 = !!用户认证.authedAsDemand && !用户认证.authedAsPilot;
+  const 审核中 = !!用户认证.pendingAuthSide;
 
-  // 情况 1：双向认证 → 弹确认窗 → 切换 → 跳"我的"页
+  if (审核中) {
+    const 缺名 = 用户认证.pendingAuthSide === 'demand' ? '企业身份' : '飞手身份';
+    显示Toast(`${缺名}认证审核中，通过后请在「设置」中手动切换`);
+    return;
+  }
+
+  // 情况 1：双向认证 → 直接切换，无弹窗
   if (双向) {
     const 目标 = 用户认证.currentMode === 'pilot' ? 'demand' : 'pilot';
-    const 目标文案 = 目标 === 'pilot' ? '飞手身份（接单）' : '企业身份（发单）';
-    const 阻断 = 进行中订单数(用户认证.currentMode);
-    const 提示 = 阻断 > 0
-      ? `你当前作为${用户认证.currentMode==='pilot'?'飞手':'企业'}还有 ${阻断} 个进行中订单。\n切换后订单不会消失，但订单列表会切到另一身份。\n\n确认切换到${目标文案}？`
-      : `确认切换到${目标文案}？`;
-    if (!confirm(提示)) return;
     用户认证.currentMode = 目标;
     同步当前身份();
     document.getElementById('页面-设置').classList.add('hidden');
@@ -6230,22 +7758,180 @@ function 从设置切换身份() {
     return;
   }
 
-  // 情况 2：单边认证 → 引导认证另一边
+  // 情况 2：单边认证 → 进入多步认证流程页（二次实名 → 上传材料 → 待审核）
   if (仅飞手 || 仅企业) {
-    const 缺失 = 仅飞手 ? '企业' : '飞手';
-    if (confirm(`你的${缺失}身份尚未认证，无法切换。\n\n是否前往完成${缺失}认证？`)) {
-      document.getElementById('页面-设置').classList.add('hidden');
-      打开认证中心();
-    }
+    const 目标 = 仅飞手 ? 'demand' : 'pilot';
+    document.getElementById('页面-设置').classList.add('hidden');
+    打开新增认证页(目标);
     return;
   }
 
-  // 情况 3：完全未认证 → 引导先完成至少一项
-  if (confirm('你尚未完成任何身份认证。\n\n是否前往认证中心？')) {
-    document.getElementById('页面-设置').classList.add('hidden');
-    打开认证中心();
-  }
+  // 情况 3：完全未认证 → 直接跳认证中心
+  document.getElementById('页面-设置').classList.add('hidden');
+  打开认证中心();
 }
+
+// ============ 新增身份认证 · 多步流程 ============
+// 目标方向；演示态用全局变量缓存
+let 新增认证_目标 = '';
+
+function 打开新增认证页(目标) {
+  新增认证_目标 = 目标;
+  const 缺名 = 目标 === 'demand' ? '企业' : '飞手';
+  document.getElementById('新增认证-顶栏标题').textContent = `新增${缺名}身份认证`;
+  document.getElementById('新增认证-姓名').value = '';
+  document.getElementById('新增认证-身份证').value = '';
+  新增认证_切到Step(1);
+  document.getElementById('页面-新增认证').classList.remove('hidden');
+  渲染全局图标();
+}
+
+function 新增认证_返回() {
+  document.getElementById('页面-新增认证').classList.add('hidden');
+  切换Tab('我的');
+}
+
+function 新增认证_切到Step(n) {
+  document.getElementById('新增认证-顶栏副').textContent = `第 ${n} 步 / 共 3 步`;
+  ['新增认证-step1','新增认证-step2','新增认证-step3'].forEach((id,i)=>{
+    document.getElementById(id).className = `flex-1 h-1 rounded-full ${i<n ? 'bg-blue-500' : 'bg-gray-200'}`;
+  });
+  document.getElementById('新增认证-页1').classList.toggle('hidden', n !== 1);
+  document.getElementById('新增认证-页2').classList.toggle('hidden', n !== 2);
+  document.getElementById('新增认证-页3').classList.toggle('hidden', n !== 3);
+}
+
+function 新增认证_校验实名() {
+  const 姓名 = document.getElementById('新增认证-姓名').value.trim();
+  const 身份证 = document.getElementById('新增认证-身份证').value.trim();
+  if (!姓名 || !身份证) { 显示Toast('请填写姓名 + 身份证号'); return; }
+  // 演示态：任意非空输入即通过。
+  // 想测"不一致"异常分支，在姓名里包含"错"字 或 身份证号以"000"结尾即可触发拒绝。
+  const 故意失败 = 姓名.includes('错') || 身份证.endsWith('000');
+  if (故意失败) {
+    显示Toast('与账号实名不一致，请重新核对');
+    return;
+  }
+  新增认证_切到Step(2);
+  新增认证_渲染材料();
+}
+
+function 新增认证_回到Step1() { 新增认证_切到Step(1); }
+
+function 新增认证_渲染材料() {
+  const 容器 = document.getElementById('新增认证-材料容器');
+  if (新增认证_目标 === 'demand') {
+    // 飞手 → 新增企业：营业执照（必填） + 与企业关系
+    容器.innerHTML = `
+      <div class="flex items-center gap-2 mb-3">
+        <div class="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center"><i data-lucide="briefcase" class="w-4 h-4 text-indigo-600"></i></div>
+        <div>
+          <div class="text-[14px] font-bold text-gray-900">上传企业材料</div>
+          <div class="text-[11px] text-gray-400">不要求法人 = 实名本人，可代公司认证</div>
+        </div>
+      </div>
+      <div class="space-y-3">
+        <div>
+          <label class="text-[12px] text-gray-600 mb-1.5 block">营业执照 <span class="text-red-500">*</span></label>
+          <button onclick="新增认证_模拟上传(this)" class="w-full py-6 border-2 border-dashed border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 text-gray-400 hover:border-blue-400 hover:text-blue-500 transition">
+            <i data-lucide="upload-cloud" class="w-6 h-6"></i>
+            <span class="text-[12px]">点击上传营业执照（jpg / png / pdf）</span>
+          </button>
+        </div>
+        <div>
+          <label class="text-[12px] text-gray-600 mb-1.5 block">我与该企业的关系 <span class="text-red-500">*</span></label>
+          <div class="grid grid-cols-4 gap-2" id="新增认证-关系组">
+            ${['法人','老板','股东','员工'].map(r => `
+              <button onclick="新增认证_选关系('${r}', this)" class="py-2 rounded-xl border border-gray-200 bg-gray-50 text-[12px] text-gray-700 active:scale-95 transition">${r}</button>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  } else {
+    // 企业 → 新增飞手：CAAC（必填）+ 机型 / 保险 / 大疆 / 其他（选填）
+    容器.innerHTML = `
+      <div class="flex items-center gap-2 mb-3">
+        <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center"><i data-lucide="plane" class="w-4 h-4 text-blue-600"></i></div>
+        <div>
+          <div class="text-[14px] font-bold text-gray-900">上传飞手材料</div>
+          <div class="text-[11px] text-gray-400">所有持有人 / 被保险人 须 = 账号实名本人</div>
+        </div>
+      </div>
+      <div class="space-y-3">
+        <div>
+          <label class="text-[12px] text-gray-600 mb-1.5 block">CAAC 执照 <span class="text-red-500">*</span></label>
+          <button onclick="新增认证_模拟上传(this)" class="w-full py-6 border-2 border-dashed border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 text-gray-400 hover:border-blue-400 hover:text-blue-500 transition">
+            <i data-lucide="upload-cloud" class="w-6 h-6"></i>
+            <span class="text-[12px]">点击上传 CAAC 执照</span>
+          </button>
+        </div>
+        ${['持有机型','保险','大疆执照','其他执照'].map(name => `
+          <div>
+            <label class="text-[12px] text-gray-600 mb-1.5 block">${name} <span class="text-gray-400">（选填）</span></label>
+            <button onclick="新增认证_模拟上传(this)" class="w-full py-4 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center gap-1.5 text-gray-400 hover:border-blue-400 hover:text-blue-500 transition">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span class="text-[12px]">上传${name}</span>
+            </button>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+  渲染全局图标();
+}
+
+function 新增认证_模拟上传(btn) {
+  btn.classList.remove('border-gray-200','text-gray-400','border-dashed');
+  btn.classList.add('border-green-300','bg-green-50','text-green-700');
+  btn.innerHTML = `<i data-lucide="check-circle-2" class="w-5 h-5"></i><span class="text-[12px] font-semibold">已上传 · 点击重新上传</span>`;
+  btn.dataset.uploaded = '1';
+  渲染全局图标();
+}
+
+function 新增认证_选关系(关系, btn) {
+  document.querySelectorAll('#新增认证-关系组 button').forEach(b => {
+    b.className = 'py-2 rounded-xl border border-gray-200 bg-gray-50 text-[12px] text-gray-700 active:scale-95 transition';
+  });
+  btn.className = 'py-2 rounded-xl border-2 border-blue-500 bg-blue-50 text-[12px] text-blue-700 font-semibold active:scale-95 transition';
+  btn.dataset.selected = '1';
+}
+
+function 新增认证_提交() {
+  const 容器 = document.getElementById('新增认证-材料容器');
+  const 必填上传 = 容器.querySelector('button[data-uploaded]');
+  if (!必填上传) { 显示Toast('请先上传必填材料'); return; }
+  if (新增认证_目标 === 'demand') {
+    const 关系选中 = 容器.querySelector('#新增认证-关系组 button[data-selected]');
+    if (!关系选中) { 显示Toast('请选择"我与该企业的关系"'); return; }
+  }
+  // 提交成功 → 进入待审核态
+  开始新增身份认证(新增认证_目标);
+  新增认证_切到Step(3);
+}
+
+// 启动新增身份认证流程（演示态：3 秒后自动审核通过）
+// 真实流程：跳认证 H5 / 上传 OCR → 后端异步审核 → push 通知
+function 开始新增身份认证(目标) {
+  const 缺名 = 目标 === 'demand' ? '企业身份' : '飞手身份';
+  // 演示态：直接进入"审核中"
+  用户认证.pendingAuthSide = 目标;
+
+  setTimeout(() => {
+    // 演示态：模拟审核通过
+    if (用户认证.pendingAuthSide !== 目标) return; // 中途被取消
+    用户认证.pendingAuthSide = '';
+    if (目标 === 'demand') 用户认证.authedAsDemand = true;
+    else 用户认证.authedAsPilot = true;
+    // 审核通过后不自动切：保留原身份；推送系统消息 + Toast，提示用户去「设置」手动切换
+    同步当前身份();
+    if (当前Tab === '我的') 渲染我的页();
+    显示Toast(`${缺名}认证已通过，请在「设置」中切换到${缺名}`);
+  }, 3000);
+}
+
+// 兼容旧入口名
+const 从设置切换身份 = 触发身份切换;
 
 function 打开退出确认() { document.getElementById('弹窗-退出确认').classList.remove('hidden'); 渲染全局图标(); }
 function 确认退出登录() {
